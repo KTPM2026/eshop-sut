@@ -61,3 +61,10 @@
       • Đảm bảo Context đã chọn là EShop.          
 
       • Bấm Start Scan và đợi tiến trình chạy đến 100%.
+  
+# Nội dung bàn giao cho đồng đội (Hoàn tất H3):
+  • Target Endpoint Fuzzer: http://localhost:3001/api/products?search=<payload>
+
+  • Cơ chế phản hồi khi bị chặn: HTTP 403 Forbidden kèm body JSON có trường blocked_keyword để Long đưa vào thuật toán Feedback Loop của AI.
+
+  • API Điều khiển tự động: POST http://localhost:3001/api/waf/toggle để Lân dùng trong script chạy benchmark đối chứng 3 nhánh (wordlist tĩnh vs AI tĩnh vs AI feedback loop).
