@@ -1,6 +1,6 @@
 # Các bước cấu hình ZAP
 
-# Bước 1: Khởi chạy các dịch vụ EShop
+  ## Bước 1: Khởi chạy các dịch vụ EShop
   Mở 2 terminal độc lập để chạy Backend và Frontend Web:
   1. Terminal 1 (Backend API - cổng 3000):                                                        
     cd /home/hung/26-27/Kiem_thu/seminar/eshop-sut/backend                                        
@@ -9,7 +9,7 @@
     cd /home/hung/26-27/Kiem_thu/seminar/eshop-sut/frontend-web                                   
     npm run dev
   ──────
-  # Bước 2: Cấu hình ZAP Scope & Context (Khắc phục bẫy khác Origin)
+  ## Bước 2: Cấu hình ZAP Scope & Context (Khắc phục bẫy khác Origin)
   Vì ZAP đang chạy trên máy của bạn (port 8080):
   1. Trên giao diện ZAP Desktop, ở tab Sites (bên trái), click chuột phải chọn Include in Context 
   ➔ New Context... (Đặt tên Context là EShop).
@@ -22,7 +22,7 @@
       • Lưu ý nghiệp vụ: Frontend chạy ở :5173 nhưng gọi API ở :3000. Nếu chỉ cấu hình localhost:5173, ZAP sẽ coi các request gọi sang :3000 là ngoài phạm vi và bỏ qua không quét
       các API backend. Regex trên đảm bảo bao quát cả 2 cổng.
   3. Bấm Save / OK.
-  # Bước 3: Cấu hình Token JWT cho ZAP quét các API yêu cầu đăng nhập
+  ## Bước 3: Cấu hình Token JWT cho ZAP quét các API yêu cầu đăng nhập
   EShop dùng JWT qua header Authorization: Bearer <token>. Cách cấu hình tự động nhanh và chuẩn
   nhất trong ZAP:
   1. Mở trình duyệt, truy cập http://localhost:5173, đăng nhập với tài khoản user:
@@ -45,7 +45,7 @@
       • Target URL Regex: http://localhost:3000*        
       • Tích chọn Enable.                  
   4. Bấm Save. Từ lúc này, mọi request ZAP gửi đến backend :3000 sẽ tự động mang token xác thực.     
-  # Bước 4: Chạy Crawl & Scan thực tế                                                          
+  ## Bước 4: Chạy Crawl & Scan thực tế                                                          
   1. Chạy AJAX Spider (Bắt buộc với React SPA):          
       • Trong ZAP, click vào tab Quick Start ➔ chọn Manual Explore, gõ URL: http://localhost:5173 
       và bấm Launch Browser (để ZAP nhận diện site).              
