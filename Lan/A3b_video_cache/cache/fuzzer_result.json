@@ -1,0 +1,11 @@
+{
+  "status": "awaiting_real_results",
+  "is_replay": true,
+  "data_origin": "empty_template",
+  "model_inference_performed": false,
+  "recorded_at_utc": null,
+  "source_sha256": null,
+  "waiting_for": ["H3 filter", "L2 fuzzer", "A2 benchmark", "L3 clip"],
+  "notice": "KHUNG CACHE RỖNG, không phải kết quả bypass. Chưa có clip hoặc dữ liệu thật để ghép video.",
+  "results": []
+}

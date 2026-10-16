@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "data_origin": "synthetic",
+    "is_sample": true,
+    "notice": "ALERT MẪU TỰ TẠO để test parser/schema, KHÔNG phải ZAP scan thật hoặc nhãn chuẩn của Như/Phát."
+  },
+  "alerts": [
+    {
+      "alert_id": "sample-sqli-001",
+      "name": "SQL Injection - SAMPLE ONLY",
+      "risk": "High",
+      "url": "http://localhost:3000/api/products?search=sample",
+      "param": "search",
+      "evidence": "GIẢ LẬP: chỉ là chuỗi minh họa; chưa có request/response xác minh.",
+      "cweid": "89"
+    },
+    {
+      "alert_id": "sample-xss-002",
+      "name": "Cross Site Scripting - SAMPLE ONLY",
+      "risk": "Medium",
+      "url": "http://localhost:5173/",
+      "param": "search",
+      "evidence": "GIẢ LẬP: marker HTML không tự chứng minh browser execution.",
+      "cweid": "79"
+    },
+    {
+      "alert_id": "sample-cors-003",
+      "name": "CORS Observation - SAMPLE ONLY",
+      "risk": "Low",
+      "url": "http://localhost:3000/api/products",
+      "param": "Origin",
+      "evidence": "GIẢ LẬP: Access-Control-Allow-Origin: * trên dữ liệu public chưa đủ kết luận lỗi.",
+      "cweid": null
+    }
+  ]
+}

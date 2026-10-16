@@ -1,0 +1,243 @@
+{
+  "schema_version": "lan-ai-v1-proposed",
+  "group_approved": false,
+  "assumption_notice": "TỰ ĐỀ XUẤT - CẦN NHÓM CHỐT",
+  "alert_input": {
+    "additionalProperties": false,
+    "properties": {
+      "alert_id": {
+        "maxLength": 200,
+        "minLength": 1,
+        "title": "Alert Id",
+        "type": "string"
+      },
+      "name": {
+        "maxLength": 1000,
+        "minLength": 1,
+        "title": "Name",
+        "type": "string"
+      },
+      "risk": {
+        "enum": [
+          "High",
+          "Medium",
+          "Low",
+          "Informational",
+          "Unknown"
+        ],
+        "title": "Risk",
+        "type": "string"
+      },
+      "url": {
+        "maxLength": 8000,
+        "minLength": 1,
+        "title": "Url",
+        "type": "string"
+      },
+      "param": {
+        "maxLength": 1000,
+        "title": "Param",
+        "type": "string"
+      },
+      "evidence": {
+        "maxLength": 16000,
+        "title": "Evidence",
+        "type": "string"
+      },
+      "cweid": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Cweid"
+      }
+    },
+    "required": [
+      "alert_id",
+      "name",
+      "risk",
+      "url",
+      "param",
+      "evidence",
+      "cweid"
+    ],
+    "title": "Alert",
+    "type": "object"
+  },
+  "triage_output": {
+    "additionalProperties": false,
+    "properties": {
+      "alert_id": {
+        "maxLength": 200,
+        "minLength": 1,
+        "title": "Alert Id",
+        "type": "string"
+      },
+      "is_real": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Is Real"
+      },
+      "priority": {
+        "enum": [
+          "P1",
+          "P2",
+          "P3",
+          "P4"
+        ],
+        "title": "Priority",
+        "type": "string"
+      },
+      "reason": {
+        "maxLength": 3000,
+        "minLength": 1,
+        "title": "Reason",
+        "type": "string"
+      },
+      "confidence": {
+        "maximum": 1,
+        "minimum": 0,
+        "title": "Confidence",
+        "type": "number"
+      },
+      "trang_thai_bang_chung": {
+        "enum": [
+          "can_xac_minh",
+          "co_bang_chung_ho_tro",
+          "khong_du_bang_chung"
+        ],
+        "title": "Trang Thai Bang Chung",
+        "type": "string"
+      }
+    },
+    "required": [
+      "alert_id",
+      "is_real",
+      "priority",
+      "reason",
+      "confidence",
+      "trang_thai_bang_chung"
+    ],
+    "title": "TriageSuggestion",
+    "type": "object"
+  },
+  "payload_input": {
+    "$defs": {
+      "PreviousAttempt": {
+        "additionalProperties": false,
+        "properties": {
+          "payload": {
+            "maxLength": 1024,
+            "title": "Payload",
+            "type": "string"
+          },
+          "response_code": {
+            "maximum": 599,
+            "minimum": 100,
+            "title": "Response Code",
+            "type": "integer"
+          },
+          "blocked": {
+            "title": "Blocked",
+            "type": "boolean"
+          },
+          "effect_observed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effect Observed"
+          }
+        },
+        "required": [
+          "payload",
+          "response_code",
+          "blocked",
+          "effect_observed"
+        ],
+        "title": "PreviousAttempt",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "target_url": {
+        "maxLength": 8000,
+        "minLength": 1,
+        "title": "Target Url",
+        "type": "string"
+      },
+      "vulnerability_type": {
+        "enum": [
+          "SQLi",
+          "XSS"
+        ],
+        "title": "Vulnerability Type",
+        "type": "string"
+      },
+      "previous_attempts": {
+        "items": {
+          "$ref": "#/$defs/PreviousAttempt"
+        },
+        "maxItems": 50,
+        "title": "Previous Attempts",
+        "type": "array"
+      },
+      "remaining_requests": {
+        "maximum": 1000,
+        "minimum": 0,
+        "title": "Remaining Requests",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "target_url",
+      "vulnerability_type",
+      "previous_attempts",
+      "remaining_requests"
+    ],
+    "title": "PayloadRequest",
+    "type": "object"
+  },
+  "payload_output": {
+    "additionalProperties": false,
+    "properties": {
+      "payload": {
+        "maxLength": 1024,
+        "title": "Payload",
+        "type": "string"
+      },
+      "reason": {
+        "maxLength": 3000,
+        "minLength": 1,
+        "title": "Reason",
+        "type": "string"
+      },
+      "should_stop": {
+        "title": "Should Stop",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "payload",
+      "reason",
+      "should_stop"
+    ],
+    "title": "PayloadSuggestion",
+    "type": "object"
+  }
+}

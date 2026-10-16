@@ -1,0 +1,11 @@
+{
+  "status": "awaiting_real_results",
+  "is_replay": true,
+  "data_origin": "empty_template",
+  "model_inference_performed": false,
+  "recorded_at_utc": null,
+  "source_sha256": null,
+  "waiting_for": ["A1 real ZAP input", "N3 benchmark"],
+  "notice": "KHUNG CACHE RỖNG, không phải kết quả AI hoặc benchmark. Nếu phát lại phải hiển thị is_replay=true.",
+  "results": []
+}
