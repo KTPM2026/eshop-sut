@@ -1,0 +1,14 @@
+{
+  "schema_version": "nhu-benchmark-v1-proposed",
+  "_meta": {
+    "dataset_id": null,
+    "source_sha256": null,
+    "data_origin": "real_zap",
+    "review_status": "awaiting_independent_labels",
+    "human_adjudication_confirmed": false,
+    "reviewers": [],
+    "independent_lock_sha256": [],
+    "notice": "KHUNG RỖNG, không phải nhãn chuẩn. Như/Phát tự khóa nhãn, đối chiếu và kiểm chứng bất đồng trước khi điền."
+  },
+  "labels": []
+}

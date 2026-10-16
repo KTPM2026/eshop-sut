@@ -1,0 +1,26 @@
+### TEMPLATE ONLY - chua gui request. Thay placeholder bang du lieu H1 duoc phep.
+### Token chi dung trong Burp/private, khong commit ban da dien token.
+
+### Owner control A
+GET {{base_url}}/api/orders/{{order_a}}
+Authorization: Bearer {{token_a}}
+Accept: application/json
+
+### Cross-user: B doc don A
+GET {{base_url}}/api/orders/{{order_a}}
+Authorization: Bearer {{token_b}}
+Accept: application/json
+
+### Guest - khong Authorization/Cookie
+GET {{base_url}}/api/orders/{{order_a}}
+Accept: application/json
+
+### User thuong goi API admin
+GET {{base_url}}/api/admin/users
+Authorization: Bearer {{token_a}}
+Accept: application/json
+
+### Admin control
+GET {{base_url}}/api/admin/users
+Authorization: Bearer {{token_admin}}
+Accept: application/json

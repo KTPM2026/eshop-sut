@@ -1,0 +1,18 @@
+{
+  "owner": "Thạch Như",
+  "student_id": "23120312",
+  "status": "awaiting_manual_Burp_run",
+  "api_preflight_commit": "ab5dd4f7ac0d8562800311dc94109939d3c6d930",
+  "api_preflight_results": "Nhu/N1_burp/evidence/main-run-20261016/results.json",
+  "is_replay": false,
+  "sut_commit": null,
+  "burp_version": null,
+  "frontend_origin": null,
+  "api_origin": null,
+  "scope_approved": false,
+  "executed_at_utc": null,
+  "lab_identity_and_order_map": null,
+  "cases": [],
+  "video_url": null,
+  "notice": "KHUNG RỖNG. Không phải bằng chứng đã chạy. Mỗi case thật cần case_id, actor, owner, status, checkpoint_result, request_ref, response_ref, screenshot_ref. Không lưu token/PII vào manifest chia sẻ."
+}

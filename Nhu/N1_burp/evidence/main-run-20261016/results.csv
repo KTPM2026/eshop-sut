@@ -1,0 +1,12 @@
+case_id,actor,resource_owner,expected_access,response_code,outcome
+N1-01,user_a,user_a,allow,200,pass
+N1-02,user_b,user_b,allow,200,pass
+N1-03,guest,user_a,deny,200,fail
+N1-04,guest,user_b,deny,200,fail
+N1-05,user_a,user_b,deny,200,fail
+N1-06,user_b,user_a,deny,200,fail
+N1-07,guest,admin,deny,401,pass
+N1-08,user_a,admin,deny,200,fail
+N1-09,user_b,admin,deny,200,fail
+N1-10,admin,admin,allow,200,pass
+N1-11,user_a,none,deny,404,pass

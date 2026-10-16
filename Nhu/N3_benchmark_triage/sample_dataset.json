@@ -1,0 +1,17 @@
+{
+  "schema_version": "nhu-benchmark-v1-proposed",
+  "_meta": {
+    "dataset_id": "SYNTHETIC-NOT-H1-23120312",
+    "data_origin": "synthetic",
+    "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "notice": "SÁU RECORD TỰ TẠO CHỈ ĐỂ TEST CODE. Không phải scan ZAP, không phải lỗi EShop hoặc nhãn của Như/Phát. Hash 0 chỉ là fixture."
+  },
+  "alerts": [
+    {"alert_id": "test-001", "name": "SYNTHETIC CASE 1", "risk": "High", "url": "http://localhost/example/1", "param": "q", "evidence": "TEST ONLY", "cweid": null},
+    {"alert_id": "test-002", "name": "SYNTHETIC CASE 2", "risk": "Medium", "url": "http://localhost/example/2", "param": "q", "evidence": "TEST ONLY", "cweid": null},
+    {"alert_id": "test-003", "name": "SYNTHETIC CASE 3", "risk": "Low", "url": "http://localhost/example/3", "param": "q", "evidence": "TEST ONLY", "cweid": null},
+    {"alert_id": "test-004", "name": "SYNTHETIC CASE 4", "risk": "Unknown", "url": "http://localhost/example/4", "param": "", "evidence": "TEST ONLY", "cweid": null},
+    {"alert_id": "test-005", "name": "SYNTHETIC CASE 5", "risk": "Informational", "url": "http://localhost/example/5", "param": "", "evidence": "TEST ONLY", "cweid": null},
+    {"alert_id": "test-006", "name": "SYNTHETIC CASE 6", "risk": "Low", "url": "http://localhost/example/6", "param": "", "evidence": "TEST ONLY", "cweid": null}
+  ]
+}
