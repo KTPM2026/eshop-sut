@@ -1,0 +1,20 @@
+{
+  "branch_1_static_wordlist": {
+    "name": "Wordlist Tĩnh Cổ Điển",
+    "success": false,
+    "requests_sent": 14,
+    "time_seconds": 0.027
+  },
+  "branch_2_static_ai": {
+    "name": "Payload AI Sinh Sẵn (Mức 1)",
+    "success": false,
+    "requests_sent": 6,
+    "time_seconds": 0.002
+  },
+  "branch_3_ai_feedback_loop": {
+    "name": "AI Fuzzer Feedback Loop (Mức 2)",
+    "success": true,
+    "requests_sent": 2,
+    "time_seconds": 0.45
+  }
+}
