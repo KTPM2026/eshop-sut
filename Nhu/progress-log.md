@@ -12,5 +12,6 @@
 | 16/10/2026 | Cập nhật N4 từ số liệu ZAP/API và rút gọn hướng dẫn bàn giao | Không còn ghi chờ toàn bộ H1; còn xác nhận commit scan cũ/full response nếu cần, quay Burp, nhãn độc lập và ba run AI thật có review |
 | 16/10/2026 | Chạy unittest sau tích hợp và tạo phiếu làm việc private cho Như | 35/35 test Như, 30/30 test Lân qua; `Nhu/private/nhu-labels.csv` có 29 dòng trống, không có nhãn do AI điền |
 | 16/10/2026 | Dọn import/ghi chú riêng máy trước khi push; cố định bytes của pack/minh chứng và thêm kiểm tra CRLF/LF | 36/36 test Như qua; giữ hash input A1 chính xác, bổ sung hash nội dung export/source để đối chiếu đa nền tảng; private/database/dependency/cache không đưa vào Git |
+| 17/10/2026 | Rút gọn checklist chuẩn bị PR, tách phần kỹ thuật N1–N3 khỏi kế hoạch video và slide/report N4 | Chưa có đề gốc xác nhận video bắt buộc cho lần nộp hiện tại; giữ nguyên code, dataset, minh chứng và dữ liệu private; không đánh dấu nhãn/benchmark là hoàn tất |
 
-Bước tiếp theo: Như tự quay Burp; Như/Phát khóa nhãn độc lập rồi chốt; Lân chạy A1 trên input chung, Như đo review và chấm N3; bổ sung N4/clip gửi nhóm. Không đưa thời gian fixture, mock hoặc ảnh Edge thành bằng chứng Burp/benchmark thật.
+Bước tiếp theo về kỹ thuật: Như kiểm chứng Burp và lưu bằng chứng; Như/Phát gán nhãn riêng, khóa rồi chốt; Lân chạy A1 trên input chung, Như đo review và chấm N3. Slide/report N4 để giai đoạn sau; yêu cầu video của lần nộp hiện tại chờ đối chiếu đề gốc. Không đưa thời gian fixture, mock hoặc ảnh Edge thành bằng chứng Burp/benchmark thật.

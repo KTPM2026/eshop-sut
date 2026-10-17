@@ -2,6 +2,8 @@
 
 **Trạng thái:** đã chạy 11 ca API thật trên main của nhóm tại commit `ab5dd4f7ac0d8562800311dc94109939d3c6d930`, **5 pass / 6 vi phạm quyền truy cập / 0 chưa đủ bằng chứng**. Có request/response và 3 ảnh trình duyệt trong [báo cáo lượt chạy](evidence/main-run-20261016/README.md). Lượt này do Codex thực thi bằng Node.js và Edge headless; demo Burp của sinh viên còn cần thực hiện.
 
+Runbook này triển khai N1 theo phân công nhóm. Video là kế hoạch bàn giao chung, chưa được đối chiếu với đề gốc/thông báo nộp của giảng viên; không coi việc quay clip là điều kiện bắt buộc của PR chuẩn bị hiện tại.
+
 ## Tái lập lượt kiểm chứng API
 
 Node.js 24 và Python 3.12 được dùng. Tạo bản clone riêng bên trong `Nhu/private`; backend reset database khi khởi động. Từ root repo:
@@ -35,7 +37,7 @@ TỰ ĐỀ XUẤT - CẦN NHÓM CHỐT: policy API cá nhân chỉ owner đượ
 
 Thao tác Proxy/scope tham chiếu [hướng dẫn intercept](https://portswigger.net/burp/documentation/desktop/getting-started/intercepting-http-traffic) và [target scope](https://portswigger.net/burp/documentation/desktop/getting-started/setting-target-scope). Phiên bản UI có thể khác; ghi lại cài đặt thực tế, không giả định chỉ frontend nằm trong scope là đủ.
 
-**Bằng chứng cần ghi mới:** version, scope, request/response đọc hợp lệ đã làm sạch, clip thao tác ngắn. Không quay bước nhập key/token hoặc mật khẩu.
+**Bằng chứng cần ghi mới:** version, scope, request/response đọc hợp lệ đã làm sạch và ảnh/history của phiên Burp. Nếu ghi hình theo kế hoạch nhóm, không quay bước nhập key/token hoặc mật khẩu.
 
 ## 3. Kịch bản 2: Record & Playback có đối chứng
 
@@ -65,14 +67,15 @@ API admin: chạy guest, user A, user B và admin hợp lệ với request đọ
 
 Nếu response lỗi vẫn kèm dữ liệu riêng thì status lỗi không làm mất bằng chứng lộ dữ liệu. Lưu riêng case ID, actor, owner, status, kết quả checkpoint và bằng chứng đã làm sạch. Chỉ status 200/403, độ dài body hoặc tên alert không đủ kết luận.
 
-## 6. Ghi hình và bàn giao
+## 6. Checklist kỹ thuật
 
-Quay ba phần với thuyết minh Như, lưu nguồn/log, cho thấy đối chứng và một ca đã xác minh; nếu không tái hiện thì báo đúng giới hạn. Gửi clip Burp cho Long ghép với sqlmap thành video 2; tiêu chuẩn chung trong đề cương là 1080p. Nếu phát lại request log/clip cũ phải ghi rõ, không gọi là live run.
-
-Checklist hoàn tất; đánh dấu khi đã thực hiện và có bằng chứng:
+Đánh dấu khi đã thực hiện và có bằng chứng:
 
 - [x] Có commit/scope/seed/reset và ánh xạ user/role/order/owner của lượt API trong results.json.
 - [x] Owner A/B và admin control của lượt API chạy được; guest không có phiên đăng nhập.
 - [x] Lượt API có actual status, checkpoint và request/response đã làm sạch.
 - [ ] Như tự thực hiện ba kịch bản Burp, lưu phiên bản công cụ, ảnh/history và điền manifest từ phiên đó.
-- [ ] Clip 1080p có thuyết minh và nhãn replay nếu có; đã gửi Long clip Burp và Phát nội dung N4.
+
+## 7. Ghi hình theo kế hoạch nhóm (giai đoạn sau)
+
+Đề cương nhóm dự kiến quay ba phần có thuyết minh Như, đối chứng và ca đã xác minh, rồi gửi Long ghép với sqlmap thành video 2 ở 1080p. Đây chưa phải yêu cầu nộp chính thức đã xác nhận cho đợt hiện tại. Nếu phát lại request log/clip cũ phải ghi rõ, không gọi là live run. Nội dung slide/report N4 để hoàn thiện sau khi có kết quả thực nghiệm.

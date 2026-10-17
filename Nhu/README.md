@@ -8,18 +8,22 @@ Repo thực hiện: [KTPM2026/eshop-sut](https://github.com/KTPM2026/eshop-sut),
 
 | Phần | Sản phẩm hiện có |
 |---|---|
-| [N1: Burp/phân quyền](N1_burp/README.md) | Chạy thật 11 ca API trên main của nhóm: **5 pass, 6 vi phạm phân quyền, 2 phát hiện**. Có request/response, CSV và 3 ảnh response 1920×1080 trong [minh chứng](N1_burp/evidence/main-run-20261016/README.md). Có runbook để Như quay Burp. |
+| [N1: Burp/phân quyền](N1_burp/README.md) | Chạy thật 11 ca API trên main của nhóm: **5 pass, 6 vi phạm phân quyền, 2 phát hiện**. Có request/response, CSV và 3 ảnh response 1920×1080 trong [minh chứng](N1_burp/evidence/main-run-20261016/README.md). Có runbook để Như kiểm chứng bằng Burp. |
 | [N2: Gán nhãn](N2_gan_nhan/README.md) | Đã đọc ZAP 2.17.0 của Hùng ngày 14/10: **31 instance gốc, giữ 29 localhost, loại 2 ngoài scope**. Dùng parser của Lân, khóa ID/hash; có input AI đã che token, dataset và phiếu nhãn trống. |
 | [N3: Benchmark](N3_benchmark_triage/README.md) | Bộ chấm tương thích A1 của Lân; tính Precision/Recall, coverage, khớp ưu tiên, lỗi thật bị xếp thấp/giả, thời gian gồm review và baseline risk. Có kiểm tra dữ liệu/mock/replay và test công thức. |
-| [N4: Báo cáo/slide](N4_slide_baocao/README.md) | Nội dung thực nghiệm đã điền số liệu ZAP và API thật, hai phát hiện, giới hạn, nguồn và nội dung từng slide để ghép bài chung. |
+| [N4: Báo cáo/slide](N4_slide_baocao/README.md) | Giữ bản nháp từ số liệu ZAP/API đã có để hoàn thiện và ghép bài sau; không nằm trong đợt dọn/chuẩn bị PR này. |
 
 Kết quả API do Codex hỗ trợ thực thi; ảnh là trình duyệt Edge, **không phải ảnh Burp**. Phiếu N2 chưa có nhãn của Như, chưa có nhãn chuẩn Như/Phát hoặc số liệu benchmark AI. Không biến dữ liệu mẫu thành kết quả nộp.
 
-## Ba việc để chốt bài
+**Phạm vi PR:** bàn giao code, dataset và minh chứng API đã chuẩn bị; không tuyên bố hoàn tất thực nghiệm N2/N3. Danh sách dưới theo phân công nhóm, chưa phải checklist nộp chính thức của giảng viên.
 
-1. **Như:** tự replay/quay Burp theo [N1](N1_burp/README.md), lưu clip 1080p có thuyết minh rồi gửi Long ghép video 2.
-2. **Như và Phát:** đồng ý scope/rubric, mỗi người tự kiểm chứng và gán nhãn riêng trên [29 ID đã chuẩn bị](N2_gan_nhan/data/h1-20261014/dataset.json). Khóa phiếu trước khi xem nhãn nhau hoặc kết quả AI, rồi chốt bất đồng. Không cần chờ Hùng gửi lại export.
-3. **Lân và Như:** sau khi khóa nhãn chuẩn, Lân chạy A1 thật ít nhất ba lần trên cùng [a1-input.json](N2_gan_nhan/data/h1-20261014/a1-input.json) và cấu hình đã duyệt; Như review/đo thời gian rồi dùng N3 chấm. Thêm kết quả/clip vào N4 và gửi Phát ghép bài.
+## Phần kỹ thuật còn lại
+
+1. **N1 - Như:** tự kiểm chứng bằng Burp theo [runbook](N1_burp/README.md), lưu request/response, phiên bản công cụ, ảnh/history và kết quả checkpoints.
+2. **N2 - Như và Phát:** đồng ý scope/rubric, mỗi người tự kiểm chứng và gán nhãn riêng trên [29 ID đã chuẩn bị](N2_gan_nhan/data/h1-20261014/dataset.json). Như không cần đợi Phát để bắt đầu. Khóa phiếu trước khi xem nhãn nhau hoặc kết quả AI, rồi chốt bất đồng.
+3. **N3 - Lân và Như:** sau khi khóa nhãn chuẩn, Lân chạy A1 thật ít nhất ba lần trên cùng [a1-input.json](N2_gan_nhan/data/h1-20261014/a1-input.json) và cấu hình đã duyệt; Như review/đo thời gian rồi dùng bộ chấm N3 xuất kết quả.
+
+Slide/report N4 để giai đoạn sau. Clip Burp ghép sqlmap là nội dung trong kế hoạch nhóm; **chưa có đề gốc/thông báo nộp để xác nhận video bắt buộc cho lần nộp hiện tại**, nên không coi video là điều kiện của PR này.
 
 Hùng đã có [ZAP export](../alert/2026-10-14-ZAP-Report-.json), [hướng dẫn setup](../setup_ZAP.md) và H3 trong main. Chỉ cần nhờ Hùng bổ sung **commit chính xác của lượt scan 14/10 và request/response gốc nếu một alert không đủ căn cứ**, không ghi toàn bộ H1 là chưa có.
 
