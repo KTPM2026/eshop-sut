@@ -14,9 +14,18 @@ from Lan.A3a_ai_config.safety import redact
 from .parser import parse_alerts
 
 
-def run_triage(document: dict | list, client: AIClient, *, source_sha256: str) -> dict:
+def run_triage(
+    document: dict | list,
+    client: AIClient,
+    *,
+    source_sha256: str,
+    allowed_hosts: set[str] | None = None,
+    allowed_origins: set[str] | None = None,
+) -> dict:
     """Xử lý mọi record; không lọc/bỏ alert, không sinh quyết định review cuối."""
-    alerts = parse_alerts(document)
+    alerts = parse_alerts(
+        document, allowed_hosts=allowed_hosts, allowed_origins=allowed_origins
+    )
     results = [client.classify_alert(alert) for alert in alerts]
     meta = document.get("_meta", {}) if isinstance(document, dict) else {}
     synthetic = isinstance(meta, dict) and meta.get("data_origin") == "synthetic"
@@ -33,6 +42,8 @@ def run_triage(document: dict | list, client: AIClient, *, source_sha256: str) -
             "created_at_utc": datetime.now(timezone.utc).isoformat(),
             "source_sha256": source_sha256,
             "record_count": len(results),
+            "allowed_hosts": sorted(allowed_hosts) if allowed_hosts else None,
+            "allowed_origins": sorted(allowed_origins) if allowed_origins else None,
             "config": client.config.model_dump(),
             "notice": "Mẫu/mock không phải kết quả model, nhãn chuẩn hay số liệu benchmark.",
         },
@@ -47,6 +58,18 @@ def main() -> int:
     parser.add_argument("--input", type=Path, default=Path(__file__).with_name("sample_alert_data.json"))
     parser.add_argument("--output", type=Path, default=Path("Lan/outputs/triage_result.json"))
     parser.add_argument("--mode", choices=["mock", "live"], default="mock")
+    parser.add_argument(
+        "--host",
+        action="append",
+        dest="hosts",
+        help="Chỉ nhận alert từ hostname này; có thể lặp lại. Dùng với ZAP report thật.",
+    )
+    parser.add_argument(
+        "--origin",
+        action="append",
+        dest="origins",
+        help="Chỉ nhận origin đầy đủ, ví dụ http://localhost:3000.",
+    )
     args = parser.parse_args()
     try:
         if args.input.resolve() == args.output.resolve():
@@ -54,7 +77,13 @@ def main() -> int:
         raw = args.input.read_bytes()
         document = json.loads(raw.decode("utf-8-sig"))
         with AIClient(mode=args.mode) as client:
-            report = run_triage(document, client, source_sha256=hashlib.sha256(raw).hexdigest())
+            report = run_triage(
+                document,
+                client,
+                source_sha256=hashlib.sha256(raw).hexdigest(),
+                allowed_hosts=set(args.hosts) if args.hosts else None,
+                allowed_origins=set(args.origins) if args.origins else None,
+            )
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(redact(report), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     except (OSError, ValueError, TypeError, ValidationError, AIResponseError) as error:

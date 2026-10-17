@@ -63,6 +63,37 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(rows, parse_alerts(doc))
         self.assertNotEqual(rows[0]["alert_id"], rows[1]["alert_id"])
 
+    def test_origin_filter_excludes_other_local_ports(self):
+        document = {
+            "site": [
+                {
+                    "alerts": [
+                        {
+                            "name": "BACKEND",
+                            "riskcode": "1",
+                            "instances": [
+                                {"uri": "http://localhost:3000/a"}
+                            ],
+                        }
+                    ]
+                },
+                {
+                    "alerts": [
+                        {
+                            "name": "FRONTEND",
+                            "riskcode": "1",
+                            "instances": [
+                                {"uri": "http://localhost:5173/a"}
+                            ],
+                        }
+                    ]
+                },
+            ]
+        }
+        rows = parse_alerts(document, allowed_origins={"http://localhost:3000"})
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["url"], "http://localhost:3000/a")
+
     def test_duplicates_rejected(self):
         doc = sample_document()
         doc["alerts"].append(doc["alerts"][0])
@@ -251,12 +282,17 @@ class WorkspaceTests(unittest.TestCase):
         data = json.loads((ROOT / "A3a_ai_config/contracts.json").read_text(encoding="utf-8"))
         self.assertEqual(data, json_contracts())
 
-    def test_cache_templates_are_not_fake_results(self):
-        for name in ["triage_result.json", "fuzzer_result.json"]:
-            data = json.loads((ROOT / "A3b_video_cache/cache" / name).read_text(encoding="utf-8"))
-            self.assertTrue(data["is_replay"])
-            self.assertEqual(data["data_origin"], "empty_template")
-            self.assertEqual(data["results"], [])
+    def test_cache_outputs_are_explicitly_provenanced(self):
+        triage = json.loads((ROOT / "A3b_video_cache/cache/triage_result.json").read_text(encoding="utf-8"))
+        self.assertTrue(triage["is_replay"])
+        self.assertEqual(triage["data_origin"], "empty_template")
+        self.assertEqual(triage["results"], [])
+
+        fuzzer = json.loads((ROOT / "A3b_video_cache/cache/fuzzer_result.json").read_text(encoding="utf-8"))
+        self.assertFalse(fuzzer["is_replay"])
+        self.assertEqual(fuzzer["data_origin"], "real_local_h3_l2_run")
+        self.assertTrue(fuzzer["success"])
+        self.assertEqual([item["status"] for item in fuzzer["logs"]], [403, 200])
 
     def test_cli_sample_and_input_overwrite_guard(self):
         with tempfile.TemporaryDirectory() as directory:

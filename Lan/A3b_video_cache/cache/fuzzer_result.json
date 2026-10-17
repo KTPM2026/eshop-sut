@@ -1,11 +1,30 @@
 {
-  "status": "awaiting_real_results",
-  "is_replay": true,
-  "data_origin": "empty_template",
-  "model_inference_performed": false,
-  "recorded_at_utc": null,
-  "source_sha256": null,
-  "waiting_for": ["H3 filter", "L2 fuzzer", "A2 benchmark", "L3 clip"],
-  "notice": "KHUNG CACHE RỖNG, không phải kết quả bypass. Chưa có clip hoặc dữ liệu thật để ghép video.",
-  "results": []
+  "status": "completed_local_lab",
+  "is_replay": false,
+  "data_origin": "real_local_h3_l2_run",
+  "target": "http://localhost:3001/api/products?search=",
+  "mode": "offline_heuristic",
+  "success_definition": "baseline returns [] and candidate returns HTTP 200 with non-empty JSON result",
+  "recorded_at_utc": "2026-10-17T13:51:33Z",
+  "total_attempts": 2,
+  "success": true,
+  "logs": [
+    {
+      "attempt": 1,
+      "payload": "' OR '1'='1",
+      "status": 403,
+      "blocked": true,
+      "reason": " OR ",
+      "latency_ms": 12.05
+    },
+    {
+      "attempt": 2,
+      "payload": "'/**/OR/**/'1'='1",
+      "status": 200,
+      "blocked": false,
+      "reason": null,
+      "latency_ms": 17.63
+    }
+  ],
+  "notice": "Đây là lượt chạy local lab offline heuristic của L2, không phải inference cloud."
 }
