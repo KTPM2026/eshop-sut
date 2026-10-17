@@ -232,7 +232,7 @@ cd seminar\eshop-sut
 Nếu môi trường Python chưa có dependency:
 
 ```powershell
-python -m pip install -r Lan\requirements.txt
+python -m pip install -r ai\requirements.txt
 ```
 
 ### 4.2. Chạy toàn bộ test workspace
@@ -240,7 +240,7 @@ python -m pip install -r Lan\requirements.txt
 Trên Windows, nên chạy từ thư mục `eshop-sut`:
 
 ```powershell
-python -X utf8 -m unittest discover -s Lan\tests -v
+python -X utf8 -m unittest discover -s ai\tests -v
 ```
 
 Kết quả đã xác nhận:
@@ -259,9 +259,9 @@ guard, A2 guard, cache provenance và CLI.
 node --check backend\waf_middleware.js
 node --check backend\server_fuzzer_lab.js
 python -m py_compile `
-  Lan\A1_ai_triage\parser.py `
-  Lan\A1_ai_triage\run.py `
-  Lan\A1_ai_triage\prepare_ground_truth.py `
+  ai\A1_ai_triage\parser.py `
+  ai\A1_ai_triage\run.py `
+  ai\A1_ai_triage\prepare_ground_truth.py `
   demo\ai_fuzzer\ai_fuzzer.py `
   demo\ai_fuzzer\benchmark_fuzzer.py
 ```
@@ -269,11 +269,11 @@ python -m py_compile `
 ### 4.4. Chạy A1 trên report ZAP thật ở chế độ mock
 
 ```powershell
-python -X utf8 -m Lan.A1_ai_triage.run `
+python -X utf8 -m ai.A1_ai_triage.run `
   --mode mock `
   --origin http://localhost:3000 `
   --input alert\2026-10-14-ZAP-Report-.json `
-  --output Lan\outputs\triage_real_backend_mock.json
+  --output ai\outputs\triage_real_backend_mock.json
 ```
 
 Lệnh này kiểm tra parser và mapping, không gọi API cloud.
@@ -281,9 +281,9 @@ Lệnh này kiểm tra parser và mapping, không gọi API cloud.
 ### 4.5. Tạo lại ground-truth template
 
 ```powershell
-python -X utf8 -m Lan.A1_ai_triage.prepare_ground_truth `
+python -X utf8 -m ai.A1_ai_triage.prepare_ground_truth `
   --input alert\2026-10-14-ZAP-Report-.json `
-  --output Lan\A1_ai_triage\ground_truth_template.json `
+  --output ai\A1_ai_triage\ground_truth_template.json `
   --origin http://localhost:3000
 ```
 

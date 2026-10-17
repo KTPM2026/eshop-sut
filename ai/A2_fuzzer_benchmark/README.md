@@ -7,7 +7,7 @@ thuộc. H3/L2 hiện dùng implementation trong `backend/` và
 ## Giao diện đang chờ
 
 ```python
-from Lan.A2_fuzzer_benchmark.runner import run_branch
+from ai.A2_fuzzer_benchmark.runner import run_branch
 
 # TỰ ĐỀ XUẤT - CẦN NHÓM CHỐT: tên nhánh và budget.
 run_branch("wordlist_static", payload_source=[],
@@ -21,7 +21,7 @@ Trước khi nối code cần Hùng/Long bàn giao endpoint/method/auth của b�
 ## Log template rỗng
 
 ```powershell
-python -m Lan.A2_fuzzer_benchmark.runner --write-template Lan/outputs/a2-template
+python -m ai.A2_fuzzer_benchmark.runner --write-template ai/outputs/a2-template
 ```
 
 CSV chỉ có header `branch,attempt_no,payload,response_code,bypass,note`. JSON có cùng danh sách cột, `rows: []`, `request_count: 0`, `status: blocked`, `is_benchmark_result: false`. Chạy lại sẽ từ chối ghi đè file đang có. Không tính tỷ lệ từ template rỗng.

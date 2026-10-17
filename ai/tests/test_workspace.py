@@ -13,12 +13,12 @@ from unittest.mock import patch
 import httpx
 from pydantic import ValidationError
 
-from Lan.A1_ai_triage.parser import parse_alerts
-from Lan.A1_ai_triage.run import run_triage
-from Lan.A2_fuzzer_benchmark.runner import DependencyBlockedError, run_branch, write_log_template
-from Lan.A3a_ai_config import AIClient, AIConfig, AIResponseError
-from Lan.A3a_ai_config.contracts import TriageSuggestion, json_contracts
-from Lan.A3a_ai_config.safety import redact, redact_url
+from ai.A1_ai_triage.parser import parse_alerts
+from ai.A1_ai_triage.run import run_triage
+from ai.A2_fuzzer_benchmark.runner import DependencyBlockedError, run_branch, write_log_template
+from ai.A3a_ai_config import AIClient, AIConfig, AIResponseError
+from ai.A3a_ai_config.contracts import TriageSuggestion, json_contracts
+from ai.A3a_ai_config.safety import redact, redact_url
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -124,7 +124,7 @@ class WorkspaceTests(unittest.TestCase):
         self.assertNotIn("secret", redact_url("http://localhost/a?%74oken=secret&x=1"))
 
     def test_mock_does_not_use_network_or_key(self):
-        with patch.dict(os.environ, {}, clear=True), patch("Lan.A3a_ai_config.client.OpenAI") as sdk:
+        with patch.dict(os.environ, {}, clear=True), patch("ai.A3a_ai_config.client.OpenAI") as sdk:
             with AIClient() as client:
                 result = run_triage(sample_document(), client, source_sha256="sample")
             sdk.assert_not_called()
@@ -297,14 +297,14 @@ class WorkspaceTests(unittest.TestCase):
     def test_cli_sample_and_input_overwrite_guard(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory) / "sample-result.json"
-            command = [sys.executable, "-m", "Lan.A1_ai_triage.run", "--output", str(target)]
+            command = [sys.executable, "-m", "ai.A1_ai_triage.run", "--output", str(target)]
             completed = subprocess.run(command, cwd=ROOT.parent, capture_output=True)
             self.assertEqual(completed.returncode, 0, completed.stderr)
             result = json.loads(target.read_text(encoding="utf-8"))
             self.assertEqual(result["_meta"]["execution_mode"], "mock")
             self.assertEqual(result["_meta"]["record_count"], 3)
             original = SAMPLE.read_bytes()
-            guard = subprocess.run([sys.executable, "-m", "Lan.A1_ai_triage.run", "--input", str(SAMPLE),
+            guard = subprocess.run([sys.executable, "-m", "ai.A1_ai_triage.run", "--input", str(SAMPLE),
                                     "--output", str(SAMPLE)], cwd=ROOT.parent, capture_output=True)
             self.assertEqual(guard.returncode, 1)
             self.assertEqual(SAMPLE.read_bytes(), original)

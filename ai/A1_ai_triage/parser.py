@@ -3,8 +3,8 @@
 import hashlib
 import json
 
-from Lan.A3a_ai_config.contracts import Alert
-from Lan.A3a_ai_config.safety import redact, redact_url
+from ai.A3a_ai_config.contracts import Alert
+from ai.A3a_ai_config.safety import redact, redact_url
 
 
 RISKS = {"3": "High", "2": "Medium", "1": "Low", "0": "Informational"}

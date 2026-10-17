@@ -21,14 +21,14 @@ Chi tiết phụ thuộc và câu hỏi cần nhóm trả lời nằm trong [k�
 Python 3.12 được dùng để kiểm tra. Nên dùng môi trường ảo riêng:
 
 ```powershell
-python -m venv Lan/.venv
-Lan/.venv/Scripts/python.exe -m pip install -r Lan/requirements.txt
-Lan/.venv/Scripts/python.exe -X utf8 -m unittest discover -s Lan/tests -v
-Lan/.venv/Scripts/python.exe -m Lan.A1_ai_triage.run --mode mock --output Lan/outputs/triage_sample_mock.json
-Lan/.venv/Scripts/python.exe -m Lan.A2_fuzzer_benchmark.runner --write-template Lan/outputs/a2-template
+python -m venv ai/.venv
+ai/.venv/Scripts/python.exe -m pip install -r ai/requirements.txt
+ai/.venv/Scripts/python.exe -X utf8 -m unittest discover -s ai/tests -v
+ai/.venv/Scripts/python.exe -m ai.A1_ai_triage.run --mode mock --output ai/outputs/triage_sample_mock.json
+ai/.venv/Scripts/python.exe -m ai.A2_fuzzer_benchmark.runner --write-template ai/outputs/a2-template
 ```
 
-Nếu đã cài đúng dependencies trong môi trường hiện tại, có thể thay `Lan/.venv/Scripts/python.exe` bằng `python`. Chế độ mock không cần key, không gửi request đến AI hoặc EShop. Lệnh A2 chỉ tạo CSV có header và JSON có `rows: []`; chạy lần hai cùng đường dẫn sẽ từ chối ghi đè.
+Nếu đã cài đúng dependencies trong môi trường hiện tại, có thể thay `ai/.venv/Scripts/python.exe` bằng `python`. Chế độ mock không cần key, không gửi request đến AI hoặc EShop. Lệnh A2 chỉ tạo CSV có header và JSON có `rows: []`; chạy lần hai cùng đường dẫn sẽ từ chối ghi đè.
 
 **Không dùng đầu ra mock làm số liệu báo cáo.** Ba alert trong sample là tự tạo; `is_real: null`, `confidence: 0`, `priority: P3` chỉ kiểm tra hợp đồng dữ liệu, không phải kết quả phân loại. Thư mục `outputs/`, môi trường ảo, bytecode và `.env` bị Git bỏ qua; `.env.example` được giữ lại.
 
@@ -42,7 +42,7 @@ Nếu đã cài đúng dependencies trong môi trường hiện tại, có thể
 
 ## Kiểm chứng ngày 16/10/2026
 
-`python -X utf8 -m unittest discover -s Lan/tests -v`: **30/30 ca qua** tại thời điểm bàn giao. Test adapter dùng `httpx.MockTransport`, không phải inference của model. Đã kiểm tra schema, parsing ZAP, secret redaction cơ bản, lỗi/refusal không fallback mock, nhánh A2 không tiêu thụ payload, cache rỗng và CLI mẫu.
+`python -X utf8 -m unittest discover -s ai/tests -v`: **31/31 ca qua** tại thời điểm bàn giao. Test adapter dùng `httpx.MockTransport`, không phải inference của model. Đã kiểm tra schema, parsing ZAP, secret redaction cơ bản, lỗi/refusal không fallback mock, nhánh A2 không tiêu thụ payload, cache rỗng và CLI mẫu.
 
 Chưa gọi API thật cho A1, chưa có nhãn chuẩn hoặc video trong lần này.
 

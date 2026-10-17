@@ -48,4 +48,4 @@
 - [CHỜ SỐ LIỆU THẬT] Link video AI, cache đúng nguồn, nhãn replay nếu phát lại.
 - Giới hạn: bộ dữ liệu nhỏ, phụ thuộc oracle/model, chi phí, AI sai và prompt injection.
 - Hiện mới kiểm tra phần mềm bằng unittest/mock; không đồng nghĩa hiệu quả bảo mật được chứng minh.
-- Code: `Lan/`; bàn giao nội dung cuối cho Phát/P3b sau khi chủ phần xác nhận.
+- Code: `ai/`; bàn giao nội dung cuối cho Phát/P3b sau khi chủ phần xác nhận.

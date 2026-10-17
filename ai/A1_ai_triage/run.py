@@ -9,8 +9,8 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
-from Lan.A3a_ai_config import AIClient, AIResponseError
-from Lan.A3a_ai_config.safety import redact
+from ai.A3a_ai_config import AIClient, AIResponseError
+from ai.A3a_ai_config.safety import redact
 from .parser import parse_alerts
 
 
@@ -56,7 +56,7 @@ def main() -> int:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=Path(__file__).with_name("sample_alert_data.json"))
-    parser.add_argument("--output", type=Path, default=Path("Lan/outputs/triage_result.json"))
+    parser.add_argument("--output", type=Path, default=Path("ai/outputs/triage_result.json"))
     parser.add_argument("--mode", choices=["mock", "live"], default="mock")
     parser.add_argument(
         "--host",
