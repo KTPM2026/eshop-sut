@@ -1,0 +1,12 @@
+case_id,actor,method,path_template,resource_owner,expected_access,checkpoint
+N1-01,user_a,GET,/api/orders/{order_a},user_a,allow,body_matches_order_a_and_owner_a
+N1-02,user_b,GET,/api/orders/{order_b},user_b,allow,body_matches_order_b_and_owner_b
+N1-03,guest,GET,/api/orders/{order_a},user_a,deny,no_private_order_data
+N1-04,guest,GET,/api/orders/{order_b},user_b,deny,no_private_order_data
+N1-05,user_a,GET,/api/orders/{order_b},user_b,deny,no_private_order_data
+N1-06,user_b,GET,/api/orders/{order_a},user_a,deny,no_private_order_data
+N1-07,guest,GET,/api/admin/users,admin,deny,no_user_registry
+N1-08,user_a,GET,/api/admin/users,admin,deny,no_user_registry
+N1-09,user_b,GET,/api/admin/users,admin,deny,no_user_registry
+N1-10,admin,GET,/api/admin/users,admin,allow,known_lab_users_in_admin_response
+N1-11,user_a,GET,/api/orders/{nonexistent_order},none,deny,not_found_without_private_data

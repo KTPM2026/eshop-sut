@@ -1,0 +1,9 @@
+{
+  "schema_version": "nhu-benchmark-v1-proposed",
+  "protocol_approved": false,
+  "dataset_path": "dataset.json",
+  "ground_truth_path": "ground_truth.json",
+  "manual_total_seconds": null,
+  "runs": [],
+  "notice": "KHUNG RỖNG. Sau khi chốt protocol, điền ít nhất 3 run_id/result_path/inference_seconds/review_seconds/review_completed từ dữ liệu và thời gian thật. Đường dẫn tính tương đối từ file manifest."
+}

@@ -1,0 +1,274 @@
+{
+  "schema_version": "nhu-benchmark-v1-proposed",
+  "_meta": {
+    "dataset_id": "h1-zap-20261014-localhost-v1",
+    "data_origin": "real_zap",
+    "raw_zap_sha256": "fee6ce5be6ab6dc619ec23efa1b1054468c13a29f4847f4c6b27f5d8cad438bf",
+    "zap_version": "2.17.0",
+    "scan_created_at": "2026-10-14T12:03:34.601803939Z",
+    "source_sha256": "5586507dc3cd3d292c7359df32760291a8eb2629cf115df88b9ecbefa751f5e7"
+  },
+  "alerts": [
+    {
+      "alert_id": "zap-d2385c33b96b1383",
+      "name": "SQL Injection",
+      "risk": "High",
+      "url": "http://localhost:3000/api/products?search=%27",
+      "param": "search",
+      "evidence": "HTTP/1.1 500 Internal Server Error",
+      "cweid": "89"
+    },
+    {
+      "alert_id": "zap-f173fdff11f41cfe",
+      "name": "Cross-Domain Misconfiguration",
+      "risk": "Medium",
+      "url": "http://localhost:3000/api/products?search=",
+      "param": "",
+      "evidence": "Access-Control-Allow-Origin: *",
+      "cweid": "264"
+    },
+    {
+      "alert_id": "zap-8e21086f2ff27a84",
+      "name": "Cross-Domain Misconfiguration",
+      "risk": "Medium",
+      "url": "http://localhost:3000/api/products/1",
+      "param": "",
+      "evidence": "Access-Control-Allow-Origin: *",
+      "cweid": "264"
+    },
+    {
+      "alert_id": "zap-701994b405476380",
+      "name": "Cross-Domain Misconfiguration",
+      "risk": "Medium",
+      "url": "http://localhost:3000/api/forgot-password",
+      "param": "",
+      "evidence": "Access-Control-Allow-Origin: *",
+      "cweid": "264"
+    },
+    {
+      "alert_id": "zap-944ee923a3688327",
+      "name": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+      "risk": "Low",
+      "url": "http://localhost:3000/api/products?search=",
+      "param": "",
+      "evidence": "X-Powered-By: Express",
+      "cweid": "497"
+    },
+    {
+      "alert_id": "zap-a7915c01b0ed4fad",
+      "name": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+      "risk": "Low",
+      "url": "http://localhost:3000/api/products/1",
+      "param": "",
+      "evidence": "X-Powered-By: Express",
+      "cweid": "497"
+    },
+    {
+      "alert_id": "zap-5551fe58281070be",
+      "name": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+      "risk": "Low",
+      "url": "http://localhost:3000/api/forgot-password",
+      "param": "",
+      "evidence": "X-Powered-By: Express",
+      "cweid": "497"
+    },
+    {
+      "alert_id": "zap-d21aa8d9db78cb56",
+      "name": "X-Content-Type-Options Header Missing",
+      "risk": "Low",
+      "url": "http://localhost:3000/api/products?search=",
+      "param": "x-content-type-options",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-685ded1c24df762f",
+      "name": "X-Content-Type-Options Header Missing",
+      "risk": "Low",
+      "url": "http://localhost:3000/api/products/1",
+      "param": "x-content-type-options",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-701ab0a1a67682ed",
+      "name": "X-Content-Type-Options Header Missing",
+      "risk": "Low",
+      "url": "http://localhost:3000/api/products/2",
+      "param": "x-content-type-options",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-9baea899de1db2e7",
+      "name": "Authentication Request Identified",
+      "risk": "Informational",
+      "url": "http://localhost:3000/api/login",
+      "param": "email",
+      "evidence": "password",
+      "cweid": null
+    },
+    {
+      "alert_id": "zap-988b3c8c4f05c910",
+      "name": "Path Traversal",
+      "risk": "High",
+      "url": "http://localhost:5173/node_modules/.vite/deps/chunk-CYJPkc-J.js?v=%2Fchunk-CYJPkc-J.js",
+      "param": "v",
+      "evidence": "",
+      "cweid": "22"
+    },
+    {
+      "alert_id": "zap-aa33b9ebbdb4fa49",
+      "name": "Content Security Policy (CSP) Header Not Set",
+      "risk": "Medium",
+      "url": "http://localhost:5173/",
+      "param": "",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-bd0afd0a5c96e99f",
+      "name": "Content Security Policy (CSP) Header Not Set",
+      "risk": "Medium",
+      "url": "http://localhost:5173/forgot-password",
+      "param": "",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-35ca958fc2dcd560",
+      "name": "Missing Anti-clickjacking Header",
+      "risk": "Medium",
+      "url": "http://localhost:5173/",
+      "param": "x-frame-options",
+      "evidence": "",
+      "cweid": "1021"
+    },
+    {
+      "alert_id": "zap-7302527dc0eab650",
+      "name": "Missing Anti-clickjacking Header",
+      "risk": "Medium",
+      "url": "http://localhost:5173/forgot-password",
+      "param": "x-frame-options",
+      "evidence": "",
+      "cweid": "1021"
+    },
+    {
+      "alert_id": "zap-5c1f7ad4db59ed6d",
+      "name": "Timestamp Disclosure - Unix",
+      "risk": "Low",
+      "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=017637a3",
+      "param": "",
+      "evidence": "2080374784",
+      "cweid": "497"
+    },
+    {
+      "alert_id": "zap-3ee62c30933823ce",
+      "name": "X-Content-Type-Options Header Missing",
+      "risk": "Low",
+      "url": "http://localhost:5173/node_modules/vite/dist/client/env.mjs",
+      "param": "x-content-type-options",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-c9309a9de8cb892a",
+      "name": "X-Content-Type-Options Header Missing",
+      "risk": "Low",
+      "url": "http://localhost:5173/src/index.css",
+      "param": "x-content-type-options",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-b66b1ccfaf7778f3",
+      "name": "X-Content-Type-Options Header Missing",
+      "risk": "Low",
+      "url": "http://localhost:5173/src/main.jsx",
+      "param": "x-content-type-options",
+      "evidence": "",
+      "cweid": "693"
+    },
+    {
+      "alert_id": "zap-9c7f7e0f2e543fa8",
+      "name": "Information Disclosure - Sensitive Information in URL",
+      "risk": "Informational",
+      "url": "http://localhost:5173/?token=%5BREDACTED%5D",
+      "param": "token",
+      "evidence": "token",
+      "cweid": "598"
+    },
+    {
+      "alert_id": "zap-6d7d10b083de9323",
+      "name": "Information Disclosure - Suspicious Comments",
+      "risk": "Informational",
+      "url": "http://localhost:5173/@react-refresh",
+      "param": "",
+      "evidence": "// TODO: rename these field",
+      "cweid": "615"
+    },
+    {
+      "alert_id": "zap-675d5a9a2721eaa8",
+      "name": "Information Disclosure - Suspicious Comments",
+      "risk": "Informational",
+      "url": "http://localhost:5173/@react-refresh",
+      "param": "",
+      "evidence": "ogic is copy-pasted from similar logic in th",
+      "cweid": "615"
+    },
+    {
+      "alert_id": "zap-72ab8dfc295d94b0",
+      "name": "Information Disclosure - Suspicious Comments",
+      "risk": "Informational",
+      "url": "http://localhost:5173/node_modules/.vite/deps/axios.js?v=017637a3",
+      "param": "",
+      "evidence": " to copy properties from\n* @param {Object} t",
+      "cweid": "615"
+    },
+    {
+      "alert_id": "zap-a0f64e12f6d6015e",
+      "name": "Information Disclosure - Suspicious Comments",
+      "risk": "Informational",
+      "url": "http://localhost:5173/node_modules/.vite/deps/axios.js?v=017637a3",
+      "param": "",
+      "evidence": "in the same key the later object in\n* the arg",
+      "cweid": "615"
+    },
+    {
+      "alert_id": "zap-121c664d4c9f03ec",
+      "name": "Information Disclosure - Suspicious Comments",
+      "risk": "Informational",
+      "url": "http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=017637a3",
+      "param": "",
+      "evidence": "*\n\t* Access a value from the context. If no ",
+      "cweid": "615"
+    },
+    {
+      "alert_id": "zap-37783ae749936d6c",
+      "name": "Information Disclosure - Suspicious Comments",
+      "risk": "Informational",
+      "url": "http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=017637a3",
+      "param": "",
+      "evidence": ", will\n\t* cause the user agent to ignore the",
+      "cweid": "615"
+    },
+    {
+      "alert_id": "zap-583e86ba03f5ac4d",
+      "name": "Modern Web Application",
+      "risk": "Informational",
+      "url": "http://localhost:5173/",
+      "param": "",
+      "evidence": "<script type=\"module\">import { injectIntoGlobalHook } from \"/@react-refresh\";\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () => {};\nwindow.$RefreshSig$ = () => (type) => type;</script>",
+      "cweid": null
+    },
+    {
+      "alert_id": "zap-f3dfec852c8aec71",
+      "name": "Modern Web Application",
+      "risk": "Informational",
+      "url": "http://localhost:5173/forgot-password",
+      "param": "",
+      "evidence": "<script type=\"module\">import { injectIntoGlobalHook } from \"/@react-refresh\";\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () => {};\nwindow.$RefreshSig$ = () => (type) => type;</script>",
+      "cweid": null
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "dataset_id": "h1-zap-20261014-localhost-v1",
+  "data_origin": "real_zap",
+  "raw_zap_sha256": "fee6ce5be6ab6dc619ec23efa1b1054468c13a29f4847f4c6b27f5d8cad438bf",
+  "raw_zap_content_sha256": "a2d802c0a036354143d2fe20bcdfe3ee6427f1a4734387793d89d3f0a70f1cd2",
+  "zap_version": "2.17.0",
+  "scan_created_at": "2026-10-14T12:03:34.601803939Z",
+  "raw_instance_count": 31,
+  "raw_site_alert_group_count": 15,
+  "included_instance_count": 29,
+  "included_site_alert_group_count": 13,
+  "excluded_instance_count": 2,
+  "excluded_by_origin": {
+    "https://content-autofill.googleapis.com": 2
+  },
+  "risk_counts": {
+    "High": 2,
+    "Medium": 7,
+    "Low": 10,
+    "Informational": 10
+  },
+  "mapping": [
+    {
+      "alert_id": "zap-d2385c33b96b1383",
+      "source_pointer": "/site/1/alerts/0/instances/0",
+      "site": "http://localhost:3000",
+      "plugin_id": "40018",
+      "zap_instance_id": "4940",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-f173fdff11f41cfe",
+      "source_pointer": "/site/1/alerts/1/instances/0",
+      "site": "http://localhost:3000",
+      "plugin_id": "10098",
+      "zap_instance_id": "22",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-8e21086f2ff27a84",
+      "source_pointer": "/site/1/alerts/1/instances/1",
+      "site": "http://localhost:3000",
+      "plugin_id": "10098",
+      "zap_instance_id": "89",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-701994b405476380",
+      "source_pointer": "/site/1/alerts/1/instances/2",
+      "site": "http://localhost:3000",
+      "plugin_id": "10098",
+      "zap_instance_id": "113",
+      "method": "POST"
+    },
+    {
+      "alert_id": "zap-944ee923a3688327",
+      "source_pointer": "/site/1/alerts/2/instances/0",
+      "site": "http://localhost:3000",
+      "plugin_id": "10037",
+      "zap_instance_id": "24",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-a7915c01b0ed4fad",
+      "source_pointer": "/site/1/alerts/2/instances/1",
+      "site": "http://localhost:3000",
+      "plugin_id": "10037",
+      "zap_instance_id": "91",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-5551fe58281070be",
+      "source_pointer": "/site/1/alerts/2/instances/2",
+      "site": "http://localhost:3000",
+      "plugin_id": "10037",
+      "zap_instance_id": "118",
+      "method": "POST"
+    },
+    {
+      "alert_id": "zap-d21aa8d9db78cb56",
+      "source_pointer": "/site/1/alerts/3/instances/0",
+      "site": "http://localhost:3000",
+      "plugin_id": "10021",
+      "zap_instance_id": "25",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-685ded1c24df762f",
+      "source_pointer": "/site/1/alerts/3/instances/1",
+      "site": "http://localhost:3000",
+      "plugin_id": "10021",
+      "zap_instance_id": "92",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-701ab0a1a67682ed",
+      "source_pointer": "/site/1/alerts/3/instances/2",
+      "site": "http://localhost:3000",
+      "plugin_id": "10021",
+      "zap_instance_id": "161",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-9baea899de1db2e7",
+      "source_pointer": "/site/1/alerts/4/instances/0",
+      "site": "http://localhost:3000",
+      "plugin_id": "10111",
+      "zap_instance_id": "194",
+      "method": "POST"
+    },
+    {
+      "alert_id": "zap-988b3c8c4f05c910",
+      "source_pointer": "/site/2/alerts/0/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "6",
+      "zap_instance_id": "4941",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-aa33b9ebbdb4fa49",
+      "source_pointer": "/site/2/alerts/1/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "10038",
+      "zap_instance_id": "1",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-bd0afd0a5c96e99f",
+      "source_pointer": "/site/2/alerts/1/instances/1",
+      "site": "http://localhost:5173",
+      "plugin_id": "10038",
+      "zap_instance_id": "110",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-35ca958fc2dcd560",
+      "source_pointer": "/site/2/alerts/2/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "10020",
+      "zap_instance_id": "0",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-7302527dc0eab650",
+      "source_pointer": "/site/2/alerts/2/instances/1",
+      "site": "http://localhost:5173",
+      "plugin_id": "10020",
+      "zap_instance_id": "109",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-5c1f7ad4db59ed6d",
+      "source_pointer": "/site/2/alerts/3/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "10096",
+      "zap_instance_id": "40",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-3ee62c30933823ce",
+      "source_pointer": "/site/2/alerts/4/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "10021",
+      "zap_instance_id": "3",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-c9309a9de8cb892a",
+      "source_pointer": "/site/2/alerts/4/instances/1",
+      "site": "http://localhost:5173",
+      "plugin_id": "10021",
+      "zap_instance_id": "2",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-b66b1ccfaf7778f3",
+      "source_pointer": "/site/2/alerts/4/instances/2",
+      "site": "http://localhost:5173",
+      "plugin_id": "10021",
+      "zap_instance_id": "4",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-9c7f7e0f2e543fa8",
+      "source_pointer": "/site/2/alerts/5/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "10024",
+      "zap_instance_id": "20",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-6d7d10b083de9323",
+      "source_pointer": "/site/2/alerts/6/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "10027",
+      "zap_instance_id": "12",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-675d5a9a2721eaa8",
+      "source_pointer": "/site/2/alerts/6/instances/1",
+      "site": "http://localhost:5173",
+      "plugin_id": "10027",
+      "zap_instance_id": "11",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-72ab8dfc295d94b0",
+      "source_pointer": "/site/2/alerts/6/instances/2",
+      "site": "http://localhost:5173",
+      "plugin_id": "10027",
+      "zap_instance_id": "35",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-a0f64e12f6d6015e",
+      "source_pointer": "/site/2/alerts/6/instances/3",
+      "site": "http://localhost:5173",
+      "plugin_id": "10027",
+      "zap_instance_id": "34",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-121c664d4c9f03ec",
+      "source_pointer": "/site/2/alerts/6/instances/4",
+      "site": "http://localhost:5173",
+      "plugin_id": "10027",
+      "zap_instance_id": "38",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-37783ae749936d6c",
+      "source_pointer": "/site/2/alerts/6/instances/5",
+      "site": "http://localhost:5173",
+      "plugin_id": "10027",
+      "zap_instance_id": "37",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-583e86ba03f5ac4d",
+      "source_pointer": "/site/2/alerts/7/instances/0",
+      "site": "http://localhost:5173",
+      "plugin_id": "10109",
+      "zap_instance_id": "5",
+      "method": "GET"
+    },
+    {
+      "alert_id": "zap-f3dfec852c8aec71",
+      "source_pointer": "/site/2/alerts/7/instances/1",
+      "site": "http://localhost:5173",
+      "plugin_id": "10109",
+      "zap_instance_id": "111",
+      "method": "GET"
+    }
+  ],
+  "source_sha256": "5586507dc3cd3d292c7359df32760291a8eb2629cf115df88b9ecbefa751f5e7",
+  "allowed_origins": [
+    "http://localhost:3000",
+    "http://localhost:5173"
+  ],
+  "raw_source": "alert/2026-10-14-ZAP-Report-.json",
+  "canonical_input": "a1-input.json",
+  "normalizer": "Lan/A1_ai_triage/parser.py",
+  "normalizer_sha256": "916dd2551de7755fed0bab300d5f35dfe34340a8d1d60fbe2ee895b6c4c45584",
+  "redactor_sha256": "6dba0ff624b280a264ee5bd27fea869a3c6a1ff714162796e9c59cedeee09b89",
+  "normalizer_text_sha256": "eccfec9fc32338829d0442705cc476ab0a38024fe1b339ac60d3e22be44576d7",
+  "redactor_text_sha256": "318d0aa7f6144dfda9ab093ba155b95ff7c74c0b57aae2c96b32060cc4de4e3a",
+  "scan_sut_commit": null,
+  "human_labels_assigned": false,
+  "ai_inference_performed": false,
+  "protocol_approved": false,
+  "notice": "One instance per record. IDs come from Lan's parser. No deduplication or labels. The original export does not record the exact SUT commit or full HTTP responses. Keep the original private when reviewing unredacted query values; never send it to AI."
+}
