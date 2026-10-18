@@ -1,0 +1,275 @@
+{
+  "schema_version": "lan-ai-v1-proposed",
+  "_meta": {
+    "execution_mode": "mock",
+    "data_origin": "unverified_external",
+    "model_inference_performed": false,
+    "is_replay": false,
+    "review_required": true,
+    "final_decision": "pending_human_review",
+    "is_benchmark_result": false,
+    "created_at_utc": "2026-10-16T11:18:37.414055+00:00",
+    "source_sha256": "f578c7a1db63ca1d446f5cdc95c344913c4b5ff14416f8ae63079300c04f07cc",
+    "record_count": 31,
+    "config": {
+      "provider": "openai",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "base_url": "https://api.openai.com/v1",
+      "temperature": 0.0,
+      "max_completion_tokens": 1200,
+      "timeout_seconds": 30.0,
+      "group_approved": false
+    },
+    "notice": "Mẫu/mock không phải kết quả model, nhãn chuẩn hay số liệu benchmark."
+  },
+  "results": [
+    {
+      "alert_id": "zap-ae81caa4cf4a54c7",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-c6f4911e5e816ecf",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-d2385c33b96b1383",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-f173fdff11f41cfe",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-8e21086f2ff27a84",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-701994b405476380",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-944ee923a3688327",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-a7915c01b0ed4fad",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-5551fe58281070be",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-d21aa8d9db78cb56",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-685ded1c24df762f",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-701ab0a1a67682ed",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-9baea899de1db2e7",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-988b3c8c4f05c910",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-aa33b9ebbdb4fa49",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-bd0afd0a5c96e99f",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-35ca958fc2dcd560",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-7302527dc0eab650",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-5c1f7ad4db59ed6d",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-3ee62c30933823ce",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-c9309a9de8cb892a",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-b66b1ccfaf7778f3",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-9c7f7e0f2e543fa8",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-6d7d10b083de9323",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-675d5a9a2721eaa8",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-72ab8dfc295d94b0",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-a0f64e12f6d6015e",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-121c664d4c9f03ec",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-37783ae749936d6c",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-583e86ba03f5ac4d",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-f3dfec852c8aec71",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "MÔ PHỎNG: chưa gọi model, chưa xác minh; P3 chỉ để kiểm tra schema.",
+      "confidence": 0.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    }
+  ]
+}

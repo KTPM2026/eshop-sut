@@ -262,10 +262,10 @@ def main():
     parser.add_argument("--skip-trigger", action="store_true", help="Bỏ qua bước gọi forgot-password nếu đã gọi trước đó")
     args = parser.parse_args()
 
-    # Tự động tìm reset_password.req nếu có sẵn trong thư mục
+    # Tự động tìm reset_password.req / reset_password.raw nếu có sẵn trong thư mục
     req_file = args.request
     if not req_file:
-        for candidate in ["reset_password.req", "demo/brute_force_otp/reset_password.req"]:
+        for candidate in ["alert/reset_password.raw", "reset_password.req", "demo/brute_force_otp/reset_password.req"]:
             if os.path.isfile(candidate):
                 req_file = candidate
                 break
