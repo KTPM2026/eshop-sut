@@ -93,7 +93,14 @@ class OTPBruteForcer:
             headers_raw = parts[0].strip().splitlines()
             first_line = headers_raw[0].split()
             if len(first_line) >= 2:
-                self.reset_path = first_line[1]
+                raw_path = first_line[1]
+                if raw_path.startswith("http://") or raw_path.startswith("https://"):
+                    from urllib.parse import urlparse
+                    parsed = urlparse(raw_path)
+                    self.base_url = f"{parsed.scheme}://{parsed.netloc}"
+                    self.reset_path = parsed.path
+                else:
+                    self.reset_path = raw_path
 
             headers = {}
             for line in headers_raw[1:]:
