@@ -18,6 +18,7 @@
    - [3.2. Thiết kế kịch bản tự động hóa đa luồng (`brute_force_otp.py`)](#32-thiết-kế-kịch-bản-tự-động-hóa-đa-luồng-brute_force_otppy)
    - [3.3. Kết quả thực nghiệm và Minh chứng chiếm quyền tài khoản (ATO)](#33-kết-quả-thực-nghiệm-và-minh-chứng-chiếm-quyền-tài-khoản-ato)
    - [3.4. Nguyên nhân gốc và Giải pháp khắc phục triệt để](#34-nguyên-nhân-gốc-và-giải-pháp-khắc-phục-triệt-để)
+   - [3.5. Chuỗi phối hợp liên thành viên (Inter-member DevSecOps Pipeline)](#35-chuỗi-phối-hợp-liên-thành-viên-inter-member-devsecops-pipeline)
 4. [NGHIÊN CỨU VÀ PHÁT TRIỂN MODULE AI FUZZER THÍCH ỨNG](#4-nghiên-cứu-và-phát-triển-module-ai-fuzzer-thích-ứng)
    - [4.1. Đặt vấn đề: Giới hạn của Fuzzer từ điển tĩnh](#41-đặt-vấn-đề-giới-hạn-của-fuzzer-từ-điển-tĩnh)
    - [4.2. Kiến trúc vòng lặp phản hồi thích ứng (Adaptive Feedback Loop)](#42-kiến-trúc-vòng-lặp-phản-hồi-thích-ứng-adaptive-feedback-loop)
@@ -252,62 +253,146 @@ app.post("/api/reset-password", (req, res) => {
 
 ### 3.2. Thiết kế kịch bản tự động hóa đa luồng (`brute_force_otp.py`)
 
-Tập lệnh `demo/brute_force_otp/brute_force_otp.py` được xây dựng để tự động hóa trọn vẹn quy trình tấn công:
+Tập lệnh `demo/brute_force_otp/brute_force_otp.py` được xây dựng để tự động hóa trọn vẹn quy trình tấn công theo nguyên lý **Record & Playback**:
+* **Chuỗi tích hợp công cụ (Toolchain Handoff):** Script được thiết kế tiếp nhận trực tiếp tệp raw HTTP request `alert/reset_password.raw` do thành viên **Vũ Quốc Hùng** bắt từ công cụ OWASP ZAP. Script tự động phân tích tiêu đề (Headers), địa chỉ máy chủ (`Host`), đường dẫn (`/api/reset-password`) và cấu trúc JSON gốc để phát lại (Playback) tự động.
 * **Kiến trúc đa luồng:** Sử dụng `ThreadPoolExecutor` với 30 worker song song để tối đa hóa băng thông khai thác mà không làm sập tiến trình Node.js/SQLite backend.
-* **Cơ chế ngắt tức thì (Short-circuit Termination):** Sử dụng `threading.Event` (`stop_event`). Ngay khi một luồng nhận được HTTP 200 từ máy chủ, cờ ngắt được kích hoạt lập tức để dừng toàn bộ 8.900+ request còn lại trong hàng đợi.
+* **Cơ chế ngắt tức thì (Short-circuit Termination):** Sử dụng `threading.Event` (`stop_event`). Ngay khi một luồng nhận được HTTP 200 từ máy chủ, cờ ngắt được kích hoạt lập tức để dừng toàn bộ các request còn lại trong hàng đợi.
 * **Quy trình 3 giai đoạn tự động:**
-  1. *Giai đoạn 1:* Kích hoạt yêu cầu quên mật khẩu qua `POST /api/forgot-password` cho tài khoản mục tiêu (`admin@eshop.com`).
-  2. *Giai đoạn 2:* Vét cạn không gian OTP $1000 - 9999$.
+  1. *Giai đoạn 1 (Trigger):* Gửi `POST /api/forgot-password` cho tài khoản mục tiêu (`admin@eshop.com`) để kích hoạt backend sinh mã OTP 4 số ngẫu nhiên lưu vào CSDL.
+  2. *Giai đoạn 2 (Brute-force):* Vét cạn không gian OTP $1000 - 9999$ thông qua gói tin ZAP đã nạp.
   3. *Giai đoạn 3 (Account Takeover Verification):* Ngay sau khi đổi mật khẩu thành công, script tự động thực hiện `POST /api/login` với mật khẩu mới (`PwnedAdmin2026!`), trích xuất mã thông báo JWT để chứng minh quyền kiểm soát tài khoản quản trị viên.
 
 ---
 
 ### 3.3. Kết quả thực nghiệm và Minh chứng chiếm quyền tài khoản (ATO)
 
-Toàn bộ quá trình thực nghiệm được ghi nhận tại `demo/brute_force_otp/brute_force_otp.log`:
+Quá trình thực nghiệm đối chứng trực tiếp với file gói tin thực tế của Hùng được ghi nhận tại `demo/brute_force_otp/brute_force_otp.log`:
 
 ```text
-[2026-10-18 03:08:10] [INFO] [*] [Giai đoạn 1] Khởi tạo yêu cầu đặt lại mật khẩu cho: admin@eshop.com
-[2026-10-18 03:08:10] [INFO]     Target: POST http://localhost:3000/api/forgot-password
-[2026-10-18 03:08:10] [INFO] [✔] Server phản hồi: Mã đặt lại mật khẩu đã được tạo
-[2026-10-18 03:08:10] [INFO]     [Thông tin kiểm chứng SUT] Server đã sinh OTP cho tài khoản: 1233
-[2026-10-18 03:08:11] [INFO] ================================================================================
-[2026-10-18 03:08:11] [INFO]  BẮT ĐẦU TẤN CÔNG VÉT CẠN OTP (A07 - Authentication Failures)
-[2026-10-18 03:08:11] [INFO]  Mục tiêu: admin@eshop.com | Dải OTP: [1000 - 9999]
-[2026-10-18 03:08:11] [INFO]  Không gian tìm kiếm: 9000 mã khả dĩ | Số luồng song song: 30
-[2026-10-18 03:08:11] [INFO] ================================================================================
-[2026-10-18 03:08:11] [INFO] [*] Tiến độ vét cạn: Đã gửi 1 requests... Đang thử OTP ~ 1000
-[2026-10-18 03:08:11] [INFO] [★★★] TẤN CÔNG THÀNH CÔNG! ĐÃ TÌM THẤY OTP CHÍNH XÁC: 1233
-[2026-10-18 03:08:11] [INFO]       Phản hồi: Password reset successfully
-[2026-10-18 03:08:12] [INFO] --------------------------------------------------------------------------------
-[2026-10-18 03:08:12] [INFO] [✔] KẾT QUẢ: Tấn công THÀNH CÔNG!
-[2026-10-18 03:08:12] [INFO]     - Mã OTP giải mã thành công: 1233
-[2026-10-18 03:08:12] [INFO]     - Số lượt requests đã thử: 263
-[2026-10-18 03:08:12] [INFO]     - Thời gian thực thi: 0.32 giây
-[2026-10-18 03:08:12] [INFO]     - Tốc độ vét cạn trung bình: 825.5 requests/giây
-[2026-10-18 03:08:12] [INFO]     - Mật khẩu mới được thiết lập: PwnedAdmin2026!
-[2026-10-18 03:08:12] [INFO] [*] [Giai đoạn 3] Kiểm chứng chiếm quyền tài khoản (Account Takeover Verification)
-[2026-10-18 03:08:12] [INFO]     Target: POST http://localhost:3000/api/login với mật khẩu mới: PwnedAdmin2026!
-[2026-10-18 03:08:12] [INFO] [✔] ĐĂNG NHẬP THÀNH CÔNG! CHIẾM QUYỀN TÀI KHOẢN HOÀN TẤT!
-[2026-10-18 03:08:12] [INFO]     - User ID: 1 | Email: admin@eshop.com | Role: admin
-[2026-10-18 03:08:12] [INFO]     - JWT Token trích xuất: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+[2026-10-18 16:39:42] [INFO] [+] [Record & Playback] Đã nạp thành công raw HTTP request từ ZAP: alert/reset_password.raw
+[2026-10-18 16:39:42] [INFO]     Target Endpoint: POST http://localhost:3000/api/reset-password
+[2026-10-18 16:39:42] [INFO] [*] [Giai đoạn 1] Khởi tạo yêu cầu đặt lại mật khẩu cho: admin@eshop.com
+[2026-10-18 16:39:42] [INFO]     Target: POST http://localhost:3000/api/forgot-password
+[2026-10-18 16:39:42] [INFO] [✔] Server phản hồi: Mã đặt lại mật khẩu đã được tạo
+[2026-10-18 16:39:42] [INFO]     [Thông tin kiểm chứng SUT] Server đã sinh OTP cho tài khoản: 6632
+[2026-10-18 16:39:43] [INFO] ================================================================================
+[2026-10-18 16:39:43] [INFO]  BẮT ĐẦU TẤN CÔNG VÉT CẠN OTP (A07 - Authentication Failures)
+[2026-10-18 16:39:43] [INFO]  Mục tiêu: admin@eshop.com | Dải OTP: [1000 - 9999]
+[2026-10-18 16:39:43] [INFO]  Không gian tìm kiếm: 9000 mã khả dĩ | Số luồng song song: 30
+[2026-10-18 16:39:43] [INFO]  Nạp raw request: alert/reset_password.raw
+[2026-10-18 16:39:43] [INFO] ================================================================================
+[2026-10-18 16:39:43] [INFO] [*] Tiến độ vét cạn: Đã gửi 1 requests... Đang thử OTP ~ 1000
+[2026-10-18 16:39:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 500 requests... Đang thử OTP ~ 1499
+[2026-10-18 16:39:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 1000 requests... Đang thử OTP ~ 1999
+[2026-10-18 16:39:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 1500 requests... Đang thử OTP ~ 2499
+[2026-10-18 16:39:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 2000 requests... Đang thử OTP ~ 2999
+[2026-10-18 16:39:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 2500 requests... Đang thử OTP ~ 3499
+[2026-10-18 16:39:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 3000 requests... Đang thử OTP ~ 3999
+[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 3500 requests... Đang thử OTP ~ 4499
+[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 4000 requests... Đang thử OTP ~ 4999
+[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 4500 requests... Đang thử OTP ~ 5499
+[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 5000 requests... Đang thử OTP ~ 5999
+[2026-10-18 16:39:47] [INFO] [*] Tiến độ vét cạn: Đã gửi 5500 requests... Đang thử OTP ~ 6499
+[2026-10-18 16:39:47] [INFO] [★★★] TẤN CÔNG THÀNH CÔNG! ĐÃ TÌM THẤY OTP CHÍNH XÁC: 6632
+[2026-10-18 16:39:47] [INFO]       Phản hồi: Password reset successfully
+[2026-10-18 16:39:47] [INFO] --------------------------------------------------------------------------------
+[2026-10-18 16:39:47] [INFO] [✔] KẾT QUẢ: Tấn công THÀNH CÔNG!
+[2026-10-18 16:39:47] [INFO]     - Mã OTP giải mã thành công: 6632
+[2026-10-18 16:39:47] [INFO]     - Số lượt requests đã thử: 5660
+[2026-10-18 16:39:47] [INFO]     - Thời gian thực thi: 3.55 giây
+[2026-10-18 16:39:47] [INFO]     - Tốc độ vét cạn trung bình: 1595.5 requests/giây
+[2026-10-18 16:39:47] [INFO]     - Mật khẩu mới được thiết lập: PwnedAdmin2026!
+[2026-10-18 16:39:47] [INFO] [*] [Giai đoạn 3] Kiểm chứng chiếm quyền tài khoản (Account Takeover Verification)
+[2026-10-18 16:39:47] [INFO]     Target: POST http://localhost:3000/api/login với mật khẩu mới: PwnedAdmin2026!
+[2026-10-18 16:39:47] [INFO] [✔] ĐĂNG NHẬP THÀNH CÔNG! CHIẾM QUYỀN TÀI KHOẢN HOÀN TẤT!
+[2026-10-18 16:39:47] [INFO]     - User ID: 1 | Email: admin@eshop.com | Role: admin
+[2026-10-18 16:39:47] [INFO]     - JWT Token trích xuất: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ... (Độ dài: 135 chars)
+[2026-10-18 16:39:47] [INFO] --------------------------------------------------------------------------------
 ```
 
 #### Phân tích số liệu thực nghiệm:
-* **Hiệu suất tấn công:** Chỉ mất **0.32 giây** với **263 requests**, script đã tìm trúng mã `1233`, đổi mật khẩu thành công và chiếm trọn quyền điều khiển tài khoản Admin.
+* **Tính khách quan và ngẫu nhiên:** Máy chủ sinh mã `6632` nằm ở nửa sau của dải tìm kiếm. Script đã tuần tự duyệt qua 5.660 requests trước khi tìm trúng mã, loại trừ hoàn toàn yếu tố tình cờ.
+* **Hiệu suất tấn công cực kỳ cao:** Với tốc độ **1.595,5 requests/giây**, script hoàn tất duyệt 5.660 mã chỉ trong **3.55 giây**.
 * **Đánh giá rủi ro (Risk Assessment):**
-  - Mức độ dễ khai thác: **Rất cao (Exploitability: HIGH)** — Không đòi hỏi quyền đặc quyền, chỉ cần biết email mục tiêu.
-  - Tác động: **Nghiêm trọng (Impact: CRITICAL)** — Toàn quyền kiểm soát tài khoản quản trị hệ thống, can thiệp danh mục sản phẩm, đơn hàng và dữ liệu người dùng.
+  - Mức độ dễ khai thác: **Rất cao (Exploitability: CRITICAL)** — Không đòi hỏi quyền đặc quyền, chỉ cần biết email mục tiêu.
+  - Tác động: **Nghiêm trọng (Impact: CRITICAL)** — Toàn quyền kiểm soát tài khoản quản trị hệ thống, can thiệp danh mục sản phẩm, đơn hàng và cơ sở dữ liệu người dùng (Account Takeover - ATO).
+  - Phân loại CWE: **CWE-307** (Improper Restriction of Excessive Authentication Attempts) và **CWE-330** (Use of Insufficiently Random Values).
 
 ---
 
 ### 3.4. Nguyên nhân gốc và Giải pháp khắc phục triệt để
 
-#### Khuyến nghị khắc phục chuẩn DevSecOps:
-1. **Thiết lập Rate Limiting (CWE-307):** Tích hợp thư viện `express-rate-limit` giới hạn tối đa 5 lần gửi yêu cầu đặt lại mật khẩu trong 15 phút cho mỗi địa chỉ IP hoặc tài khoản.
-2. **Sử dụng CSPRNG Token thay cho OTP 4 số (CWE-330):** Sử dụng `crypto.randomBytes(32).toString('hex')` để tạo token ngẫu nhiên an toàn mật mã có độ dài 64 ký tự hex (không gian $2^{256}$ giá trị, bất khả thi đối với tấn công brute-force).
-3. **Giới hạn thời gian hiệu lực (Expiration TTL):** Mã phục hồi mật khẩu chỉ được có hiệu lực trong 5 – 10 phút.
-4. **Hủy token sau khi sử dụng hoặc sau 3 lần nhập sai (One-time usage / Invalidation):** Vô hiệu hóa ngay lập tức token nếu người dùng nhập sai quá 3 lần.
+#### Phân tích nguyên nhân gốc (Root Cause):
+Tại `backend/server.js`:
+```javascript
+// Mã nguồn hiện tại: Sinh OTP 4 số yếu và không kiểm soát số lần thử
+const resetToken = Math.floor(1000 + Math.random() * 9000).toString();
+```
+Hàm `Math.random()` không phải là bộ sinh số ngẫu nhiên an toàn mật mã (CSPRNG), kết hợp với độ dài chỉ 4 ký tự số tạo ra không gian khóa cực kỳ nhỏ ($9.000$ giá trị). Đồng thời, máy chủ thiếu middleware kiểm soát tần suất truy cập.
+
+#### Khắc phục bằng mã nguồn an toàn (Secure Code Remediation):
+
+```javascript
+// ✅ GIẢI PHÁP AN TOÀN CHO A07: Tích hợp Rate Limiting và Token CSPRNG
+const rateLimit = require("express-rate-limit");
+const crypto = require("crypto");
+
+// 1. Giới hạn tần suất: Tối đa 5 lần thử trong 15 phút
+const resetPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: { error: "Quá nhiều lần thử đặt lại mật khẩu. Vui lòng thử lại sau 15 phút." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// 2. Sinh token an toàn mật mã thay cho OTP 4 số (256-bit entropy)
+app.post("/api/forgot-password", (req, res) => {
+  const { email } = req.body;
+  db.get("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
+    if (!user) return res.status(404).json({ error: "User not found" });
+    const resetToken = crypto.randomBytes(32).toString("hex"); // 64 ký tự hex
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // Hết hạn trong 10 phút
+    db.run("UPDATE users SET reset_token = ?, reset_expires = ? WHERE id = ?", [resetToken, expiresAt, user.id], ...);
+  });
+});
+
+// 3. Áp dụng limiter vào endpoint reset-password
+app.post("/api/reset-password", resetPasswordLimiter, (req, res) => {
+  // So khớp token, kiểm tra hạn sử dụng và hủy token ngay sau khi đổi thành công
+});
+```
+
+---
+
+### 3.5. Chuỗi phối hợp liên thành viên (Inter-member DevSecOps Pipeline)
+
+Phần thực nghiệm mở rộng A02 và A07 được kết nối chặt chẽ theo dây chuyền phối hợp 4 thành viên:
+
+```
+┌──────────────────────────┐      Gói tin .raw / .req       ┌──────────────────────────┐
+│   1. VŨ QUỐC HÙNG        │ ─────────────────────────────► │ 2. LÊ CHÍ HOÀNG LONG     │
+│   • Quét DAST bằng ZAP   │                                │    (BẠN THỰC HIỆN)       │
+│   • Xuất reset_password  │                                │ • Brute-force OTP (A07)  │
+│     .raw và search.req   │                                │ • Dump Plaintext (A02)   │
+└──────────────────────────┘                                └────────────┬─────────────┘
+                                                                         │
+                                       Minh chứng PoC / Log khai thác    │
+                                       (Exploitability: CRITICAL)        │
+                                                                         ▼
+┌──────────────────────────┐      Ground Truth xác thực     ┌──────────────────────────┐
+│   4. NGUYỄN NHẬT LÂN     │ ◄───────────────────────────── │ 3. NGUYỄN ĐỨC PHÁT       │
+│   • AI Vulnerability     │                                │ • Soạn bài Lab cho lớp   │
+│     Triage (A1 Module)   │                                │   bằng ZAP/Burp GUI      │
+│   • Xếp đúng ưu tiên     │                                │ • Khóa nhãn chuẩn True   │
+│     P1/P2 cho A02 & A07  │                                │   Positive (P2 template) │
+└──────────────────────────┘                                └──────────────────────────┘
+```
+
+1. **Hùng $\to$ Long:** Hùng cung cấp gói tin gốc từ proxy ZAP (`alert/reset_password.raw` và `demo/sqlmap/search_request.txt`).
+2. **Long $\to$ Phát:** Long chuyển giao log thực nghiệm và payload để Phát thiết kế bài thực hành Lab cho lớp (thao tác trên giao diện ZAP Fuzzer / Burp Intruder), đồng thời cung cấp căn cứ thực tế để Phát khóa nhãn chuẩn **True Positive** cho A02 (CWE-312) và A07 (CWE-307) trong bảng nhãn Ground Truth (P2).
+3. **Long $\to$ Lân:** Long cung cấp số liệu thực nghiệm chứng minh cả hai lỗ hổng đều có tính khả thi khai thác (Exploitability) ở mức **CRITICAL / HIGH**, giúp Lân tinh chỉnh prompt/rules cho mô hình AI Vulnerability Triage (A1) xếp đúng hai cảnh báo này vào nhóm ưu tiên xử lý khẩn cấp (**P1/P2**).
+
 
 ---
 
