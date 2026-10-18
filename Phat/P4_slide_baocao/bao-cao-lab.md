@@ -63,11 +63,17 @@ ZAP mở một trình duyệt đã tự cấu hình proxy sẵn (trang khởi đ
 
 ![Trình duyệt do ZAP mở, đã cấu hình proxy](../P1_labs/evidence/lab1-03-browser-proxied.jpg)
 
-**Bước 2 — Ghi nhận request.** Trong trình duyệt vừa mở, truy cập `http://localhost:5173` và thực hiện tìm kiếm; ZAP ghi lại request `GET /api/products?search=test` trong tab **History**.
+**Bước 2 — Ghi nhận request.** Trong trình duyệt vừa mở, truy cập `http://localhost:5173`; giao diện EShop hiển thị. Thực hiện tìm kiếm để ZAP ghi lại request `GET /api/products?search=test` trong tab **History**.
 
-**Bước 3 — Fuzz.** Chuột phải request → **Attack → Fuzz**, đánh dấu tham số `search` làm điểm chèn.
+![Giao diện EShop hiển thị qua trình duyệt proxy ZAP](../P1_labs/evidence/lab1-04-eshop-ui.jpg)
 
-**Bước 4 — Nạp payload.** Nạp wordlist `xss-payloads.txt` và chạy Fuzzer.
+**Bước 3 — Fuzz.** Trong tab History, chuột phải request tìm kiếm → **Attack → Fuzz...**
+
+![Menu chuột phải: Attack → Fuzz](../P1_labs/evidence/lab1-05-attack-fuzz.jpg)
+
+**Bước 4 — Đánh dấu điểm chèn & nạp payload.** Trong cửa sổ Fuzzer, bôi đen giá trị tham số `search` (`test`) làm điểm chèn, rồi bấm **Payloads...** nạp wordlist `xss-payloads.txt` và **Start Fuzzer**.
+
+![Cửa sổ Fuzzer: điểm chèn trên tham số search và nạp payload](../P1_labs/evidence/lab1-06-fuzzer-payload.jpg)
 
 **Bước 5 — Xác thực** thực thi trên trình duyệt.
 
