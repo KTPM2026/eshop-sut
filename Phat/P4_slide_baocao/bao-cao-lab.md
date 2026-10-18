@@ -50,11 +50,26 @@ Minh họa lỗ hổng **Reflected XSS**: dữ liệu tìm kiếm của người
 `dangerouslySetInnerHTML` chèn trực tiếp chuỗi `search` vào DOM → payload HTML được thực thi.
 
 ### 3.2. Quy trình thực hiện
-1. Cấu hình trình duyệt đi qua proxy ZAP, truy cập `http://localhost:5173`.
-2. Thực hiện tìm kiếm để ZAP ghi nhận request `GET /api/products?search=test` trong History.
-3. Chuột phải request → **Attack → Fuzz**, đánh dấu tham số `search` làm điểm chèn.
-4. Nạp wordlist `xss-payloads.txt` và chạy Fuzzer.
-5. Xác thực thực thi trên trình duyệt.
+
+**Bước 1 — Mở trình duyệt qua proxy ZAP (Manual Explore).** Tại màn hình Quick Start của ZAP, chọn **Manual Explore**:
+
+![Màn hình Quick Start của ZAP với nút Manual Explore](../P1_labs/evidence/lab1-01-manual-explore.jpg)
+
+Nhập URL cần khám phá (`http://localhost:5173`), chọn trình duyệt **Chrome** và bấm **Launch Browser**:
+
+![Màn hình Manual Explore — Launch Browser](../P1_labs/evidence/lab1-02-launch-browser.jpg)
+
+ZAP mở một trình duyệt đã tự cấu hình proxy sẵn (trang khởi đầu "Explore your application with ZAP"), mọi thao tác trong trình duyệt này đều được ZAP ghi nhận:
+
+![Trình duyệt do ZAP mở, đã cấu hình proxy](../P1_labs/evidence/lab1-03-browser-proxied.jpg)
+
+**Bước 2 — Ghi nhận request.** Trong trình duyệt vừa mở, truy cập `http://localhost:5173` và thực hiện tìm kiếm; ZAP ghi lại request `GET /api/products?search=test` trong tab **History**.
+
+**Bước 3 — Fuzz.** Chuột phải request → **Attack → Fuzz**, đánh dấu tham số `search` làm điểm chèn.
+
+**Bước 4 — Nạp payload.** Nạp wordlist `xss-payloads.txt` và chạy Fuzzer.
+
+**Bước 5 — Xác thực** thực thi trên trình duyệt.
 
 ### 3.3. Kết quả
 
