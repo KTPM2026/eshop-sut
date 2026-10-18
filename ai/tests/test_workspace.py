@@ -13,12 +13,12 @@ from unittest.mock import patch
 import httpx
 from pydantic import ValidationError
 
-from Lan.A1_ai_triage.parser import parse_alerts
-from Lan.A1_ai_triage.run import run_triage
-from Lan.A2_fuzzer_benchmark.runner import DependencyBlockedError, run_branch, write_log_template
-from Lan.A3a_ai_config import AIClient, AIConfig, AIResponseError
-from Lan.A3a_ai_config.contracts import TriageSuggestion, json_contracts
-from Lan.A3a_ai_config.safety import redact, redact_url
+from ai.A1_ai_triage.parser import parse_alerts
+from ai.A1_ai_triage.run import run_triage
+from ai.A2_fuzzer_benchmark.runner import DependencyBlockedError, run_branch, write_log_template
+from ai.A3a_ai_config import AIClient, AIConfig, AIResponseError
+from ai.A3a_ai_config.contracts import TriageSuggestion, json_contracts
+from ai.A3a_ai_config.safety import redact, redact_url
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,6 +63,37 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(rows, parse_alerts(doc))
         self.assertNotEqual(rows[0]["alert_id"], rows[1]["alert_id"])
 
+    def test_origin_filter_excludes_other_local_ports(self):
+        document = {
+            "site": [
+                {
+                    "alerts": [
+                        {
+                            "name": "BACKEND",
+                            "riskcode": "1",
+                            "instances": [
+                                {"uri": "http://localhost:3000/a"}
+                            ],
+                        }
+                    ]
+                },
+                {
+                    "alerts": [
+                        {
+                            "name": "FRONTEND",
+                            "riskcode": "1",
+                            "instances": [
+                                {"uri": "http://localhost:5173/a"}
+                            ],
+                        }
+                    ]
+                },
+            ]
+        }
+        rows = parse_alerts(document, allowed_origins={"http://localhost:3000"})
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["url"], "http://localhost:3000/a")
+
     def test_duplicates_rejected(self):
         doc = sample_document()
         doc["alerts"].append(doc["alerts"][0])
@@ -93,7 +124,7 @@ class WorkspaceTests(unittest.TestCase):
         self.assertNotIn("secret", redact_url("http://localhost/a?%74oken=secret&x=1"))
 
     def test_mock_does_not_use_network_or_key(self):
-        with patch.dict(os.environ, {}, clear=True), patch("Lan.A3a_ai_config.client.OpenAI") as sdk:
+        with patch.dict(os.environ, {}, clear=True), patch("ai.A3a_ai_config.client.OpenAI") as sdk:
             with AIClient() as client:
                 result = run_triage(sample_document(), client, source_sha256="sample")
             sdk.assert_not_called()
@@ -251,24 +282,29 @@ class WorkspaceTests(unittest.TestCase):
         data = json.loads((ROOT / "A3a_ai_config/contracts.json").read_text(encoding="utf-8"))
         self.assertEqual(data, json_contracts())
 
-    def test_cache_templates_are_not_fake_results(self):
-        for name in ["triage_result.json", "fuzzer_result.json"]:
-            data = json.loads((ROOT / "A3b_video_cache/cache" / name).read_text(encoding="utf-8"))
-            self.assertTrue(data["is_replay"])
-            self.assertEqual(data["data_origin"], "empty_template")
-            self.assertEqual(data["results"], [])
+    def test_cache_outputs_are_explicitly_provenanced(self):
+        triage = json.loads((ROOT / "A3b_video_cache/cache/triage_result.json").read_text(encoding="utf-8"))
+        self.assertTrue(triage["is_replay"])
+        self.assertEqual(triage["data_origin"], "empty_template")
+        self.assertEqual(triage["results"], [])
+
+        fuzzer = json.loads((ROOT / "A3b_video_cache/cache/fuzzer_result.json").read_text(encoding="utf-8"))
+        self.assertFalse(fuzzer["is_replay"])
+        self.assertEqual(fuzzer["data_origin"], "real_local_h3_l2_run")
+        self.assertTrue(fuzzer["success"])
+        self.assertEqual([item["status"] for item in fuzzer["logs"]], [403, 200])
 
     def test_cli_sample_and_input_overwrite_guard(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory) / "sample-result.json"
-            command = [sys.executable, "-m", "Lan.A1_ai_triage.run", "--output", str(target)]
+            command = [sys.executable, "-m", "ai.A1_ai_triage.run", "--output", str(target)]
             completed = subprocess.run(command, cwd=ROOT.parent, capture_output=True)
             self.assertEqual(completed.returncode, 0, completed.stderr)
             result = json.loads(target.read_text(encoding="utf-8"))
             self.assertEqual(result["_meta"]["execution_mode"], "mock")
             self.assertEqual(result["_meta"]["record_count"], 3)
             original = SAMPLE.read_bytes()
-            guard = subprocess.run([sys.executable, "-m", "Lan.A1_ai_triage.run", "--input", str(SAMPLE),
+            guard = subprocess.run([sys.executable, "-m", "ai.A1_ai_triage.run", "--input", str(SAMPLE),
                                     "--output", str(SAMPLE)], cwd=ROOT.parent, capture_output=True)
             self.assertEqual(guard.returncode, 1)
             self.assertEqual(SAMPLE.read_bytes(), original)

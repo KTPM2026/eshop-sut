@@ -26,7 +26,7 @@ SDK không tự retry (`max_retries=0`). Không có trần chi phí bằng tiề
 [contracts.json](contracts.json) sinh từ [contracts.py](contracts.py); Pydantic cấm trường ngoài schema và kiểm tra kiểu, enum, độ dài, giá trị. Sinh lại khi model dữ liệu thay đổi:
 
 ```powershell
-python -m Lan.A3a_ai_config.export_schema
+python -m ai.A3a_ai_config.export_schema
 ```
 
 | Hàm | Đầu vào bắt buộc | Đầu ra |
@@ -44,10 +44,10 @@ python -m Lan.A3a_ai_config.export_schema
 
 ## Ví dụ tích hợp cho Long
 
-Chạy từ thư mục gốc repo, với dependencies trong `Lan/requirements.txt`:
+Chạy từ thư mục gốc repo, với dependencies trong `ai/requirements.txt`:
 
 ```python
-from Lan.A3a_ai_config import AIClient
+from ai.A3a_ai_config import AIClient
 
 context = {
     "target_url": "http://localhost:3000/api/products",

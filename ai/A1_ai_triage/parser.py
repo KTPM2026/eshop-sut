@@ -3,14 +3,19 @@
 import hashlib
 import json
 
-from Lan.A3a_ai_config.contracts import Alert
-from Lan.A3a_ai_config.safety import redact, redact_url
+from ai.A3a_ai_config.contracts import Alert
+from ai.A3a_ai_config.safety import redact, redact_url
 
 
 RISKS = {"3": "High", "2": "Medium", "1": "Low", "0": "Informational"}
 
 
-def parse_alerts(document: dict | list) -> list[dict]:
+def parse_alerts(
+    document: dict | list,
+    *,
+    allowed_hosts: set[str] | None = None,
+    allowed_origins: set[str] | None = None,
+) -> list[dict]:
     """Chuẩn hóa theo từng instance; ID tự sinh ổn định, không dùng làm nhãn chuẩn.
 
     [TỰ ĐỀ XUẤT - CẦN NHÓM CHỐT] Một instance là một record; số record có thể
@@ -61,6 +66,16 @@ def parse_alerts(document: dict | list) -> list[dict]:
                 "evidence": instance.get("evidence", group.get("evidence", "")),
                 "cweid": None if cwe in {None, "", "0", 0, -1, "-1"} else str(cwe),
             }
+            if allowed_hosts is not None or allowed_origins is not None:
+                from urllib.parse import urlsplit
+
+                parsed_url = urlsplit(str(item["url"] or ""))
+                if allowed_hosts is not None and parsed_url.hostname not in allowed_hosts:
+                    continue
+                if allowed_origins is not None:
+                    origin = f"{parsed_url.scheme}://{parsed_url.netloc}"
+                    if origin not in allowed_origins:
+                        continue
             safe = redact(item)
             if isinstance(safe["url"], str):
                 safe["url"] = redact_url(safe["url"])

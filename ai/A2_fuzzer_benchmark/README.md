@@ -1,11 +1,13 @@
 # A2: Khung benchmark Fuzzer
 
-**BLOCK HOÀN TOÀN đối với benchmark thật.** Chưa có H3/L2 trong repo để tích hợp. Không dựng bộ lọc H3 hoặc viết thay vòng lặp L2 của Long.
+Runner trong thư mục này vẫn là giao diện an toàn và bị block nếu thiếu phụ
+thuộc. H3/L2 hiện dùng implementation trong `backend/` và
+`demo/ai_fuzzer/`; không dùng runner mock này để tạo số liệu.
 
 ## Giao diện đang chờ
 
 ```python
-from Lan.A2_fuzzer_benchmark.runner import run_branch
+from ai.A2_fuzzer_benchmark.runner import run_branch
 
 # TỰ ĐỀ XUẤT - CẦN NHÓM CHỐT: tên nhánh và budget.
 run_branch("wordlist_static", payload_source=[],
@@ -19,7 +21,7 @@ Trước khi nối code cần Hùng/Long bàn giao endpoint/method/auth của b�
 ## Log template rỗng
 
 ```powershell
-python -m Lan.A2_fuzzer_benchmark.runner --write-template Lan/outputs/a2-template
+python -m ai.A2_fuzzer_benchmark.runner --write-template ai/outputs/a2-template
 ```
 
 CSV chỉ có header `branch,attempt_no,payload,response_code,bypass,note`. JSON có cùng danh sách cột, `rows: []`, `request_count: 0`, `status: blocked`, `is_benchmark_result: false`. Chạy lại sẽ từ chối ghi đè file đang có. Không tính tỷ lệ từ template rỗng.
@@ -34,4 +36,13 @@ CSV chỉ có header `branch,attempt_no,payload,response_code,bypass,note`. JSON
 - Nhóm cần chốt oracle theo SQLi/XSS; XSS phải xác minh execution phù hợp luồng thực tế, không chỉ tìm chuỗi phản xạ. Timeout, 500 và redirect không mặc định thành công.
 - Khi đủ dữ liệu mới báo tỷ lệ bypass và request đến lần đầu theo từng lượt; trường hợp không thành công ghi chưa đạt trong budget, không tự gán bằng 50.
 
-Hiện không có request đã gửi, không có lượt benchmark hoặc số liệu bypass. A3a chỉ là giao diện gọi AI, không làm A2 hết block.
+Benchmark thực tế chạy bằng:
+
+```powershell
+python -X utf8 demo/ai_fuzzer/benchmark_fuzzer.py
+```
+
+Kết quả nằm tại `demo/ai_fuzzer/benchmark_results.json`, gồm 3 lượt/nhánh,
+log từng request và baseline rỗng trước khi chấp nhận backend trả dữ liệu.
+Đây là kết quả local lab/offline heuristic của L2, chưa phải benchmark API
+live theo adapter A3a.

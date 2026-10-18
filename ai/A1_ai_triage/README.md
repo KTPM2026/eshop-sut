@@ -1,6 +1,6 @@
 # A1: AI Vulnerability Triage
 
-**Block một phần:** pipeline đã có, chưa nhận JSON scan thật H1. [sample_alert_data.json](sample_alert_data.json) chứa ba alert **MẪU TỰ TẠO**, không phải lỗi đã phát hiện trong EShop và không phải ground truth.
+**Block một phần:** đã nhận report ZAP thật, nhưng chưa inference live và chưa có ground truth. [sample_alert_data.json](sample_alert_data.json) vẫn chỉ chứa ba alert **MẪU TỰ TẠO**.
 
 ## Luồng xử lý
 
@@ -24,16 +24,30 @@ H1 cần giao JSON gốc đã làm sạch secret, commit SUT, phiên bản ZAP, 
 Từ thư mục gốc repo:
 
 ```powershell
-python -m Lan.A1_ai_triage.run --mode mock --output Lan/outputs/triage_sample_mock.json
+python -m ai.A1_ai_triage.run --mode mock --output ai/outputs/triage_sample_mock.json
 ```
 
 Chỉ sau khi nhóm duyệt cấu hình A3a, làm sạch dữ liệu và cấp key qua môi trường mới chạy API thật:
 
 ```powershell
-python -m Lan.A1_ai_triage.run --mode live --input <duong-dan-json-H1> --output Lan/outputs/triage_live.json
+python -m ai.A1_ai_triage.run --mode live --input <duong-dan-json-H1> --output ai/outputs/triage_live.json
 ```
 
 Thay placeholder bằng đường dẫn H1 thực tế; không dùng nguyên lệnh placeholder. Các biến và điều kiện live xem [A3a](../A3a_ai_config/README.md). Lệnh không tự tạo nhãn hoặc benchmark N3.
+
+Report thật hiện có tại `alert/2026-10-14-ZAP-Report-.json`. Chỉ xử lý
+backend EShop bằng origin đầy đủ:
+
+```powershell
+python -m ai.A1_ai_triage.run --mode mock `
+  --origin http://localhost:3000 `
+  --input alert/2026-10-14-ZAP-Report-.json `
+  --output ai/outputs/triage_real_backend_mock.json
+```
+
+Lượt này chuẩn hóa 11 instance thật nhưng vẫn là **mock**, không phải
+inference hay benchmark. Biểu mẫu review độc lập nằm tại
+`ai/A1_ai_triage/ground_truth_template.json`.
 
 ## Đầu ra
 

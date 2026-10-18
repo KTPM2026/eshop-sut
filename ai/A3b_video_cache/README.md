@@ -1,11 +1,16 @@
 # A3b: Cache và video AI
 
-**BLOCK:** chờ benchmark N3 của Như, kết quả A1/A2 và clip Fuzzer L3 của Long. Hiện chỉ có hai template **rỗng**, không có video hoặc kết quả AI đã lưu:
+**BLOCK một phần:** Triage vẫn chờ inference/ground truth N3; Fuzzer đã có
+một lượt local lab từ L2 nhưng vẫn chờ chuẩn hóa benchmark và clip L3. Hiện
+không có video:
 
 - [cache/triage_result.json](cache/triage_result.json)
 - [cache/fuzzer_result.json](cache/fuzzer_result.json)
 
-`results: []`, `data_origin: empty_template`, thời điểm/hash null không được đưa vào bảng số liệu. `is_replay: true` trong template là nhắc rõ mục đích cache phát lại; không chứng minh đã có run thật.
+Cache Triage vẫn là template rỗng. Cache Fuzzer có
+`data_origin: real_local_h3_l2_run`, `is_replay: false`, log 403 -> 200 và
+checkpoint backend; không được diễn giải là inference cloud hoặc kết quả tổng
+quát.
 
 ## Quy trình khi đủ đầu vào
 
