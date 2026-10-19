@@ -1,0 +1,25 @@
+{
+  "is_replay": false,
+  "target": "http://localhost:3001/api/products?search=",
+  "success": true,
+  "total_attempts": 2,
+  "timestamp": "2026-10-17T13:52:29Z",
+  "logs": [
+    {
+      "attempt": 1,
+      "payload": "' OR '1'='1",
+      "status": 403,
+      "blocked": true,
+      "reason": " OR ",
+      "latency_ms": 19.7
+    },
+    {
+      "attempt": 2,
+      "payload": "'/**/OR/**/'1'='1",
+      "status": 200,
+      "blocked": false,
+      "reason": null,
+      "latency_ms": 20.3
+    }
+  ]
+}
