@@ -6,9 +6,12 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from Lan.A1_ai_triage.parser import parse_alerts
+from ai.A1_ai_triage.parser import parse_alerts
+from ai.A1_ai_triage.run import run_triage
+from ai.A3a_ai_config import AIClient, AIConfig
 from Nhu.common import ContractError, digest, file_digest, read_json, text_file_digest, write_json
 from Nhu.N2_gan_nhan.prepare_zap import scope_report, write_pack
+from Nhu.N3_benchmark_triage.scoring import validate_result
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,6 +82,11 @@ class ZapHandoffTests(unittest.TestCase):
             self.assertEqual(provenance["raw_zap_sha256"], raw_hash)
             self.assertFalse(provenance["human_labels_assigned"])
             self.assertFalse(provenance["ai_inference_performed"])
+            self.assertEqual(provenance["normalizer"], "ai/A1_ai_triage/parser.py")
+            self.assertEqual(provenance["normalizer_text_sha256"],
+                             text_file_digest(ROOT / "ai/A1_ai_triage/parser.py"))
+            self.assertEqual(provenance["redactor_text_sha256"],
+                             text_file_digest(ROOT / "ai/A3a_ai_config/safety.py"))
             with (target / "nhu-labels.blank.csv").open(encoding="utf-8", newline="") as stream:
                 sheet = list(csv.DictReader(stream))
             self.assertEqual(len(sheet), 1)
@@ -100,8 +108,31 @@ class ZapHandoffTests(unittest.TestCase):
         self.assertEqual(dataset["alerts"], rows)
         self.assertEqual(dataset["_meta"]["source_sha256"], file_digest(folder / "a1-input.json"))
         self.assertEqual(provenance["raw_zap_content_sha256"], digest(read_json(source)))
-        self.assertEqual(provenance["normalizer_text_sha256"], text_file_digest(ROOT / "Lan/A1_ai_triage/parser.py"))
-        self.assertEqual(provenance["redactor_text_sha256"], text_file_digest(ROOT / "Lan/A3a_ai_config/safety.py"))
+        # The frozen pack describes the OLD parser, not the current checkout's source text.
+        self.assertEqual(provenance["normalizer"], "Lan/A1_ai_triage/parser.py")
+        self.assertEqual(provenance["normalizer_text_sha256"],
+                         "eccfec9fc32338829d0442705cc476ab0a38024fe1b339ac60d3e22be44576d7")
+        self.assertEqual(provenance["redactor_text_sha256"],
+                         "318d0aa7f6144dfda9ab093ba155b95ff7c74c0b57aae2c96b32060cc4de4e3a")
+
+    def test_current_a1_keeps_all_29_locked_ids_but_mock_cannot_be_benchmarked(self):
+        folder = ROOT / "Nhu/N2_gan_nhan/data/h1-20261014"
+        dataset = read_json(folder / "dataset.json")
+        with AIClient(AIConfig(), mode="mock") as client:
+            report = run_triage(read_json(folder / "a1-input.json"), client,
+                                source_sha256=file_digest(folder / "a1-input.json"),
+                                allowed_origins={"http://localhost:3000", "http://localhost:5173"})
+        self.assertEqual(report["_meta"]["record_count"], 29)
+        self.assertEqual({row["alert_id"] for row in report["results"]},
+                         {row["alert_id"] for row in dataset["alerts"]})
+        self.assertFalse(report["_meta"]["model_inference_performed"])
+        with self.assertRaises(ContractError):
+            validate_result(report, dataset, synthetic=False)
+
+    def test_current_a1_backend_only_does_not_silently_match_29_record_contract(self):
+        folder = ROOT / "Nhu/N2_gan_nhan/data/h1-20261014"
+        source = read_json(folder / "a1-input.json")
+        self.assertEqual(len(parse_alerts(source, allowed_origins={"http://localhost:3000"})), 11)
 
 
 if __name__ == "__main__":

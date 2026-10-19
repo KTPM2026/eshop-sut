@@ -1,6 +1,6 @@
 # N3: Bộ chấm benchmark AI Triage
 
-**Đã lập trình bộ chấm offline, chưa có benchmark thật.** Không gọi API, không phân loại/prompt lại alert và không sửa A1. Tương thích hợp đồng `lan-ai-v1-proposed` của [A1 hiện có trong main](../../Lan/A1_ai_triage/README.md).
+**Đã lập trình bộ chấm offline, chưa có benchmark thật.** Không gọi API, không phân loại/prompt lại alert và không sửa A1. Tương thích hợp đồng `lan-ai-v1-proposed` của [A1 hiện có trong main](../../ai/A1_ai_triage/README.md).
 
 ## 1. Đầu vào chờ bàn giao
 
@@ -13,6 +13,12 @@
 | Protocol | Nhóm chốt baseline, rubric, cách chấm abstain/unknown và phạm vi tính thời gian trước khi chạy |
 
 Dataset thật đã chuẩn bị tại [N2/data/h1-20261014](../N2_gan_nhan/data/h1-20261014): 29 ID từ parser của Lân. Lân dùng **a1-input.json** làm input A1; N3 dùng **dataset.json**. Hai bên phải khớp hash `5586507dc3cd3d292c7359df32760291a8eb2629cf115df88b9ecbefa751f5e7`, không dùng hash raw export thay thế.
+
+Sau pull main `d66c263`, đã kiểm thử A1 namespace `ai/` giữ đủ 29 ID khi cho phép cả API 3000 và frontend 5173. Chỉ bật origin API sẽ còn 11 ID, không được ghép output đó với dataset/ground truth 29 ID. Đây là kiểm thử mock, không phải inference.
+
+Nhánh mới của Lân `feat(ai)/benchmark_offline` tại `f56c79f` chưa merge vào main nhưng đã có bundle khóa 11 ID API và hai phiếu trống. [Adapter N2](../N2_gan_nhan/README.md#phương-án-11-id-theo-bundle-mới-của-lân) đã chuẩn bị candidate tương thích: nếu nhóm chọn bộ này, tất cả N2/P2/A1/N3 phải dùng **candidate dataset/input 11 ID** cùng hash `275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea`. Không dùng nhãn/run/hash của bộ 29 hoặc hash raw ZAP thay thế. Chưa tự đổi scope hay tạo manifest benchmark thật.
+
+Benchmark/cache offline mới của Lân thuộc Fuzzer A2, không phải ba output phân loại A1 Triage; không chuyển số liệu đó thành Precision/Recall/F1/Accuracy N3.
 
 N3 không tự tạo ground truth hoặc đo lại inference từ file cache. Adapter N2 chỉ lọc scope và gọi parser H1/A1 sẵn có, không viết lại logic Triage. Các field metadata là khai báo của người cung cấp, không thay bằng chứng thực nghiệm. Chỉ chạy AI sau khi Như/Phát đã khóa nhãn và nhóm duyệt protocol/model.
 
@@ -63,6 +69,8 @@ Lớp dương là **lỗ hổng thật**. Trên tập nhãn chuẩn true/false:
 | TP/FP/TN/FN | FN ở trường `fn_explicit_false` chỉ là AI kết luận false trên nhãn thật |
 | Precision | `TP / (TP + FP)` |
 | Recall bảo thủ | `TP / tổng lỗi thật có nhãn chuẩn`; AI null trên lỗi thật vẫn nằm trong mẫu số, không được loại để nâng Recall |
+| F1 (`f1`) | `2*TP / (2*TP + FP + FN_explicit_false + abstain_on_true)`; cùng quy ước Recall bảo thủ. Trả 0 nếu bỏ sót hết lỗi thật, null khi mẫu số 0 |
+| Classification accuracy (`accuracy`) | `(TP + TN) / số truth đã rõ`; mọi AI abstain vẫn ở mẫu số và chưa được tính đúng, khác `priority_accuracy` |
 | Abstain | Đếm riêng AI null trên truth true và false; không coi null là false positive |
 | Coverage | Số AI đã kết luận true/false / số truth đã rõ |
 | Priority accuracy | Số P1–P4 khớp truth / số truth đã rõ; kể cả AI abstain classification nhưng vẫn gán priority |
@@ -70,7 +78,9 @@ Lớp dương là **lỗ hổng thật**. Trên tập nhãn chuẩn true/false:
 | Chỉ số an toàn | Số lỗi thật bị gán false, P4, hợp hai tập không đếm trùng; lỗi thật P1/P2 bị xuống P3/P4; ID để review |
 | Tiết kiệm thời gian | `(manual_total - AI_total) / manual_total`; manual thiếu/0 hoặc chưa review thì null, có thể âm nếu AI chậm hơn |
 
-Mẫu số 0 trả **null**, không tự gọi là 0%/100%. Recall này đo AI **nhận diện true**, không phải số alert chương trình giữ lại: A1 luôn phải giữ mọi alert để người review.
+Mẫu số 0 trả **null**, không tự gọi là 0%/100%. F1 dùng công thức đếm trực tiếp: khi không có truth dương và AI không dự đoán dương, F1 là null; khi có lỗi thật nhưng không nhận diện được, F1 là 0 dù Precision chưa xác định. Recall này đo AI **nhận diện true**, không phải số alert chương trình giữ lại: A1 luôn phải giữ mọi alert để người review.
+
+F1/Accuracy có trong baseline, từng run, summary JSON và CSV. Đây vẫn là quy ước đề xuất cần nhóm duyệt trước thực nghiệm, không phải số liệu đã đo.
 
 Summary chỉ mean/min/max và số lượt xác định/không xác định; không tự kiểm định thống kê hay kết luận ba lượt là đủ để suy rộng. JSON phân biệt metric undefined và zero.
 

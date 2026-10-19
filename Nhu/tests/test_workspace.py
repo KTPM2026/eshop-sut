@@ -52,6 +52,8 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(metrics["abstain_on_true"], 1)
         self.assertEqual(metrics["precision"], 0.5)
         self.assertAlmostEqual(metrics["recall"], 1 / 3)
+        self.assertEqual(metrics["f1"], 0.4)
+        self.assertEqual(metrics["accuracy"], 0.4)
         self.assertEqual(metrics["classification_coverage"], 0.8)
         self.assertEqual(metrics["priority_accuracy"], 0.4)
 
@@ -78,10 +80,44 @@ class WorkspaceTests(unittest.TestCase):
         metrics = score_predictions(truth, predicted)
         self.assertIsNone(metrics["precision"])
         self.assertIsNone(metrics["recall"])
+        self.assertIsNone(metrics["f1"])
+        self.assertEqual(metrics["accuracy"], 1)
         truth[0]["is_real"] = None
         metrics = score_predictions(truth, predicted)
         self.assertIsNone(metrics["priority_accuracy"])
         self.assertIsNone(metrics["classification_coverage"])
+        self.assertIsNone(metrics["f1"])
+        self.assertIsNone(metrics["accuracy"])
+
+    def test_f1_zero_when_positives_missed_and_accuracy_counts_abstentions(self):
+        for actual in (True, False):
+            truth = [{"alert_id": "x", "is_real": actual, "priority": "P1"}]
+            predicted = [{"alert_id": "x", "is_real": None, "priority": "P1"}]
+            metrics = score_predictions(truth, predicted)
+            self.assertEqual(metrics["accuracy"], 0)
+            self.assertEqual(metrics["classification_coverage"], 0)
+            if actual:
+                self.assertEqual(metrics["f1"], 0)
+                self.assertEqual(metrics["recall"], 0)
+            else:
+                self.assertIsNone(metrics["f1"])
+
+    def test_f1_and_accuracy_perfect_and_fully_incorrect(self):
+        truth = [{"alert_id": "x", "is_real": True, "priority": "P1"},
+                 {"alert_id": "y", "is_real": False, "priority": "P4"}]
+        for correct in (True, False):
+            predicted = [{**row, "is_real": row["is_real"] if correct else not row["is_real"]}
+                         for row in truth]
+            metrics = score_predictions(truth, predicted)
+            self.assertEqual(metrics["f1"], int(correct))
+            self.assertEqual(metrics["accuracy"], int(correct))
+
+    def test_f1_and_accuracy_summarized(self):
+        report = self.evaluate()
+        for key in ("f1", "accuracy"):
+            self.assertEqual(report["summary"][key]["mean"], 0.4)
+            self.assertEqual(report["summary"][key]["defined_runs"], 3)
+            self.assertIn(key, report["baseline_risk"])
 
     def test_review_time_is_included(self):
         timing = self.evaluate(manual_total_seconds=60)["runs"][0]["timing"]
@@ -219,6 +255,7 @@ class WorkspaceTests(unittest.TestCase):
                 rows = list(csv.DictReader(stream))
             self.assertEqual(len(rows), 3)
             self.assertTrue(all(row["is_benchmark_result"] == "False" for row in rows))
+            self.assertTrue(all(row["f1"] == row["accuracy"] == "0.4" for row in rows))
             with self.assertRaises(ContractError):
                 write_report(report, out)
             with self.assertRaises(ContractError):

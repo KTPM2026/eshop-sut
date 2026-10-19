@@ -9,10 +9,11 @@ from Nhu.common import SCHEMA_VERSION, digest, read_json, require, write_json
 from .scoring import evaluate_benchmark
 
 
-CSV_COLUMNS = ("run_id", "is_benchmark_result", "precision", "recall", "classification_coverage",
-               "priority_accuracy", "true_labeled_false", "true_assigned_P4",
-               "true_labeled_false_or_P4", "excluded_unresolved_truth", "total_seconds",
-               "time_saved_fraction")
+METRIC_COLUMNS = ("precision", "recall", "f1", "accuracy", "classification_coverage",
+                  "priority_accuracy", "true_labeled_false", "true_assigned_P4",
+                  "true_labeled_false_or_P4", "excluded_unresolved_truth")
+CSV_COLUMNS = ("run_id", "is_benchmark_result", *METRIC_COLUMNS,
+               "total_seconds", "time_saved_fraction")
 
 
 def evaluate_manifest(path, *, allow_synthetic=False):
@@ -48,7 +49,7 @@ def write_report(report, output_dir):
         for run in report["runs"]:
             writer.writerow({
                 "run_id": run["run_id"], "is_benchmark_result": report["_meta"]["is_benchmark_result"],
-                **{key: run["metrics"][key] for key in CSV_COLUMNS[2:10]},
+                **{key: run["metrics"][key] for key in METRIC_COLUMNS},
                 "total_seconds": run["timing"]["total_seconds"],
                 "time_saved_fraction": run["timing"]["time_saved_fraction"],
             })

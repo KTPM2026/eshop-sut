@@ -2,36 +2,37 @@
 
 **MSSV:** 23120312. **Lớp:** CQ2023/31. **Học phần:** CS423 / CSC13003 - Software Testing, FIT@HCMUS. **Giảng viên:** ThS. Trần Thị Bích Hạnh.
 
-Repo thực hiện: [KTPM2026/eshop-sut](https://github.com/KTPM2026/eshop-sut), nhánh `nhu/seminar-workspace`, nền `main` tại `ab5dd4f7ac0d8562800311dc94109939d3c6d930`. Giữ nguyên source SUT, file ZAP/WAF của Hùng và module AI của Lân. Phần này chỉ bổ sung `Nhu/`.
+Repo: [KTPM2026/eshop-sut](https://github.com/KTPM2026/eshop-sut), nhánh `nhu/seminar-workspace`, đã đồng bộ `main` tại `13f4d88`. Phần đóng góp nằm trong `Nhu/`; không sửa source SUT hay phần của thành viên khác. Lượt kiểm chứng N1 trước đó dùng commit `ab5dd4f`.
+
+Ngày 19/10 đã bổ sung minh chứng Burp do Như thực hiện. [PR #1](https://github.com/KTPM2026/eshop-sut/pull/1) dùng để bàn giao phần này; commit/push không đồng nghĩa đã merge hoặc hoàn tất mọi thực nghiệm.
 
 ## Đã thực hiện
 
 | Phần | Sản phẩm hiện có |
 |---|---|
-| [N1: Burp/phân quyền](N1_burp/README.md) | Chạy thật 11 ca API trên main của nhóm: **5 pass, 6 vi phạm phân quyền, 2 phát hiện**. Có request/response, CSV và 3 ảnh response 1920×1080 trong [minh chứng](N1_burp/evidence/main-run-20261016/README.md). Có runbook để Như kiểm chứng bằng Burp. |
-| [N2: Gán nhãn](N2_gan_nhan/README.md) | Đã đọc ZAP 2.17.0 của Hùng ngày 14/10: **31 instance gốc, giữ 29 localhost, loại 2 ngoài scope**. Dùng parser của Lân, khóa ID/hash; có input AI đã che token, dataset và phiếu nhãn trống. |
-| [N3: Benchmark](N3_benchmark_triage/README.md) | Bộ chấm tương thích A1 của Lân; tính Precision/Recall, coverage, khớp ưu tiên, lỗi thật bị xếp thấp/giả, thời gian gồm review và baseline risk. Có kiểm tra dữ liệu/mock/replay và test công thức. |
+| [N1: Burp/phân quyền](N1_burp/README.md) | [14 ảnh Burp](N1_burp/evidence/burp-manual-20261019/README.md): 11 Response + 2 Proxy + 1 Scope. Hai ảnh Intruder chứa token giữ private. Cần bổ sung cặp request/response xác minh actor và clip nhóm; XML không bắt buộc. [Lượt API tự động riêng](N1_burp/evidence/main-run-20261016/README.md): 5 pass, 6 vi phạm quyền, 2 phát hiện. |
+| [N2: Gán nhãn](N2_gan_nhan/README.md) | Đã có **bản AI-assisted 29 ID: 14 true / 10 false / 5 unknown**, đối chiếu đủ 15 nhóm Phát (loại 2 ngoài scope), 15 HTTP checks trực tiếp + browser và 2 ảnh thật. 10 nhóm cùng kết luận sơ bộ, 3 nhóm cần kiểm chứng chung; chưa là nhãn người độc lập hoặc ground truth. |
+| [N3: Benchmark](N3_benchmark_triage/README.md) | Bộ chấm offline tính **Precision, Recall, F1, Accuracy**, coverage, khớp ưu tiên, lỗi thật bị xếp thấp/giả, thời gian gồm review và baseline risk. Có kiểm tra dữ liệu/mock/replay và test công thức; chưa có số liệu benchmark thật. |
 | [N4: Báo cáo/slide](N4_slide_baocao/README.md) | Giữ bản nháp từ số liệu ZAP/API đã có để hoàn thiện và ghép bài sau; không nằm trong đợt dọn/chuẩn bị PR này. |
 
-Kết quả API do Codex hỗ trợ thực thi; ảnh là trình duyệt Edge, **không phải ảnh Burp**. Phiếu N2 chưa có nhãn của Như, chưa có nhãn chuẩn Như/Phát hoặc số liệu benchmark AI. Không biến dữ liệu mẫu thành kết quả nộp.
+Ảnh `burp-manual-20261019` do Như cung cấp, được lưu nguyên bytes và kiểm tra SHA256. Kết quả API/browser do Codex hỗ trợ thực thi được ghi riêng, không gọi là Burp. Review N2 có AI hỗ trợ sau khi tham khảo Phát; chưa phải nhãn người độc lập, ground truth hoặc benchmark thật. Thời gian người chưa đo giữ trống.
 
-**Phạm vi PR:** bàn giao code, dataset và minh chứng API đã chuẩn bị; không tuyên bố hoàn tất thực nghiệm N2/N3. Danh sách dưới theo phân công nhóm, chưa phải checklist nộp chính thức của giảng viên.
+**Phạm vi PR:** code, dataset, review có ghi nguồn và minh chứng hiện có. Các việc còn lại dưới đây theo kế hoạch nhóm, không phải yêu cầu định dạng nộp chính thức của giảng viên.
 
-## Phần kỹ thuật còn lại
+## Việc Như cần tự làm
 
-1. **N1 - Như:** tự kiểm chứng bằng Burp theo [runbook](N1_burp/README.md), lưu request/response, phiên bản công cụ, ảnh/history và kết quả checkpoints.
-2. **N2 - Như và Phát:** đồng ý scope/rubric, mỗi người tự kiểm chứng và gán nhãn riêng trên [29 ID đã chuẩn bị](N2_gan_nhan/data/h1-20261014/dataset.json). Như không cần đợi Phát để bắt đầu. Khóa phiếu trước khi xem nhãn nhau hoặc kết quả AI, rồi chốt bất đồng.
-3. **N3 - Lân và Như:** sau khi khóa nhãn chuẩn, Lân chạy A1 thật ít nhất ba lần trên cùng [a1-input.json](N2_gan_nhan/data/h1-20261014/a1-input.json) và cấu hình đã duyệt; Như review/đo thời gian rồi dùng bộ chấm N3 xuất kết quả.
+1. **N1:** bổ sung minh chứng cặp request/response xác định actor/URL và clip bàn giao Long. XML chỉ là một lựa chọn lưu, có thể dùng ảnh ghép hoặc log đã che token. Chi tiết giới hạn của ảnh Intruder nằm trong bộ minh chứng.
+2. **N2:** rà bản AI-assisted, xác nhận phương pháp/nhãn với nhóm; các mục CORS, Path Traversal và token URL còn thiếu căn cứ. Không hồi dựng thời gian hoặc gọi bản assisted là review độc lập.
+3. **N3:** thống nhất input 29 ID hay [11 ID API](N2_gan_nhan/README.md#phương-án-11-id-theo-bundle-mới-của-lân), khóa nhãn đúng protocol rồi nhận ít nhất ba lượt A1 thật từ Lân để review/chấm. Không trộn phạm vi hoặc dùng mock làm kết quả.
+4. **N4:** hoàn thiện slide/report và ghép bài chung ở giai đoạn sau.
 
-Slide/report N4 để giai đoạn sau. Clip Burp ghép sqlmap là nội dung trong kế hoạch nhóm; **chưa có đề gốc/thông báo nộp để xác nhận video bắt buộc cho lần nộp hiện tại**, nên không coi video là điều kiện của PR này.
-
-Hùng đã có [ZAP export](../alert/2026-10-14-ZAP-Report-.json), [hướng dẫn setup](../setup_ZAP.md) và H3 trong main. Chỉ cần nhờ Hùng bổ sung **commit chính xác của lượt scan 14/10 và request/response gốc nếu một alert không đủ căn cứ**, không ghi toàn bộ H1 là chưa có.
+Hùng đã bàn giao [ZAP export](../alert/2026-10-14-ZAP-Report-.json) và [setup](../setup_ZAP.md). Chỉ cần hỏi thêm commit scan/request gốc khi thiếu căn cứ cho alert. Có thể kiểm tra metadata/ID bằng `python -X utf8 -m Nhu.check_handoff --output Nhu/outputs/handoff-check-new.json`; tool không tự merge hoặc chứng nhận benchmark.
 
 ## File dùng chung
 
-- Lân chạy AI bằng `Nhu/N2_gan_nhan/data/h1-20261014/a1-input.json`, không dùng raw export chứa traffic ngoài scope/token.
+- Nếu nhóm chốt giữ pack 29, Lân chạy AI bằng `Nhu/N2_gan_nhan/data/h1-20261014/a1-input.json`, không dùng raw export chứa traffic ngoài scope/token; cấu hình scope A1 phải giữ đủ API + frontend.
 - Như/Phát dùng `dataset.json` cùng thư mục. Hash `source_sha256` là SHA256 bytes của **a1-input.json**, không phải hash export gốc; cả hai hash và mapping về export nằm trong `provenance.json`.
-- `nhu-labels.blank.csv` là mẫu chưa điền. Sao chép vào `Nhu/private/nhu-labels.csv` để làm riêng, không sửa bản mẫu hoặc đưa nhãn draft lên Git trước khi Phát khóa phiếu.
+- `nhu-labels.blank.csv` là mẫu chưa điền, giữ nguyên. `Nhu/private/nhu-labels.csv` hiện đã có 29 đề xuất AI-assisted theo yêu cầu của Như, kèm metadata nguồn; không ghi đè hoặc gọi đây là nhãn người độc lập. File private không lên Git; bản assisted chia sẻ nằm trong `N2_gan_nhan/assisted-review/`.
 - Nội dung ghép báo cáo/slide: [N4](N4_slide_baocao/README.md). Các bản khóa, timing và output thật sẽ bàn giao sau; không tạo file giả để đủ checklist.
 
 ## Kiểm tra và tái lập
@@ -39,14 +40,15 @@ Hùng đã có [ZAP export](../alert/2026-10-14-ZAP-Report-.json), [hướng d�
 Từ root repo, Python 3.12 và Node.js 24. N2 chuẩn bị ZAP dùng dependency có sẵn của Lân:
 
 ```powershell
-python -m pip install -r Lan/requirements.txt
+python -m pip install -r ai/requirements.txt
 python -X utf8 -m unittest discover -s Nhu/tests -v
+python -X utf8 -m unittest discover -s ai/tests -v
 python -X utf8 -m Nhu.N2_gan_nhan.prepare_zap --output-dir Nhu/outputs/h1-rebuilt
 ```
 
-N2/N3 core dùng thư viện chuẩn; adapter ZAP dùng trực tiếp `Lan.A1_ai_triage.parser`. Lệnh chuẩn bị từ chối ghi đè, không truy cập URL trong report và không gọi AI. Lệnh N1 và N3 ở README tương ứng.
+N2/N3 core dùng thư viện chuẩn; adapter ZAP/bundle dùng trực tiếp `ai.A1_ai_triage.parser`. Lệnh chuẩn bị từ chối ghi đè, không truy cập URL trong report và không gọi AI. Pack cũ giữ nguyên provenance của parser lịch sử `Lan/`; pack mới ghi `ai/`. Lệnh N1 và N3 ở README tương ứng.
 
-Kiểm tra ngày 16/10/2026: **36/36 test Như và 30/30 test Lân qua**. Đây là kiểm thử code/contract, không phải số liệu benchmark AI. Tạo phiếu làm việc riêng theo lệnh trong N2; nếu đã có phiếu thì tiếp tục trên file đó, không xóa hoặc ghi đè.
+Tests không gọi model hay thay thế thực nghiệm người/AI. Kiểm chứng HTTP/browser và hash bằng chứng được ghi riêng trong các phần tương ứng.
 
 Phân công N1–N4 lấy từ [đề cương nhóm](https://github.com/KTPM2026/seminar/blob/main/docs/de-cuong-seminar.md); phương pháp từ [proposal](https://github.com/KTPM2026/seminar/blob/main/docs/ai_proposal.md). Đây là tài liệu kế hoạch của nhóm, không phải hướng dẫn upload chính thức của giảng viên. [Nhật ký thực hiện](progress-log.md) ghi rõ phần AI hỗ trợ.
 

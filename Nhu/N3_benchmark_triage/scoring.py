@@ -63,6 +63,8 @@ def score_predictions(truth_rows, predictions):
         "abstain_on_true": abstain_positive, "abstain_on_false": abstain_negative,
         "precision": ratio(tp, tp + fp),
         "recall": ratio(tp, total_positive),
+        "f1": ratio(2 * tp, 2 * tp + fp + fn + abstain_positive),
+        "accuracy": ratio(tp + tn, len(known)),
         "classification_coverage": ratio(tp + fp + tn + fn, len(known)),
         "priority_accuracy": ratio(priority_matches, len(known)),
         "priority_matches": priority_matches,
@@ -71,7 +73,8 @@ def score_predictions(truth_rows, predictions):
         "true_downgraded_from_P1_P2_to_P3_P4": len(low_ids),
         "safety_alert_ids": {"false": false_ids, "P4": p4_ids,
                              "downgraded_to_low": low_ids, "abstain": abstain_ids},
-        "notice": "Precision mẫu số 0 là null. Recall=TP/(tất cả lỗi thật có nhãn chuẩn), gồm abstain.",
+        "notice": "Mẫu số 0 là null. Recall/F1 tính abstain trên lỗi thật là bỏ sót; "
+                  "Accuracy tính mọi abstain là chưa đúng, không loại khỏi mẫu số.",
     }
 
 
@@ -226,6 +229,9 @@ def evaluate_benchmark(dataset, ground_truth, runs, *, manual_total_seconds=None
         "protocol": {
             "status": "group_approved_by_input" if protocol_approved else "proposed_not_group_approved",
             "positive_class": "real_vulnerability", "abstention_in_recall_denominator": True,
+            "f1_formula": "2*TP/(2*TP+FP+FN_explicit_false+abstain_on_true)",
+            "accuracy_formula": "(TP+TN)/scored_records",
+            "abstention_in_accuracy_denominator": True,
             "unresolved_truth_excluded_and_reported": True,
             "zero_denominator": None, "risk_baseline": RISK_BASELINE,
         },
@@ -234,7 +240,8 @@ def evaluate_benchmark(dataset, ground_truth, runs, *, manual_total_seconds=None
         "runs": reports,
         "summary": {
             **{key: summarize([report["metrics"][key] for report in reports])
-               for key in ("precision", "recall", "priority_accuracy", "classification_coverage")},
+               for key in ("precision", "recall", "f1", "accuracy", "priority_accuracy",
+                           "classification_coverage")},
             "total_seconds": summarize([report["timing"]["total_seconds"] for report in reports]),
             "time_saved_fraction": summarize([report["timing"]["time_saved_fraction"] for report in reports]),
         },

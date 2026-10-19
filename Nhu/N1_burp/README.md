@@ -1,8 +1,34 @@
 # N1: Runbook Burp Suite của Như
 
-**Trạng thái:** đã chạy 11 ca API thật trên main của nhóm tại commit `ab5dd4f7ac0d8562800311dc94109939d3c6d930`, **5 pass / 6 vi phạm quyền truy cập / 0 chưa đủ bằng chứng**. Có request/response và 3 ảnh trình duyệt trong [báo cáo lượt chạy](evidence/main-run-20261016/README.md). Lượt này do Codex thực thi bằng Node.js và Edge headless; demo Burp của sinh viên còn cần thực hiện.
+**Trạng thái:** đã chạy 11 ca API thật trên main của nhóm tại commit `ab5dd4f7ac0d8562800311dc94109939d3c6d930`, **5 pass / 6 vi phạm quyền truy cập / 0 chưa đủ bằng chứng**. Có request/response và 3 ảnh trình duyệt trong [báo cáo lượt chạy](evidence/main-run-20261016/README.md). Lượt này do Codex thực thi bằng Node.js và Edge headless, không phải Burp.
+
+**Cập nhật 19/10:** đã lưu **11 ảnh Response, 2 ảnh Proxy và 1 ảnh Scope** trong [minh chứng Burp](evidence/burp-manual-20261019/README.md), kèm [manifest/hash](evidence/burp-manual-20261019/manifest.json). Hai ảnh kết quả Intruder chứa JWT giữ private. Còn minh chứng cặp request/response để xác minh actor/URL và clip nhóm; ảnh payload `2` có điểm lệch giữa Request/Response cần đối chiếu. **XML không phải định dạng bắt buộc**: có thể dùng ảnh ghép hoặc log đã che token. Không lấy kết quả API tự động thay bằng chứng Burp còn thiếu.
 
 Runbook này triển khai N1 theo phân công nhóm. Video là kế hoạch bàn giao chung, chưa được đối chiếu với đề gốc/thông báo nộp của giảng viên; không coi việc quay clip là điều kiện bắt buộc của PR chuẩn bị hiện tại.
+
+## Chuẩn bị Burp bằng một lệnh
+
+Chuẩn bị clone lab riêng `Nhu/private/eshop-n1-main` tại commit `ab5dd4f` và dependency backend như hướng dẫn tái lập bên dưới. Phiên Burp của bộ minh chứng dùng Community 2026.3.3. Từ root repo chạy:
+
+```powershell
+node Nhu/N1_burp/start_burp_lab.cjs --reset-lab
+```
+
+[start_burp_lab.cjs](start_burp_lab.cjs) gọi runner API đã có, tạo user A/B/admin và hai đơn, kiểm tra 11 ca, rồi giữ lab chạy tại `http://127.0.0.1:3000`. Mỗi lượt tự tạo thư mục mới `Nhu/private/burp-manual-<UTC>/`; không ghi đè lượt cũ. Chỉ chạy với clone lab bỏ được: backend sẽ reset database của clone này, không phải database repo chính. Port 3000 đang bận thì dừng, không tự tắt dịch vụ khác.
+
+Trong thư mục private vừa in ra có:
+
+- `README.md`: các bước Burp theo phiên và bảng case/actor/path.
+- `requests/N1-01.request.txt` đến `N1-11.request.txt`: raw GET request đã thay đúng ID/token của phiên, có thể dán vào Repeater. Guest không có Authorization/Cookie.
+- `session.json`: token và ánh xạ tài khoản/đơn; chỉ dùng riêng, không quay màn hình hoặc đưa lên Git.
+- `case-plan.json`, `burp-manifest.blank.json`: kế hoạch và khung ghi bằng chứng Burp; actual status/checkpoint/time/version vẫn trống.
+- `api-preflight/`: kết quả API tự động, **không phải kết quả Burp**.
+
+Mở Burp Community, dùng browser của Burp bắt một request `/api/products`, Forward rồi tắt Intercept. Từ HTTP history gửi request sang Repeater, thay toàn bộ Raw bằng file request tương ứng và giữ target **HTTP, 127.0.0.1, port 3000**. Gửi đối chứng N1-01/N1-02/N1-10 trước, kiểm tra ID/owner/role, sau đó chạy các ca còn lại. Phần chi tiết và cách diễn giải nằm ở mục 2–5 bên dưới.
+
+Nhấn Ctrl+C ở terminal để dừng riêng cây tiến trình lab do launcher tạo. Lượt sau chạy lại lệnh để tạo session/request mới; không dùng kit cũ sau reset. Có thể dùng `--stop-after-setup --output-dir Nhu/private/burp-check-new` để kiểm tra chuẩn bị rồi tự dừng, **không dùng lựa chọn này khi đang thao tác Burp**.
+
+**Kiểm tra launcher ngày 18/10:** tạo đủ 11 request, chạy API có 5 pass/6 vi phạm quyền và 2 phát hiện; database repo chính không đổi. Lượt tự động này không được dùng làm bằng chứng thao tác Burp.
 
 ## Tái lập lượt kiểm chứng API
 
@@ -74,7 +100,10 @@ Nếu response lỗi vẫn kèm dữ liệu riêng thì status lỗi không làm
 - [x] Có commit/scope/seed/reset và ánh xạ user/role/order/owner của lượt API trong results.json.
 - [x] Owner A/B và admin control của lượt API chạy được; guest không có phiên đăng nhập.
 - [x] Lượt API có actual status, checkpoint và request/response đã làm sạch.
-- [ ] Như tự thực hiện ba kịch bản Burp, lưu phiên bản công cụ, ảnh/history và điền manifest từ phiên đó.
+- [x] Đã lưu ảnh Proxy Intercept/HTTP history và đủ 11 ảnh Response thật do Như cung cấp, gồm ảnh dự kiến admin đối chứng N1-10; kiểm tra hash bản sao.
+- [x] Có ảnh cấu hình Scope chỉ gồm prefix lab `http://127.0.0.1:3000/` được bật.
+- [x] Có ảnh kết quả Intruder/Data-driven với payload `1`, `2`; bản gốc chứa token giữ private, điểm lệch request của ảnh payload `2` còn chờ export.
+- [ ] Bổ sung cặp request/response xác minh actor/URL, gồm admin N1-10 và điểm lệch Intruder; ảnh ghép/log hoặc XML tùy chọn, không bắt buộc 11 file XML.
 
 ## 7. Ghi hình theo kế hoạch nhóm (giai đoạn sau)
 

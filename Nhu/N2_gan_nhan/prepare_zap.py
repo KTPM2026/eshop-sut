@@ -6,7 +6,7 @@ from copy import deepcopy
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from Lan.A1_ai_triage.parser import parse_alerts
+from ai.A1_ai_triage.parser import parse_alerts
 from Nhu.common import (SCHEMA_VERSION, digest, file_digest, read_json, require,
                         text_file_digest, validate_dataset, write_json)
 from .labels import create_sheet
@@ -104,11 +104,11 @@ def write_pack(source, output, *, dataset_id):
         "allowed_origins": sorted(ALLOWED_ORIGINS),
         "raw_source": "alert/" + source.name,
         "canonical_input": "a1-input.json",
-        "normalizer": "Lan/A1_ai_triage/parser.py",
-        "normalizer_sha256": file_digest(Path(__file__).resolve().parents[2] / "Lan/A1_ai_triage/parser.py"),
-        "redactor_sha256": file_digest(Path(__file__).resolve().parents[2] / "Lan/A3a_ai_config/safety.py"),
-        "normalizer_text_sha256": text_file_digest(Path(__file__).resolve().parents[2] / "Lan/A1_ai_triage/parser.py"),
-        "redactor_text_sha256": text_file_digest(Path(__file__).resolve().parents[2] / "Lan/A3a_ai_config/safety.py"),
+        "normalizer": "ai/A1_ai_triage/parser.py",
+        "normalizer_sha256": file_digest(Path(__file__).resolve().parents[2] / "ai/A1_ai_triage/parser.py"),
+        "redactor_sha256": file_digest(Path(__file__).resolve().parents[2] / "ai/A3a_ai_config/safety.py"),
+        "normalizer_text_sha256": text_file_digest(Path(__file__).resolve().parents[2] / "ai/A1_ai_triage/parser.py"),
+        "redactor_text_sha256": text_file_digest(Path(__file__).resolve().parents[2] / "ai/A3a_ai_config/safety.py"),
         "scan_sut_commit": None,
         "human_labels_assigned": False, "ai_inference_performed": False,
         "protocol_approved": False,
