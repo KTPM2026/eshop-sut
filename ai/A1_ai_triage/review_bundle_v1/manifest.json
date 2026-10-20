@@ -1,0 +1,26 @@
+{
+  "status": "frozen_input_pending_human_review",
+  "origin": "http://localhost:3000",
+  "source": "alert/2026-10-14-ZAP-Report-.json",
+  "source_sha256": "fee6ce5be6ab6dc619ec23efa1b1054468c13a29f4847f4c6b27f5d8cad438bf",
+  "record_count": 11,
+  "alert_ids": [
+    "zap-d2385c33b96b1383",
+    "zap-f173fdff11f41cfe",
+    "zap-8e21086f2ff27a84",
+    "zap-701994b405476380",
+    "zap-944ee923a3688327",
+    "zap-a7915c01b0ed4fad",
+    "zap-5551fe58281070be",
+    "zap-d21aa8d9db78cb56",
+    "zap-685ded1c24df762f",
+    "zap-701ab0a1a67682ed",
+    "zap-9baea899de1db2e7"
+  ],
+  "files": {
+    "alerts.json": "275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea",
+    "review_nhu.json": "d08eaca90bf1fdf3e932980d9f3761813eb15f672b9a22d0a560fe674c1e79b5",
+    "review_phat.json": "bc40297689ace10778d0ec1462a27620b1c19b27523459d260f3536c33db7803"
+  },
+  "notice": "Hashes of review sheets describe blank handoff copies, not completed labels."
+}

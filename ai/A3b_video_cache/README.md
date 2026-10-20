@@ -1,5 +1,7 @@
 # A3b: Cache và video AI
 
+> Cập nhật 18/10: [cache offline mới](cache/offline_v1.json) có hash nguồn/payload và kết quả 9 lượt. Replay: `python -X utf8 -m ai.A3b_video_cache.artifacts --source ai/A3b_video_cache/cache/offline_v1.json --replay`. Công cụ kiểm tra hash, không gọi mạng, không tạo kết quả khi thiếu cache. Có thể lưu cache A1 ngay khi có inference, đánh giá chất lượng vẫn chờ nhãn/N3. Cache cũ giữ nguyên để truy vết; log 403 → 200 cũ không chứa đủ checkpoint độc lập. Công cụ mới không dùng playback L2 còn có kịch bản mặc định/tỷ lệ cố định.
+
 **BLOCK một phần:** Triage vẫn chờ inference/ground truth N3; Fuzzer đã có
 một lượt local lab từ L2 nhưng vẫn chờ chuẩn hóa benchmark và clip L3. Hiện
 không có video:

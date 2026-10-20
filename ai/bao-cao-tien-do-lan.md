@@ -1,5 +1,19 @@
 # Báo cáo tiến độ công việc của Nguyễn Nhật Lân
 
+## Cập nhật 18/10/2026
+
+- Đã khóa input 11 alert thật, manifest SHA-256 và hai bản review trống riêng tại [review_bundle_v1](A1_ai_triage/review_bundle_v1/README.md). Chưa có nhãn reviewer hoặc inference cloud.
+- Entry point mới: `python -X utf8 -m ai.A2_fuzzer_benchmark.isolated_lab --output ai/outputs/offline-new-run.json`. Launcher dùng database tạm riêng, không reset database backend hiện hữu.
+- Đã chạy HTTP thật 3 nhánh × 3 lượt trên lab tách biệt. [Kết quả mới](A2_fuzzer_benchmark/results/offline_v1.json): wordlist/fixed candidates/heuristic đạt checkpoint sau 5/6/2 request mỗi lượt; tổng 39 request tấn công + 36 request phụ benchmark. Request launcher chờ server sẵn sàng ở ngoài tổng này.
+- Mỗi lượt reset và xác nhận WAF level 1; snapshot id/name giống nhau. Checkpoint từng attempt so sánh SQL ghép chuỗi và truy vấn parameterized. Oracle đề xuất cho H3 SQLi còn cần nhóm duyệt; không bao gồm XSS.
+- Danh sách cũ tên `ai_static` đổi nhãn thành `fixed_candidates` vì chưa xác minh nguồn sinh AI. Nhánh feedback ghi đúng `heuristic_feedback`, không gọi cloud và không ghi đè cache L2.
+- [Cache mới](A3b_video_cache/cache/offline_v1.json) có hash nguồn/payload. Công cụ replay kiểm tra hash, gắn nhãn replay và báo lỗi khi thiếu dữ liệu.
+- Test mới bao phủ budget, nguồn cạn, WAF/baseline lỗi, timeout, checkpoint riêng từng attempt, tìm kiếm hợp lệ không phải SQLi, bundle không ghi đè và cache bị sửa.
+- Kết quả kiểm thử cập nhật: **38/38 unittest pass** và 9/9 lượt benchmark HTTP thật đạt oracle đề xuất. Chưa phải kiểm thử model cloud.
+- Còn cần: quyền/cấu hình/key cloud, nhãn độc lập, duyệt oracle và N3. Video/slide vẫn ngoài đợt này.
+
+Phần từ đây trở xuống giữ báo cáo ngày 17/10. Đường chạy hiện tại dùng theo [README](README.md).
+
 **MSSV:** 23120289  
 **Ngày cập nhật:** 17/10/2026  
 **Phạm vi:** A1, A2, A3a, A3b và phần báo cáo kỹ thuật liên quan  

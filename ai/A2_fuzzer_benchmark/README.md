@@ -1,5 +1,7 @@
 # A2: Khung benchmark Fuzzer
 
+> Cập nhật 18/10: entrypoint chính là `python -X utf8 -m ai.A2_fuzzer_benchmark.isolated_lab --output ai/outputs/offline-new-run.json`. Xem [README hiện tại](../README.md) và [kết quả offline v1](results/offline_v1.json). Có budget chung, checkpoint SQLite từng attempt và ba nhánh ghi đúng nguồn offline. `runner.py` dưới đây chỉ giữ scaffold/template cũ để tương thích. Script/kết quả demo được giữ làm lịch sử.
+
 Runner trong thư mục này vẫn là giao diện an toàn và bị block nếu thiếu phụ
 thuộc. H3/L2 hiện dùng implementation trong `backend/` và
 `demo/ai_fuzzer/`; không dùng runner mock này để tạo số liệu.
