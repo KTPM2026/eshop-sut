@@ -1,0 +1,6 @@
+# Preserve byte hashes of newly generated evidence across Windows checkouts.
+A1_ai_triage/results/live*.json text eol=lf
+A2_fuzzer_benchmark/results/live*.json text eol=lf
+A3b_video_cache/cache/*live*.json text eol=lf
+A4_slide_baocao/live-summary*.json text eol=lf
+artifact_inventory_2026-10-20.json text eol=lf

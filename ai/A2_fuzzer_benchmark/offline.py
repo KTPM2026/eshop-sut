@@ -88,7 +88,8 @@ def checkpoint(snapshot, payload, status, body):
             "observed_ids": actual, "parameterized_ids": safe, "vulnerable_ids": vulnerable}
 
 
-def run_branch(branch, budget=50, request=http):
+def run_branch(branch, budget=50, request=http, *, candidates=None, proposer=None,
+               on_update=None):
     if branch not in BRANCHES or type(budget) is not int or budget <= 0:
         raise ValueError("Invalid branch/budget")
     result = {"branch": branch, "mode": "offline", "budget": budget,
@@ -125,9 +126,22 @@ def run_branch(branch, budget=50, request=http):
         return result
     result["baseline"] = {"payload": marker, "status": status, "result": []}
     static = WORDLIST_PAYLOADS if branch == "wordlist_static" else AI_PREGENERATED_PAYLOADS
+    if candidates is not None:
+        static = candidates
     payload = "' OR '1'='1"
     for index in range(budget):
-        if branch != "heuristic_feedback":
+        if proposer is not None:
+            try:
+                suggestion = proposer(result["attempts"], budget - index)
+            except Exception as error:
+                result["stop_reason"] = "ai_error"
+                result["error_type"] = type(error).__name__
+                break
+            if suggestion["should_stop"]:
+                result["stop_reason"] = "model_stopped"
+                break
+            payload = suggestion["payload"]
+        elif branch != "heuristic_feedback":
             if index >= len(static):
                 result["stop_reason"] = "source_exhausted"
                 break
@@ -139,6 +153,16 @@ def run_branch(branch, budget=50, request=http):
             "response_code": status, "checkpoint": effect, "bypass": effect["bypass"],
             "latency_ms": round((time.perf_counter() - started) * 1000, 3),
             "response_sha256": digest(body.encode("utf-8")), "mode": "offline"})
+        try:
+            feedback = json.loads(body)
+            blocked_keyword = feedback.get("blocked_keyword") if isinstance(feedback, dict) else None
+        except ValueError:
+            blocked_keyword = None
+        result["attempts"][-1]["blocked_keyword"] = blocked_keyword
+        if on_update:
+            result["attack_requests"] = len(result["attempts"])
+            result["total_sut_requests"] = result["attack_requests"] + result["auxiliary_requests"]
+            on_update(result)
         if status == 0:
             result["stop_reason"] = "transport_error"
             break

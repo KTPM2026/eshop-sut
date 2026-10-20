@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-20",
+  "notice": "Raw hashes describe this checkout; LF hashes handle Git Windows line-ending conversion. Review sheets remain blank. No credentials included.",
+  "files": {
+    "ai/.gitattributes": {
+      "sha256": "795f88fa5bcc55135b5b04cd323deb65f186c9d81b30511d36a76a8f72e98827",
+      "sha256_lf": "795f88fa5bcc55135b5b04cd323deb65f186c9d81b30511d36a76a8f72e98827"
+    },
+    "ai/A1_ai_triage/live.py": {
+      "sha256": "bb065ae5ccbb5532b82dbb1af6b4cf2e30b52c67dded5c7241421928dbfa575a",
+      "sha256_lf": "bb065ae5ccbb5532b82dbb1af6b4cf2e30b52c67dded5c7241421928dbfa575a"
+    },
+    "ai/A1_ai_triage/results/live_2026-10-20_run1.json": {
+      "sha256": "4ee23fcdb0716cfd8b54cb5aff988e9eb4a0de0ae6dfacc1bdbefd4f6d6b8143",
+      "sha256_lf": "54488977aa6b34cfb98ec5bb110f8c614954da586c3e3ea0dadb9efae7d8c48b"
+    },
+    "ai/A1_ai_triage/results/live_2026-10-20_run2.json": {
+      "sha256": "1d1d6b28546a22952d4873a8b8f80d6e2e5bf4e7653cb3a6ad0f3cb78f5f16ac",
+      "sha256_lf": "f3f3b94ce228e542126ad7739c8dcc862622a5014ebb4667bcb0ae2b8f2ee4af"
+    },
+    "ai/A1_ai_triage/results/live_2026-10-20_run3.json": {
+      "sha256": "c862c948678d0cac24790d3c6ecae83bdf323f2062d166250d5e8758775c554b",
+      "sha256_lf": "e968d663b05629609323bace4e0e3105c89ffc2019e80bcd96e51049da007ebe"
+    },
+    "ai/A1_ai_triage/review_bundle_v1/alerts.json": {
+      "sha256": "ef539a916009c976a2dcffc8028be270e7f9c45646299847fdda89f0d059e2e7",
+      "sha256_lf": "275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea"
+    },
+    "ai/A1_ai_triage/review_bundle_v1/manifest.json": {
+      "sha256": "2df63d5625540554b542fc3cbea96bbd67b0f4c0dbab8dbbc5c373b34e8e3c46",
+      "sha256_lf": "9808b9907e11777f4f0e915296d87e695414e44217f870c49e7a86aecc2c4baf"
+    },
+    "ai/A1_ai_triage/review_bundle_v1/review_nhu.json": {
+      "sha256": "fb0e621f5fd8aae7238bfe4c970e4a597e1526b1647ce4e10805f39c5d8aec34",
+      "sha256_lf": "d08eaca90bf1fdf3e932980d9f3761813eb15f672b9a22d0a560fe674c1e79b5"
+    },
+    "ai/A1_ai_triage/review_bundle_v1/review_phat.json": {
+      "sha256": "7ea19df319e8ba9c349dda3585b48746f01e838b2e03a3c901abed17f30b29af",
+      "sha256_lf": "bc40297689ace10778d0ec1462a27620b1c19b27523459d260f3536c33db7803"
+    },
+    "ai/A2_fuzzer_benchmark/isolated_lab.py": {
+      "sha256": "482952dabc6e4c97169fa72133a418cb6a646f2b41496e3551726953b6cf1bc3",
+      "sha256_lf": "081a29f005ebc40a3316b0a77e00f24c267b1510d127ecfc24265022722bcfac"
+    },
+    "ai/A2_fuzzer_benchmark/live.py": {
+      "sha256": "25b61a750925144b23f39df65657ad8b281f5514bff71439fcce3f142325a11a",
+      "sha256_lf": "25b61a750925144b23f39df65657ad8b281f5514bff71439fcce3f142325a11a"
+    },
+    "ai/A2_fuzzer_benchmark/offline.py": {
+      "sha256": "e25f7acb9d3be5341722f224f5007d8a5a6395da01203ec62e1ef0a552344a9f",
+      "sha256_lf": "d693b60d3d93281c92b9412803f017b53aacb4fc3d27a7f2fe33eff6e7179315"
+    },
+    "ai/A2_fuzzer_benchmark/results/live_2026-10-20_v1.json": {
+      "sha256": "6612eefb724eefb771f1440bbbb60bbda31c766c1a2fc3a004049ef14bb13fd4",
+      "sha256_lf": "408cc6695bbc0af01b21f2a6eb372cdc5342969d86bbc4d7cd8d50a3dd86cc5c"
+    },
+    "ai/A3a_ai_config/client.py": {
+      "sha256": "29a16d054f3c6b1ff6535a4dbf7d0f1afc39df78bc51ba19139bbd9861397a85",
+      "sha256_lf": "da55e4958877285d5aea17a1a90ee18bcc612ba248477120ea1a176f0ee63e5f"
+    },
+    "ai/A3a_ai_config/config.py": {
+      "sha256": "803aaf0f7039217cda69fdd5d676487d5a7e1f3a387deb72fd53ef791fd4dd74",
+      "sha256_lf": "278a94b31e39a8e94cd236156fc9659cf5465b54cbff05b7953ec2fa9b12dcd6"
+    },
+    "ai/A3a_ai_config/contracts.py": {
+      "sha256": "e15246913c55e40380db818809d64816009417a9b2b07108d73e46ddba609d14",
+      "sha256_lf": "53f7997940b7abed2862437054896ae3390a816d3b4753f88bca0f21b77fed7b"
+    },
+    "ai/A3a_ai_config/environment.py": {
+      "sha256": "abc555f4fbcb9d1b5ab98cf53d137252ee0be43e6e875f328282738c11f8a531",
+      "sha256_lf": "abc555f4fbcb9d1b5ab98cf53d137252ee0be43e6e875f328282738c11f8a531"
+    },
+    "ai/A3b_video_cache/cache/fuzzer_live_2026-10-20_v1.json": {
+      "sha256": "54fa2479cd60de983ae1fa8288f5f6b62a0ce0c0d6a54eae0add11ee2049d46e",
+      "sha256_lf": "58f4bd2b891174be94623dbb16a6041d59b5f522727dcd01ef07c9c95ca80e7c"
+    },
+    "ai/A3b_video_cache/cache/triage_live_2026-10-20_run1.json": {
+      "sha256": "7d872834731746f28fcab5a56d94df7de8f292484f6bd87d30badb5ee023e2f2",
+      "sha256_lf": "c1fe1fe10bebbeb3d9170704d5ab1b30fcfcdb74d67160c8403ee46b2d806dd1"
+    },
+    "ai/A3b_video_cache/cache/triage_live_2026-10-20_run2.json": {
+      "sha256": "14af7bb42cde51b8d0de32cb9f5a478538756f69542e059bdf62955aa8360b16",
+      "sha256_lf": "5a475f810ea7f83cbb257b01597c2aaf0f2ccce985cb4efcb7c0845708947617"
+    },
+    "ai/A3b_video_cache/cache/triage_live_2026-10-20_run3.json": {
+      "sha256": "89fa3501bd8c3d684b8d6ee376b24ae7c2dc628687741b727047355098ac1584",
+      "sha256_lf": "acd917882a8e888fbdbf042ef0229a8e1a7cf2c6c61bf1574cf939884b75f8c7"
+    },
+    "ai/A4_slide_baocao/bao-cao-live-2026-10-20.md": {
+      "sha256": "03126011d360b49daaf47f13716498e6cfdfad8d1c1ed0ea7139dd2d3656190a",
+      "sha256_lf": "03126011d360b49daaf47f13716498e6cfdfad8d1c1ed0ea7139dd2d3656190a"
+    },
+    "ai/A4_slide_baocao/live-summary-2026-10-20.json": {
+      "sha256": "7038d6f7c293556f6e1543487a85f51be5c694d000345f0a7ff2b6c142caad98",
+      "sha256_lf": "fca2bcadbe72667f437eaf92189ed44011369494a3e668ff052dd7dcca23f5d3"
+    },
+    "ai/A4_slide_baocao/slide-live-2026-10-20.md": {
+      "sha256": "312fa81c58bec5f2e8724a5005eb0479d2dbf311c0eaae81e42de83d8d8aa8cd",
+      "sha256_lf": "312fa81c58bec5f2e8724a5005eb0479d2dbf311c0eaae81e42de83d8d8aa8cd"
+    },
+    "ai/summarize_live.py": {
+      "sha256": "98daa9f24686f57838e1ee36bf5913b2833130aefcdf5580437101e0b9b7c2b6",
+      "sha256_lf": "98daa9f24686f57838e1ee36bf5913b2833130aefcdf5580437101e0b9b7c2b6"
+    },
+    "ai/tests/test_live.py": {
+      "sha256": "1001dfdea807f39b5f3d5b526be9518d35946a02778edeab1ad9c0ad15902de2",
+      "sha256_lf": "1001dfdea807f39b5f3d5b526be9518d35946a02778edeab1ad9c0ad15902de2"
+    },
+    "demo/ai_fuzzer/ai_fuzzer.py": {
+      "sha256": "c50832ff21d400d5a9a1ccd496e820c93632afc92e46cebd65458b44be1e74d2",
+      "sha256_lf": "cb5a07c3bf6024ae0910dd80ee563c31d89945564a85bcf7d6bf2cbdc712b439"
+    }
+  }
+}

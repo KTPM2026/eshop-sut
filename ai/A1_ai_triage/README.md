@@ -1,5 +1,7 @@
 # A1: AI Vulnerability Triage
 
+> 20/10/2026: đã chạy live trên bộ 11 alert khóa hash. CLI có checkpoint/resume: `python -X utf8 -m ai.A1_ai_triage.live --output ai/outputs/new-live.json`; thêm `--resume` để chỉ gọi ID còn thiếu, `--max-calls 1` để smoke test, `--interval 15` để chỉnh khoảng nghỉ. Mặc định đọc `ai/.env`; dùng `--env-file` để chọn tệp khác. Output mới không ghi đè lượt cũ. Kết quả và giới hạn nằm ở [báo cáo live](../A4_slide_baocao/bao-cao-live-2026-10-20.md). `run.py` bên dưới là CLI batch cũ, không có checkpoint.
+
 **Block một phần:** đã nhận report ZAP thật, nhưng chưa inference live và chưa có ground truth. [sample_alert_data.json](sample_alert_data.json) vẫn chỉ chứa ba alert **MẪU TỰ TẠO**.
 
 ## Luồng xử lý

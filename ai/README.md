@@ -1,5 +1,24 @@
 # Không gian làm việc của Nguyễn Nhật Lân
 
+## Cập nhật live — 20/10/2026
+
+A3a/A1 đã gọi thật model `qwen/qwen3.8-27b` tại Groq qua OpenAI-compatible API trong `ai/.env`: hoàn tất 3 lượt, mỗi lượt đủ 11/11 ID. CLI mới đọc dotenv tường minh, lưu checkpoint mỗi alert, resume bỏ qua ID đã thành công, giữ lỗi/usage/latency và hash input/prompt/schema. Không ghi key vào artifact.
+
+A2 đã chạy 3 lượt/nhánh trên lab/database tạm riêng: wordlist đạt oracle 3/3, AI tĩnh 0/3 (hết 7 ứng viên), AI feedback 0/3 (model chủ động dừng). Trần 50 request tấn công/lượt; feedback tối đa 10 API call/lượt; danh sách AI tĩnh sinh một lần và dùng chung. Có 39 request tấn công + 36 request phụ benchmark; 7 API call sinh AI được ghi riêng.
+
+Xem [báo cáo thực nghiệm live](A4_slide_baocao/bao-cao-live-2026-10-20.md), [kết quả benchmark](A2_fuzzer_benchmark/results/live_2026-10-20_v1.json) và [lượt triage đầu](A1_ai_triage/results/live_2026-10-20_run1.json). Nhãn reviewer/N3, thời gian review thủ công và clip/video vẫn cần đầu vào của người phụ trách.
+
+```powershell
+python -X utf8 -m ai.A1_ai_triage.live --output ai/outputs/triage-new.json
+python -X utf8 -m ai.A1_ai_triage.live --output ai/outputs/triage-new.json --resume
+python -X utf8 -m ai.A2_fuzzer_benchmark.isolated_lab --mode live --output ai/outputs/benchmark-new.json
+python -X utf8 -m ai.A3b_video_cache.artifacts --source ai/A3b_video_cache/cache/triage_live_2026-10-20_run1.json --replay
+```
+
+Live có sử dụng API theo `.env`; SDK không tự retry hoặc fallback. Giãn cách mặc định 20 giây, có thể dùng `--interval` cho triage. Resume yêu cầu cùng input/config/prompt/schema và bỏ qua ID đã thành công. Log giữ các lần lỗi kết nối/429 của lượt đầu. Chi phí tiền chưa có hóa đơn/đơn giá được xác minh nên không suy ra từ token. `AI_PROVIDER=openai` mô tả adapter SDK; endpoint thực tế là Groq.
+
+Các mục ngày 16–18/10 dưới đây là lịch sử. Riêng `outputs/triage_zap_report.json` được giữ trong Git sau khi chuyển từ `Lan/outputs`; các output tạm khác vẫn bị bỏ qua.
+
 ## Trạng thái hiện tại — 18/10/2026
 
 | Phần | Đã chuẩn bị | Còn phụ thuộc |

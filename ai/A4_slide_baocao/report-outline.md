@@ -1,5 +1,7 @@
 # A4: Khung báo cáo triển khai Triage và đối chứng AI
 
+> Cập nhật 20/10/2026: đã có [báo cáo thực nghiệm live](bao-cao-live-2026-10-20.md). Outline bên dưới là lịch sử; phần N3/nhãn/thời gian người review còn chờ dữ liệu độc lập.
+
 **Nguyễn Nhật Lân – 23120289.** TỰ ĐỀ XUẤT - CẦN NHÓM CHỐT: bố cục bài. Tài liệu này là outline, **không phải báo cáo thực nghiệm đã có kết quả**.
 
 ## 1. Phạm vi và trách nhiệm
