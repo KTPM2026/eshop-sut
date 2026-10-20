@@ -1,0 +1,819 @@
+{
+  "schema_version": "nhu-n1-preflight-v1",
+  "owner": "Thạch Như",
+  "student_id": "23120312",
+  "executed_at_utc": "2026-10-16T10:55:11.941Z",
+  "completed_at_utc": "2026-10-16T10:55:14.890Z",
+  "repository": "https://github.com/KTPM2026/eshop-sut.git",
+  "sut_commit": "ab5dd4f7ac0d8562800311dc94109939d3c6d930",
+  "source_sha256": {
+    "server.js": "e2263811a1690a63a7dbb4446c3fd33fb87f50d073d9f8cdfab7083a52f5e8ed",
+    "database.js": "50012f35c2cf0776dd837482d76adf701f0ee40cdcb9d80143278fccde034717",
+    "package.json": "b42d2fd7a0d11e136fa893df1c44b37c648e8efb995abe9fe806ff872c5ac417",
+    "package-lock.json": "15663a68dea9ceb74b8c0ebb6078f7637977c5368b4f175a10112214f003f205"
+  },
+  "matrix_sha256": "dc5e028c00a160e90e624bb478b9101a2f01a2fc64b675870fb8cefd35875e71",
+  "runner_sha256": "430ecd6d2c92a12b898ec42499d4b5ed4088f7ee2172ff8cf074160ec00bf1e1",
+  "node_version": "v24.11.1",
+  "dependency_versions": {
+    "express": "5.2.1",
+    "body-parser": "2.2.2",
+    "cors": "2.8.6",
+    "jsonwebtoken": "9.0.3",
+    "sqlite3": "6.0.1"
+  },
+  "api_origin": "http://127.0.0.1:3000",
+  "data_origin": "real_local_http",
+  "execution_tool": "Node.js node:http; scripted API preflight",
+  "executed_by": "Codex AI assistant",
+  "student_performed": false,
+  "burp_executed": false,
+  "is_replay": false,
+  "scan_commit_confirmed": false,
+  "request_count_cases": 11,
+  "request_count_setup": 6,
+  "identities": {
+    "guest": {
+      "id": null,
+      "role": "guest",
+      "email": null
+    },
+    "user_a": {
+      "id": 2,
+      "role": "user",
+      "email": "test@eshop.com",
+      "token": "[REDACTED]"
+    },
+    "user_b": {
+      "id": 3,
+      "role": "user",
+      "email": "n1-b-23120312@example.invalid",
+      "token": "[REDACTED]"
+    },
+    "admin": {
+      "id": 1,
+      "role": "admin",
+      "email": "admin@eshop.com",
+      "token": "[REDACTED]"
+    }
+  },
+  "orders": {
+    "user_a": {
+      "id": 1,
+      "address": "N1-23120312-LAB-user_a",
+      "total": 30000000
+    },
+    "user_b": {
+      "id": 2,
+      "address": "N1-23120312-LAB-user_b",
+      "total": 6000000
+    }
+  },
+  "setup": [
+    {
+      "started_at_utc": "2026-10-16T10:55:12.452Z",
+      "elapsed_ms": 20.99,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/login",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "email": "test@eshop.com",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "body": {
+          "message": "Login successful",
+          "token": "[REDACTED]",
+          "user": {
+            "id": 2,
+            "name": "Test User",
+            "email": "test@eshop.com",
+            "password": "[REDACTED]",
+            "role": "user",
+            "login_attempts": 0,
+            "locked_until": null,
+            "reset_token": "[REDACTED]",
+            "shipping_address": null,
+            "phone": null
+          }
+        }
+      }
+    },
+    {
+      "started_at_utc": "2026-10-16T10:55:12.473Z",
+      "elapsed_ms": 2.6,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/login",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "email": "admin@eshop.com",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "body": {
+          "message": "Login successful",
+          "token": "[REDACTED]",
+          "user": {
+            "id": 1,
+            "name": "Admin User",
+            "email": "admin@eshop.com",
+            "password": "[REDACTED]",
+            "role": "admin",
+            "login_attempts": 0,
+            "locked_until": null,
+            "reset_token": "[REDACTED]",
+            "shipping_address": null,
+            "phone": null
+          }
+        }
+      }
+    },
+    {
+      "started_at_utc": "2026-10-16T10:55:12.476Z",
+      "elapsed_ms": 4.48,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/register",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "N1 Lab B",
+          "email": "n1-b-23120312@example.invalid",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "body": {
+          "message": "User registered successfully",
+          "id": 3
+        }
+      }
+    },
+    {
+      "started_at_utc": "2026-10-16T10:55:12.481Z",
+      "elapsed_ms": 1.73,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/login",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "email": "n1-b-23120312@example.invalid",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "body": {
+          "message": "Login successful",
+          "token": "[REDACTED]",
+          "user": {
+            "id": 3,
+            "name": "N1 Lab B",
+            "email": "n1-b-23120312@example.invalid",
+            "password": "[REDACTED]",
+            "role": "user",
+            "login_attempts": 0,
+            "locked_until": null,
+            "reset_token": "[REDACTED]",
+            "shipping_address": null,
+            "phone": null
+          }
+        }
+      }
+    },
+    {
+      "started_at_utc": "2026-10-16T10:55:12.482Z",
+      "elapsed_ms": 5.9,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/checkout",
+        "headers": {
+          "Accept": "application/json",
+          "Authorization": "[REDACTED]",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "total_amount": 30000000,
+          "shipping_address": "N1-23120312-LAB-user_a"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "body": {
+          "message": "Checkout successful",
+          "orderId": 1
+        }
+      }
+    },
+    {
+      "started_at_utc": "2026-10-16T10:55:12.489Z",
+      "elapsed_ms": 5.64,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/checkout",
+        "headers": {
+          "Accept": "application/json",
+          "Authorization": "[REDACTED]",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "total_amount": 6000000,
+          "shipping_address": "N1-23120312-LAB-user_b"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "body": {
+          "message": "Checkout successful",
+          "orderId": 2
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "N1-01",
+      "actor": "user_a",
+      "method": "GET",
+      "path_template": "/api/orders/{order_a}",
+      "resource_owner": "user_a",
+      "expected_access": "allow",
+      "checkpoint": {
+        "outcome": "pass",
+        "observed_access": "private_data_returned",
+        "reason": "Body khớp order ID, owner ID, địa chỉ và tổng tiền lab đã tạo."
+      },
+      "requester_id": 2,
+      "requester_role": "user",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.494Z",
+        "elapsed_ms": 3.15,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/orders/1",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "id": 1,
+            "user_id": 2,
+            "total_amount": 30000000,
+            "status": "pending",
+            "shipping_address": "N1-23120312-LAB-user_a",
+            "created_at": "2026-10-16 10:55:12"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "N1-02",
+      "actor": "user_b",
+      "method": "GET",
+      "path_template": "/api/orders/{order_b}",
+      "resource_owner": "user_b",
+      "expected_access": "allow",
+      "checkpoint": {
+        "outcome": "pass",
+        "observed_access": "private_data_returned",
+        "reason": "Body khớp order ID, owner ID, địa chỉ và tổng tiền lab đã tạo."
+      },
+      "requester_id": 3,
+      "requester_role": "user",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.498Z",
+        "elapsed_ms": 1.62,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/orders/2",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "id": 2,
+            "user_id": 3,
+            "total_amount": 6000000,
+            "status": "pending",
+            "shipping_address": "N1-23120312-LAB-user_b",
+            "created_at": "2026-10-16 10:55:12"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "N1-03",
+      "actor": "guest",
+      "method": "GET",
+      "path_template": "/api/orders/{order_a}",
+      "resource_owner": "user_a",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "fail",
+        "observed_access": "unauthorized_private_data_returned",
+        "reason": "Body khớp order ID, owner ID, địa chỉ và tổng tiền lab đã tạo."
+      },
+      "requester_id": null,
+      "requester_role": "guest",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.500Z",
+        "elapsed_ms": 2.61,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/orders/1",
+          "headers": {
+            "Accept": "application/json"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "id": 1,
+            "user_id": 2,
+            "total_amount": 30000000,
+            "status": "pending",
+            "shipping_address": "N1-23120312-LAB-user_a",
+            "created_at": "2026-10-16 10:55:12"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "N1-04",
+      "actor": "guest",
+      "method": "GET",
+      "path_template": "/api/orders/{order_b}",
+      "resource_owner": "user_b",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "fail",
+        "observed_access": "unauthorized_private_data_returned",
+        "reason": "Body khớp order ID, owner ID, địa chỉ và tổng tiền lab đã tạo."
+      },
+      "requester_id": null,
+      "requester_role": "guest",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.503Z",
+        "elapsed_ms": 1.16,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/orders/2",
+          "headers": {
+            "Accept": "application/json"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "id": 2,
+            "user_id": 3,
+            "total_amount": 6000000,
+            "status": "pending",
+            "shipping_address": "N1-23120312-LAB-user_b",
+            "created_at": "2026-10-16 10:55:12"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "N1-05",
+      "actor": "user_a",
+      "method": "GET",
+      "path_template": "/api/orders/{order_b}",
+      "resource_owner": "user_b",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "fail",
+        "observed_access": "unauthorized_private_data_returned",
+        "reason": "Body khớp order ID, owner ID, địa chỉ và tổng tiền lab đã tạo."
+      },
+      "requester_id": 2,
+      "requester_role": "user",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.504Z",
+        "elapsed_ms": 0.74,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/orders/2",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "id": 2,
+            "user_id": 3,
+            "total_amount": 6000000,
+            "status": "pending",
+            "shipping_address": "N1-23120312-LAB-user_b",
+            "created_at": "2026-10-16 10:55:12"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "N1-06",
+      "actor": "user_b",
+      "method": "GET",
+      "path_template": "/api/orders/{order_a}",
+      "resource_owner": "user_a",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "fail",
+        "observed_access": "unauthorized_private_data_returned",
+        "reason": "Body khớp order ID, owner ID, địa chỉ và tổng tiền lab đã tạo."
+      },
+      "requester_id": 3,
+      "requester_role": "user",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.505Z",
+        "elapsed_ms": 0.95,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/orders/1",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "id": 1,
+            "user_id": 2,
+            "total_amount": 30000000,
+            "status": "pending",
+            "shipping_address": "N1-23120312-LAB-user_a",
+            "created_at": "2026-10-16 10:55:12"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "N1-07",
+      "actor": "guest",
+      "method": "GET",
+      "path_template": "/api/admin/users",
+      "resource_owner": "admin",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "pass",
+        "observed_access": "denied",
+        "reason": "Server từ chối và body không chứa dữ liệu riêng đã kiểm tra."
+      },
+      "requester_id": null,
+      "requester_role": "guest",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.506Z",
+        "elapsed_ms": 1.2,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/admin/users",
+          "headers": {
+            "Accept": "application/json"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 401,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "error": "Unauthorized"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "N1-08",
+      "actor": "user_a",
+      "method": "GET",
+      "path_template": "/api/admin/users",
+      "resource_owner": "admin",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "fail",
+        "observed_access": "unauthorized_private_data_returned",
+        "reason": "Body chứa đúng danh sách tài khoản lab và role, đối chiếu admin control."
+      },
+      "requester_id": 2,
+      "requester_role": "user",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.507Z",
+        "elapsed_ms": 2.58,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/admin/users",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": [
+            {
+              "id": 1,
+              "name": "Admin User",
+              "email": "admin@eshop.com",
+              "role": "admin",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            },
+            {
+              "id": 2,
+              "name": "Test User",
+              "email": "test@eshop.com",
+              "role": "user",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            },
+            {
+              "id": 3,
+              "name": "N1 Lab B",
+              "email": "n1-b-23120312@example.invalid",
+              "role": "user",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "N1-09",
+      "actor": "user_b",
+      "method": "GET",
+      "path_template": "/api/admin/users",
+      "resource_owner": "admin",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "fail",
+        "observed_access": "unauthorized_private_data_returned",
+        "reason": "Body chứa đúng danh sách tài khoản lab và role, đối chiếu admin control."
+      },
+      "requester_id": 3,
+      "requester_role": "user",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.510Z",
+        "elapsed_ms": 1.03,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/admin/users",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": [
+            {
+              "id": 1,
+              "name": "Admin User",
+              "email": "admin@eshop.com",
+              "role": "admin",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            },
+            {
+              "id": 2,
+              "name": "Test User",
+              "email": "test@eshop.com",
+              "role": "user",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            },
+            {
+              "id": 3,
+              "name": "N1 Lab B",
+              "email": "n1-b-23120312@example.invalid",
+              "role": "user",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "N1-10",
+      "actor": "admin",
+      "method": "GET",
+      "path_template": "/api/admin/users",
+      "resource_owner": "admin",
+      "expected_access": "allow",
+      "checkpoint": {
+        "outcome": "pass",
+        "observed_access": "private_data_returned",
+        "reason": "Body chứa đúng danh sách tài khoản lab và role, đối chiếu admin control."
+      },
+      "requester_id": 1,
+      "requester_role": "admin",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.511Z",
+        "elapsed_ms": 0.85,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/admin/users",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": [
+            {
+              "id": 1,
+              "name": "Admin User",
+              "email": "admin@eshop.com",
+              "role": "admin",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            },
+            {
+              "id": 2,
+              "name": "Test User",
+              "email": "test@eshop.com",
+              "role": "user",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            },
+            {
+              "id": 3,
+              "name": "N1 Lab B",
+              "email": "n1-b-23120312@example.invalid",
+              "role": "user",
+              "login_attempts": 0,
+              "locked_until": null,
+              "shipping_address": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "N1-11",
+      "actor": "user_a",
+      "method": "GET",
+      "path_template": "/api/orders/{nonexistent_order}",
+      "resource_owner": "none",
+      "expected_access": "deny",
+      "checkpoint": {
+        "outcome": "pass",
+        "observed_access": "not_found",
+        "reason": "Đối chứng ID không tồn tại: cần 404 và body Order not found."
+      },
+      "requester_id": 2,
+      "requester_role": "user",
+      "evidence": {
+        "started_at_utc": "2026-10-16T10:55:12.512Z",
+        "elapsed_ms": 0.7,
+        "request": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/api/orders/2147483647",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "[REDACTED]"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 404,
+          "content_type": "application/json; charset=utf-8",
+          "body": {
+            "error": "Order not found"
+          }
+        }
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "N1-ACCESS-01",
+      "title": "Đọc đơn hàng không đúng quyền",
+      "description": "Guest và/hoặc user khác nhận đúng dữ liệu đơn lab đã tạo, gồm owner ID, địa chỉ và tổng tiền. Đối chứng owner đọc được đơn của mình. Cùng route GET /api/orders/:id được gom thành một phát hiện.",
+      "case_ids": [
+        "N1-03",
+        "N1-04",
+        "N1-05",
+        "N1-06"
+      ]
+    },
+    {
+      "id": "N1-ACCESS-02",
+      "title": "User thường đọc API danh sách quản trị",
+      "description": "Token role user nhận danh sách tài khoản lab tại GET /api/admin/users, đối chiếu cùng danh sách với admin control. Đã chứng minh quyền đọc, chưa kiểm tra sửa/xóa.",
+      "case_ids": [
+        "N1-08",
+        "N1-09"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 5,
+    "fail": 6,
+    "inconclusive": 0
+  },
+  "limitations": [
+    "SUT chạy ở commit main ghi trong báo cáo; ZAP export ngày 14/10 không ghi commit scan nên chưa chứng minh hai môi trường hoàn toàn trùng nhau.",
+    "Burp chưa được cài/chạy; không dùng kết quả này để tuyên bố đã hoàn tất demo Burp.",
+    "Lượt chạy do AI thực thi; Như cần tự rà soát, thao tác và thuyết minh theo yêu cầu chính chủ.",
+    "Không phải ZAP export, nhãn độc lập N2 hoặc benchmark AI N3.",
+    "Chỉ kiểm tra quyền đọc ở hai route; chưa đánh giá sửa/xóa hoặc ngoại lệ admin với đơn cá nhân."
+  ],
+  "screenshots": [
+    {
+      "case_id": "N1-03",
+      "file": "N1-03.png",
+      "sha256": "ecf4d8388f284585df33d9a7a2dbcd75e8cafa2e647eaded9c503cf57cbca577",
+      "captured_at_utc": "2026-10-16T10:55:13.655Z",
+      "url": "http://127.0.0.1:3000/api/orders/1",
+      "tool": "Microsoft Edge headless via Playwright; live API response, not Burp",
+      "browser_version": "155.0.4283.45",
+      "playwright_version": "1.64.1",
+      "response_matches_case": true
+    },
+    {
+      "case_id": "N1-06",
+      "file": "N1-06.png",
+      "sha256": "ecf4d8388f284585df33d9a7a2dbcd75e8cafa2e647eaded9c503cf57cbca577",
+      "captured_at_utc": "2026-10-16T10:55:13.907Z",
+      "url": "http://127.0.0.1:3000/api/orders/1",
+      "tool": "Microsoft Edge headless via Playwright; live API response, not Burp",
+      "browser_version": "155.0.4283.45",
+      "playwright_version": "1.64.1",
+      "response_matches_case": true
+    },
+    {
+      "case_id": "N1-08",
+      "file": "N1-08.png",
+      "sha256": "c2618d3f91d33c0de954c2375a09927dcaecf1921bd2c964c151026d3dfa7f5a",
+      "captured_at_utc": "2026-10-16T10:55:14.214Z",
+      "url": "http://127.0.0.1:3000/api/admin/users",
+      "tool": "Microsoft Edge headless via Playwright; live API response, not Burp",
+      "browser_version": "155.0.4283.45",
+      "playwright_version": "1.64.1",
+      "response_matches_case": true
+    }
+  ],
+  "browser_API_navigations": 3
+}

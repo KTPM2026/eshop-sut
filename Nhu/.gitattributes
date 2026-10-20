@@ -1,0 +1,10 @@
+# Preserve exact bytes used by recorded evidence and benchmark input hashes.
+* whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+N1_burp/evidence/** -text
+N1_burp/run_preflight.cjs -text
+N1_burp/case-matrix.csv -text
+N2_gan_nhan/data/** -text
+N2_gan_nhan/evidence/** -text
+N2_gan_nhan/assisted-review/** -text
+N2_gan_nhan/verify_local.cjs -text
+N3_benchmark_triage/evidence/** -text

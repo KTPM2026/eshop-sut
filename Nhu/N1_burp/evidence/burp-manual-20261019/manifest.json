@@ -1,0 +1,501 @@
+{
+  "schema_version": "nhu-n1-screenshot-review-v1",
+  "_meta": {
+    "owner": "Thạch Như",
+    "student_id": "23120312",
+    "status": "partial_manual_burp_evidence",
+    "n1_complete": false,
+    "archive_created_at_utc": "2026-10-19T03:32:20.3651438Z",
+    "reported_operator": "Thạch Như",
+    "archived_and_reviewed_by": "Codex AI assistant",
+    "data_origin": "user_provided_burp_screenshots",
+    "burp_ui_observed": true,
+    "automated_burp_execution_by_assistant": false,
+    "burp_version_observed": "2026.3.3",
+    "api_origin_observed": "http://127.0.0.1:3000",
+    "sut_commit_from_launcher_session": "ab5dd4f7ac0d8562800311dc94109939d3c6d930",
+    "sut_commit_independently_verified_from_burp": false,
+    "image_transformation": "none; copied original PNG bytes after visual review; source files unchanged",
+    "case_mapping_basis": "Guided request filenames and conversation sequence; seven earlier response crops mapped in response-time order. N1-10 mapped from the response screenshot supplied after the admin-control instructions. Response-only crops do not independently identify actor, URL or case ID.",
+    "request_response_exports_received": false,
+    "xml_required_by_assignment": false,
+    "request_response_evidence_options": ["paired_screenshots", "sanitized_http_logs", "optional_burp_xml_export"],
+    "all_actor_identities_verified_from_exports": false,
+    "scope_configuration_verified": true,
+    "data_driven_execution_verified": true,
+    "video_received": false,
+    "human_operation_timing_measured": false,
+    "is_ground_truth": false,
+    "is_benchmark_result": false,
+    "notice": "Screenshot observations are not complete Burp request/response exports. Intruder execution with payloads 1 and 2 is visible, but the payload-2 screenshot has a request-line/response mismatch pending raw export review. Do not claim 11 completed cases, all verified actors, verified attack configuration, manual timings, or a video from this bundle. HTTP Date headers are server response times, not human start/end times."
+  },
+  "summary": {
+    "planned_cases": 11,
+    "cases_with_response_screenshot": 11,
+    "proxy_screenshots": 2,
+    "scope_screenshots": 1,
+    "intruder_screenshots_private": 2,
+    "total_images": 14,
+    "missing_response_screenshots": [],
+    "raw_exports_verified": 0,
+    "final_case_outcomes_verified": 0,
+    "provisional_if_requests_match_guided_cases": {
+      "pass": 5,
+      "fail": 6,
+      "missing": 0
+    }
+  },
+  "lab_identity_map_from_setup": {
+    "user_a": {
+      "id": 2,
+      "role": "user",
+      "order_id": 1
+    },
+    "user_b": {
+      "id": 3,
+      "role": "user",
+      "order_id": 2
+    },
+    "admin": {
+      "id": 1,
+      "role": "admin"
+    }
+  },
+  "scope_configuration": {
+    "screenshot_ref": "scope.png",
+    "verified_at_utc": "2026-10-19T04:02:41.7089729Z",
+    "mode": "URL prefix",
+    "include": [{"enabled": true, "prefix": "http://127.0.0.1:3000/", "include_subdomains": false}],
+    "exclude": [],
+    "out_of_scope_request_blocking_verified": false
+  },
+  "intruder_observations": {
+    "reviewed_at_utc": "2026-10-19T04:24:48.7706013Z",
+    "source": "User-provided screenshots; observations transcribed by Codex, not raw Burp exports",
+    "private_archive_path": "Nhu/private/burp-intruder-20261019",
+    "target_observed": "http://127.0.0.1:3000",
+    "run_state_observed": "Finished",
+    "planned_actor_from_guidance": "user_b",
+    "actor_verified_from_export": false,
+    "same_authorization_text_visible_in_both_screenshots": true,
+    "authorization_value_published": false,
+    "attack_type_verified": false,
+    "payload_position_configuration_verified": false,
+    "errors_or_timeouts_visible": false,
+    "results_table": [
+      {"request": 0, "payload": null, "kind": "unmodified baseline, not order ID 0", "http_status": 200, "length_column": 410},
+      {"request": 1, "payload": "1", "http_status": 200, "length_column": 410},
+      {"request": 2, "payload": "2", "http_status": 200, "length_column": 409}
+    ],
+    "selected_row_observations": [
+      {
+        "screenshot_file": "intruder-payload-1.png",
+        "selected_payload": "1",
+        "visible_request_line": "GET /api/orders/1 HTTP/1.1",
+        "http_status": 200,
+        "server_response_date_utc": "2026-10-19T04:14:57Z",
+        "visible_body": {"id": 1, "user_id": 2, "total_amount": 30000000, "shipping_address": "N1-23120312-LAB-user_a"},
+        "request_path_matches_selected_payload": true
+      },
+      {
+        "screenshot_file": "intruder-payload-2.png",
+        "selected_payload": "2",
+        "visible_request_line": "GET /api/orders/1 HTTP/1.1",
+        "http_status": 200,
+        "server_response_date_utc": "2026-10-19T04:14:57Z",
+        "visible_body": {"id": 2, "user_id": 3, "total_amount": 6000000, "shipping_address": "N1-23120312-LAB-user_b"},
+        "request_path_matches_selected_payload": false
+      }
+    ],
+    "pairing_note": "Payload 2 is selected and response order 2 is visible, but the request pane still shows /api/orders/1. Cause is not established. Verify the selected item's original request/response export before claiming a matched /api/orders/2 exchange.",
+    "images_private": [
+      {
+        "file": "intruder-payload-1.png",
+        "source_filename": "Screenshot 2026-10-19 111527.png",
+        "sha256": "417453f6c7ad53959f5eae49f521d6369021e348ce4dd173b99a70fedbd22247",
+        "bytes": 86650,
+        "source_file_last_write_utc": "2026-10-19T04:15:27.9240244Z"
+      },
+      {
+        "file": "intruder-payload-2.png",
+        "source_filename": "Screenshot 2026-10-19 111539.png",
+        "sha256": "c1db3a98d67b610ed290b7dd741d4abf1900da30d3f3a43f8a0067c0640f8a2a",
+        "bytes": 97879,
+        "source_file_last_write_utc": "2026-10-19T04:15:39.8295970Z"
+      }
+    ]
+  },
+  "images": [
+    {
+      "file": "N1-01.response.png",
+      "source_filename": "Screenshot 2026-10-19 002747.png",
+      "sha256": "337f87b933f52b563297367c7ba667740309dff0d482d313754a98ef5600c116",
+      "bytes": 32227,
+      "source_file_last_write_utc": "2026-10-18T17:27:47.4365837Z"
+    },
+    {
+      "file": "N1-02.response.png",
+      "source_filename": "Screenshot 2026-10-19 003056.png",
+      "sha256": "e870097c114d2a1bc8c60842fc61f34413b556d75a0618208b70cd656d0be7d8",
+      "bytes": 32744,
+      "source_file_last_write_utc": "2026-10-18T17:30:56.7957921Z"
+    },
+    {
+      "file": "N1-03.response.png",
+      "source_filename": "Screenshot 2026-10-19 102339.png",
+      "sha256": "3a61265b531a1cd39a7d99e01d3df77d1d8e988c5d257f55d4254e8399f024a6",
+      "bytes": 32051,
+      "source_file_last_write_utc": "2026-10-19T03:23:39.9456113Z"
+    },
+    {
+      "file": "N1-04.response.png",
+      "source_filename": "Screenshot 2026-10-19 102455.png",
+      "sha256": "2cb75f126d8970098dfac09c865ef1c6879d2766d80e348f946952ea83f0fc48",
+      "bytes": 37801,
+      "source_file_last_write_utc": "2026-10-19T03:24:55.2577311Z"
+    },
+    {
+      "file": "N1-05.response.png",
+      "source_filename": "Screenshot 2026-10-19 102530.png",
+      "sha256": "b973f4e77c20760cc63096ab39c16621d569c7a7ff6b1cf3a47291906fd7f594",
+      "bytes": 37612,
+      "source_file_last_write_utc": "2026-10-19T03:25:30.3751146Z"
+    },
+    {
+      "file": "N1-06.response.png",
+      "source_filename": "Screenshot 2026-10-19 003122.png",
+      "sha256": "c0a1d4a9fb484cc3167942ca429c0fd206d467b699197cb1f3ec2efec5a02fc3",
+      "bytes": 32344,
+      "source_file_last_write_utc": "2026-10-18T17:31:22.6161781Z"
+    },
+    {
+      "file": "N1-07.response.png",
+      "source_filename": "Screenshot 2026-10-19 102615.png",
+      "sha256": "b27edb0775633910d752a4b3014d4610cc19803935f6439f04b64a3cd5ea9931",
+      "bytes": 31882,
+      "source_file_last_write_utc": "2026-10-19T03:26:15.9036093Z"
+    },
+    {
+      "file": "N1-08.response.png",
+      "source_filename": "Screenshot 2026-10-19 102636.png",
+      "sha256": "61253b2d6548515a94f565c3a0c22ad17bf549dbac75c13e021cea3712c984c0",
+      "bytes": 48031,
+      "source_file_last_write_utc": "2026-10-19T03:26:36.4423337Z"
+    },
+    {
+      "file": "N1-09.response.png",
+      "source_filename": "Screenshot 2026-10-19 102708.png",
+      "sha256": "af25f2195cf629418483fea9e1b9cee212cb0f1ca140f545a089e6d594f88f16",
+      "bytes": 52973,
+      "source_file_last_write_utc": "2026-10-19T03:27:08.1578297Z"
+    },
+    {
+      "file": "N1-10.response.png",
+      "source_filename": "Screenshot 2026-10-19 112905.png",
+      "sha256": "a460574fdaf61cfd7670052882fb32146be2d89a091a7480773a95cfb1e92325",
+      "bytes": 51176,
+      "source_file_last_write_utc": "2026-10-19T04:29:05.6899359Z"
+    },
+    {
+      "file": "N1-11.response.png",
+      "source_filename": "Screenshot 2026-10-19 102725.png",
+      "sha256": "964aa6a3c7f0528031d16d5e8199a76b688f7719bb696981cd461109179862b7",
+      "bytes": 31576,
+      "source_file_last_write_utc": "2026-10-19T03:27:25.8949631Z"
+    },
+    {
+      "file": "proxy-intercept.png",
+      "source_filename": "Screenshot 2026-10-19 002136.png",
+      "sha256": "06906258b2d1c3cd2b800cb9024dd84cd920bc11ef5b701461eb6894e262cdf1",
+      "bytes": 99734,
+      "source_file_last_write_utc": "2026-10-18T17:21:36.8460843Z"
+    },
+    {
+      "file": "proxy-http-history.png",
+      "source_filename": "Screenshot 2026-10-19 002224.png",
+      "sha256": "fc1bbd0b12caa6b9f5592914f196c1c0c8c27441ec6e28b736bebd762e9eb6c8",
+      "bytes": 131005,
+      "source_file_last_write_utc": "2026-10-18T17:22:24.6323196Z"
+    },
+    {
+      "file": "scope.png",
+      "source_filename": "Screenshot 2026-10-19 110149.png",
+      "sha256": "ade2dd03f433b6d8d728e0ec817c5fe11d7e7e56c2e4a65068b24c32521236c4",
+      "bytes": 40812,
+      "source_file_last_write_utc": "2026-10-19T04:01:49.6232998Z"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "N1-01",
+      "planned_actor": "user_a",
+      "planned_method": "GET",
+      "planned_path": "/api/orders/1",
+      "expected_access": "allow",
+      "screenshot_ref": "N1-01.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-18T17:27:32Z",
+      "visible_body_observation": {
+        "id": 1,
+        "user_id": 2,
+        "total_amount": 30000000,
+        "shipping_address": "N1-23120312-LAB-user_a"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "pass",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-02",
+      "planned_actor": "user_b",
+      "planned_method": "GET",
+      "planned_path": "/api/orders/2",
+      "expected_access": "allow",
+      "screenshot_ref": "N1-02.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-18T17:30:52Z",
+      "visible_body_observation": {
+        "id": 2,
+        "user_id": 3,
+        "total_amount": 6000000,
+        "shipping_address": "N1-23120312-LAB-user_b"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "pass",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-03",
+      "planned_actor": "guest",
+      "planned_method": "GET",
+      "planned_path": "/api/orders/1",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-03.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-19T03:23:29Z",
+      "visible_body_observation": {
+        "id": 1,
+        "user_id": 2,
+        "total_amount": 30000000,
+        "shipping_address": "N1-23120312-LAB-user_a"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "fail",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-04",
+      "planned_actor": "guest",
+      "planned_method": "GET",
+      "planned_path": "/api/orders/2",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-04.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-19T03:24:48Z",
+      "visible_body_observation": {
+        "id": 2,
+        "user_id": 3,
+        "total_amount": 6000000,
+        "shipping_address": "N1-23120312-LAB-user_b"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "fail",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-05",
+      "planned_actor": "user_a",
+      "planned_method": "GET",
+      "planned_path": "/api/orders/2",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-05.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-19T03:25:21Z",
+      "visible_body_observation": {
+        "id": 2,
+        "user_id": 3,
+        "total_amount": 6000000,
+        "shipping_address": "N1-23120312-LAB-user_b"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "fail",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-06",
+      "planned_actor": "user_b",
+      "planned_method": "GET",
+      "planned_path": "/api/orders/1",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-06.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-18T17:31:17Z",
+      "visible_body_observation": {
+        "id": 1,
+        "user_id": 2,
+        "total_amount": 30000000,
+        "shipping_address": "N1-23120312-LAB-user_a"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "fail",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-07",
+      "planned_actor": "guest",
+      "planned_method": "GET",
+      "planned_path": "/api/admin/users",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-07.response.png",
+      "observed_http_status": 401,
+      "server_response_date_utc": "2026-10-19T03:26:10Z",
+      "visible_body_observation": {
+        "error": "Unauthorized"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "pass",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-08",
+      "planned_actor": "user_a",
+      "planned_method": "GET",
+      "planned_path": "/api/admin/users",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-08.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-19T03:26:30Z",
+      "visible_body_observation": {
+        "visible_users": [
+          {
+            "id": 1,
+            "role": "admin"
+          },
+          {
+            "id": 2,
+            "role": "user"
+          },
+          {
+            "id": 3,
+            "role": "user"
+          }
+        ],
+        "body_fully_visible": false
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "fail",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-09",
+      "planned_actor": "user_b",
+      "planned_method": "GET",
+      "planned_path": "/api/admin/users",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-09.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-19T03:27:03Z",
+      "visible_body_observation": {
+        "visible_users": [
+          {
+            "id": 1,
+            "role": "admin"
+          },
+          {
+            "id": 2,
+            "role": "user"
+          },
+          {
+            "id": 3,
+            "role": "user"
+          }
+        ],
+        "body_fully_visible": false
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "fail",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-10",
+      "planned_actor": "admin",
+      "planned_method": "GET",
+      "planned_path": "/api/admin/users",
+      "expected_access": "allow",
+      "screenshot_ref": "N1-10.response.png",
+      "observed_http_status": 200,
+      "server_response_date_utc": "2026-10-19T04:29:01Z",
+      "visible_body_observation": {
+        "visible_users": [
+          {"id": 1, "role": "admin"},
+          {"id": 2, "role": "user"},
+          {"id": 3, "role": "user"}
+        ],
+        "body_fully_visible": true
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "pass",
+      "verification_status": "response_observed_request_pending"
+    },
+    {
+      "case_id": "N1-11",
+      "planned_actor": "user_a",
+      "planned_method": "GET",
+      "planned_path": "/api/orders/2147483647",
+      "expected_access": "deny",
+      "screenshot_ref": "N1-11.response.png",
+      "observed_http_status": 404,
+      "server_response_date_utc": "2026-10-19T03:27:21Z",
+      "visible_body_observation": {
+        "error": "Order not found"
+      },
+      "request_export_ref": null,
+      "response_export_ref": null,
+      "actor_verified_from_export": false,
+      "final_outcome": null,
+      "provisional_outcome_if_request_matches": "pass",
+      "verification_status": "response_observed_request_pending"
+    }
+  ],
+  "missing_evidence": [
+    "Paired original request/response evidence identifying guest/user/admin and URL; screenshots or sanitized HTTP logs are acceptable, XML optional",
+    "Paired Intruder item evidence to resolve the payload-2 request-pane mismatch and verify actor/path/response pairing",
+    "Burp demo clip for the group's video 2"
+  ],
+  "excluded_from_shared_archive": [
+    {
+      "source_filename": "Screenshot 2026-10-19 002757.png",
+      "reason": "Full Repeater screenshot shows a lab Authorization JWT; the response-only crop was archived instead."
+    }
+  ]
+}

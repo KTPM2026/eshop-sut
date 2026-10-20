@@ -1,0 +1,444 @@
+{
+  "schema_version": "nhu-local-alert-verification-v1",
+  "sut_commit": "13f4d8847c44ec833f2eb6fdaf1b506e5037d0dc",
+  "executed_by": "Codex AI assistant",
+  "student_id": "23120312",
+  "student_performed": false,
+  "independent_human_review": false,
+  "burp_executed": false,
+  "is_ground_truth": false,
+  "is_benchmark_result": false,
+  "started_at_utc": "2026-10-18T15:03:05.686Z",
+  "finished_at_utc": "2026-10-18T15:03:09.372Z",
+  "node_version": "v24.11.1",
+  "browser_version": "155.0.4283.45",
+  "dependency_versions": {
+    "express": "5.2.1",
+    "sqlite3": "6.0.1",
+    "vite": "8.0.12",
+    "react-dom": "19.2.6"
+  },
+  "runner_sha256": "07fa886b33cbff2c995b9eb2843423ed719497139b92797e8157338ce1b5db31",
+  "source_sha256": {
+    "backend/server.js": "e2263811a1690a63a7dbb4446c3fd33fb87f50d073d9f8cdfab7083a52f5e8ed",
+    "backend/database.js": "50012f35c2cf0776dd837482d76adf701f0ee40cdcb9d80143278fccde034717",
+    "backend/package-lock.json": "15663a68dea9ceb74b8c0ebb6078f7637977c5368b4f175a10112214f003f205",
+    "frontend-web/package-lock.json": "3a2f77044ea23f8aabcfeda91ce374bf04f8e5cd719171756ec6436df7b42608",
+    "frontend-web/src/pages/Home.jsx": "d6bf712e66f605256afc1ccf6642adfd3cac5ef344aa3dac231dafb6c2547a52",
+    "frontend-web/src/pages/ForgotPassword.jsx": "a2005b8860b2cb24da63386ac38641c0278f274c441bdf0ad5a038ba829e49df"
+  },
+  "original_scan_commit_known": false,
+  "original_url_host": "localhost",
+  "replay_host": "127.0.0.1",
+  "requests": {
+    "sql-control": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/products?search=__NHU_NO_PRODUCT_23120312__",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.349Z",
+      "automated_elapsed_ms": 2.4815999999999576,
+      "response": {
+        "status": 200,
+        "byte_length": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": null,
+          "x-powered-by": "Express",
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": 0
+      }
+    },
+    "sql-true": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/products?search=__NHU_NO_PRODUCT_23120312__%27%20OR%201%3D1%20--%20",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.352Z",
+      "automated_elapsed_ms": 5.614700000000084,
+      "response": {
+        "status": 200,
+        "byte_length": 969,
+        "sha256": "55f8455f177bb2c48db629f7a6b148a0f1996cb9d2481569cb6bfcc2e85c0e1a",
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": null,
+          "x-powered-by": "Express",
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": 5
+      }
+    },
+    "sql-false": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/products?search=__NHU_NO_PRODUCT_23120312__%27%20OR%201%3D2%20--%20",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.358Z",
+      "automated_elapsed_ms": 2.7390000000000327,
+      "response": {
+        "status": 200,
+        "byte_length": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": null,
+          "x-powered-by": "Express",
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": 0
+      }
+    },
+    "sql-quote": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/products?search=%27",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.360Z",
+      "automated_elapsed_ms": 1.4370999999999867,
+      "response": {
+        "status": 500,
+        "byte_length": 67,
+        "sha256": "bc1f96cffd851be7a097983b9c5d4a4300ce45c4beb5ae8b892d82c49e444ddf",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": null,
+          "x-powered-by": "Express",
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "api-products": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/products?search=",
+        "headers": {
+          "Origin": "http://127.0.0.1:5174"
+        }
+      },
+      "started_at_utc": "2026-10-18T15:03:06.362Z",
+      "automated_elapsed_ms": 518.5338999999999,
+      "response": {
+        "status": 200,
+        "byte_length": 969,
+        "sha256": "55f8455f177bb2c48db629f7a6b148a0f1996cb9d2481569cb6bfcc2e85c0e1a",
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": null,
+          "x-powered-by": "Express",
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": 5
+      }
+    },
+    "api-detail": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/products/1",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.881Z",
+      "automated_elapsed_ms": 3.3661999999999352,
+      "response": {
+        "status": 200,
+        "byte_length": 183,
+        "sha256": "414c628afb472b85cd393c9f2d2655764e27b151e3daa3cdb3020f6cd1008a63",
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": null,
+          "x-powered-by": "Express",
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "api-private-guest": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/users/me",
+        "headers": {
+          "Origin": "http://127.0.0.1:5174"
+        }
+      },
+      "started_at_utc": "2026-10-18T15:03:06.884Z",
+      "automated_elapsed_ms": 0.8354000000001633,
+      "response": {
+        "status": 401,
+        "byte_length": 24,
+        "sha256": "3be5b8e53fdc8b0a2996590589456db33504977f3d1ce9bb75016c8a707e1a71",
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": null,
+          "x-powered-by": "Express",
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "web-root": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.885Z",
+      "automated_elapsed_ms": 19.044800000000123,
+      "response": {
+        "status": 200,
+        "byte_length": 632,
+        "sha256": "ed627da05ba1cda606697f9140b22241d34faea475df1e092d4247459dd22a57",
+        "headers": {
+          "content-type": "text/html",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "web-forgot": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/forgot-password",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.904Z",
+      "automated_elapsed_ms": 18.38149999999996,
+      "response": {
+        "status": 200,
+        "byte_length": 632,
+        "sha256": "ed627da05ba1cda606697f9140b22241d34faea475df1e092d4247459dd22a57",
+        "headers": {
+          "content-type": "text/html",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "web-css": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/src/index.css",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:06.923Z",
+      "automated_elapsed_ms": 184.32899999999995,
+      "response": {
+        "status": 200,
+        "byte_length": 20946,
+        "sha256": "25cdc354a1db9a73930aeabe272bd2873781c141986d4e3d15c58c86a5a4b32d",
+        "headers": {
+          "content-type": "text/javascript",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "web-env": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/node_modules/vite/dist/client/env.mjs",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:07.107Z",
+      "automated_elapsed_ms": 28.95860000000016,
+      "response": {
+        "status": 200,
+        "byte_length": 3478,
+        "sha256": "87a1e6adc3833b1e0d8fd872e39e822401c8f0d593d5358f7e142f34d335946a",
+        "headers": {
+          "content-type": "text/javascript",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "path-old-chunk-control": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-CYJPkc-J.js",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:07.136Z",
+      "automated_elapsed_ms": 3.738399999999956,
+      "response": {
+        "status": 200,
+        "byte_length": 632,
+        "sha256": "ed627da05ba1cda606697f9140b22241d34faea475df1e092d4247459dd22a57",
+        "headers": {
+          "content-type": "text/html",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "path-old-chunk-attack": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/node_modules/.vite/deps/chunk-CYJPkc-J.js?v=%2Fchunk-CYJPkc-J.js",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:07.140Z",
+      "automated_elapsed_ms": 2.5597999999999956,
+      "response": {
+        "status": 200,
+        "byte_length": 632,
+        "sha256": "ed627da05ba1cda606697f9140b22241d34faea475df1e092d4247459dd22a57",
+        "headers": {
+          "content-type": "text/html",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "web-react-refresh": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/@react-refresh",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:07.143Z",
+      "automated_elapsed_ms": 4.08439999999996,
+      "response": {
+        "status": 200,
+        "byte_length": 111894,
+        "sha256": "fe633113388e056842f0b8df96ea422fcd97761329b79d39fddd71d1fee2f8c7",
+        "headers": {
+          "content-type": "text/javascript",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    },
+    "web-synthetic-token": {
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:5173/?token=%5BREDACTED%5D",
+        "headers": {}
+      },
+      "started_at_utc": "2026-10-18T15:03:07.147Z",
+      "automated_elapsed_ms": 2.0973999999998796,
+      "response": {
+        "status": 200,
+        "byte_length": 632,
+        "sha256": "ed627da05ba1cda606697f9140b22241d34faea475df1e092d4247459dd22a57",
+        "headers": {
+          "content-type": "text/html",
+          "access-control-allow-origin": null,
+          "access-control-allow-credentials": null,
+          "x-powered-by": null,
+          "x-content-type-options": null,
+          "content-security-policy": null,
+          "x-frame-options": null
+        },
+        "json_array_count": null
+      }
+    }
+  },
+  "checkpoints": {
+    "sql_boolean_effect_verified": true,
+    "sql_quote_http_status": 500,
+    "cors": {
+      "public_without_credentials": {
+        "status": 200,
+        "readable": true,
+        "array_count": 5,
+        "contains_user_profile": false
+      },
+      "public_with_credentials": {
+        "readable": false,
+        "blocked_or_network_error": true
+      },
+      "private_without_credentials": {
+        "status": 401,
+        "readable": true,
+        "array_count": null,
+        "contains_user_profile": false
+      }
+    },
+    "cross_origin_frame_rendered": true,
+    "sensitive_frame_action_attempted": false,
+    "xss_dom_marker_executed": true,
+    "xss_payload": "<img src=data:, onerror=\"document.documentElement.dataset.nhuProof='executed';this.outerHTML='<strong>NHU_XSS_EXECUTED</strong>'\">",
+    "xss_delivery_demonstrated": "local_input_only",
+    "url_query_delivery_executed": false,
+    "victim_delivery_demonstrated": false,
+    "react_numeric_constant": {
+      "found": true,
+      "context": "Transition\"\n              : lanes & 62914560\n                ? \"Suspense\"\n                : lanes & 2080374784\n                  ? \"Idle\"\n                  : \"Other\";\n    }\n    function logComponentTr",
+      "relative_source": "react-dom/cjs/react-dom-client.development.js",
+      "source_sha256": "d27de6648360d44909aca6a3a93b9d306e6cad2d23913caf1b10cc39c896225b"
+    },
+    "react_refresh_contains_todo": true,
+    "synthetic_query_changes_html_body": false
+  },
+  "screenshots": {
+    "frame-rendered.png": "23c1aaccec529e5c1b0f6444e98f180074960e5a12513e8d41641be8c3c649a9",
+    "xss-executed.png": "071c2799d9e923916a3a2c12eebf8868736b5bcef50f8da81a35fa198ade6620"
+  },
+  "blocked_external_origins": [
+    "https://placehold.co"
+  ],
+  "notice": "Read-only HTTP/browser checks on a disposable clone, not a manual Burp run or human timing. No users/passwords were dumped. DOM script execution uses locally typed input, not proven victim delivery. Old Vite chunk paths may not exist in this rebuild. Reproduction on this commit does not prove identical behavior at the unrecorded original scan commit."
+}
