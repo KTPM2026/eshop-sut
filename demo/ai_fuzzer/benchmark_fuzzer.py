@@ -12,7 +12,10 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from ai_fuzzer import AIFuzzer
+try:
+    from .ai_fuzzer import AIFuzzer
+except ImportError:
+    from ai_fuzzer import AIFuzzer
 
 TARGET_URL = "http://localhost:3001/api/products?search="
 DEFAULT_RUNS = 3

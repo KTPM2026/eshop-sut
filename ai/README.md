@@ -1,5 +1,39 @@
 # Không gian làm việc của Nguyễn Nhật Lân
 
+## Trạng thái hiện tại — 18/10/2026
+
+| Phần | Đã chuẩn bị | Còn phụ thuộc |
+|---|---|---|
+| A3a | Config/schema, adapter OpenAI, test HTTP giả | Provider/model, quyền gửi dữ liệu, hạn mức/key và cloud smoke test |
+| A1 | H1 thật, 11 ID backend, input khóa hash và hai bản review riêng | Nhãn độc lập Như/Phát, inference live và N3 |
+| A2 | Runner offline mới, reset WAF, budget chung, checkpoint SQLi từng attempt; 9 lượt HTTP thật trên lab tách biệt | Nhóm duyệt oracle; nguồn AI tĩnh và benchmark LLM live |
+| A3b | Cache offline có hash nguồn/payload; replay kiểm tra hash và không gọi mạng | Output A1 live; video nếu đưa vào phạm vi |
+
+[Kế hoạch hoàn thiện](01_ke-hoach-hoan-thien-lan.md), [báo cáo](bao-cao-tien-do-lan.md), [bộ review độc lập](A1_ai_triage/review_bundle_v1/README.md).
+
+Chạy từ gốc repo với dependency Python trong `ai/requirements.txt` và Node tại `backend/node_modules`:
+
+Kiểm chứng cập nhật: **38/38 unittest pass**, 9/9 lượt benchmark offline HTTP thật đạt oracle đề xuất. [Danh mục hash bàn giao](artifact_inventory_2026-10-18.json) bảo toàn hash nguồn/đầu ra hiện tại; không xác nhận nhãn hay chất lượng AI.
+
+```powershell
+$env:PYTHONDONTWRITEBYTECODE='1'
+python -X utf8 -m unittest discover -s ai/tests -v
+python -X utf8 -m ai.A2_fuzzer_benchmark.isolated_lab --output ai/outputs/offline-new-run.json
+python -X utf8 -m ai.A3b_video_cache.artifacts --source ai/A3b_video_cache/cache/offline_v1.json --replay
+```
+
+Launcher sao chép ba file H3 vào thư mục tạm, khởi động cổng trống với database riêng, chạy benchmark rồi dừng đúng process. Server gốc tự reset database khi khởi động nên không khởi động nó để chạy lại trên dữ liệu hiện hữu.
+
+[Kết quả mới](A2_fuzzer_benchmark/results/offline_v1.json): `wordlist_static`, `fixed_candidates`, `heuristic_feedback`, 3 lượt/nhánh, đạt checkpoint sau 5/6/2 request tấn công mỗi lượt. Tổng 39 request tấn công + 36 request phụ benchmark; launcher có request chờ server sẵn sàng ngoài tổng này. Không có lời gọi cloud.
+
+Oracle đề xuất cho câu SQLi H3 so sánh ID kết quả với SQL ghép chuỗi và truy vấn parameterized trên cùng snapshot id/name. Cần nhóm rà soát; không đánh giá XSS hoặc hiệu quả LLM cloud. Danh sách cố định chưa có provenance sinh AI. N=50 là trần đề xuất; nguồn cạn hoặc đạt checkpoint thì dừng sớm.
+
+Entry point chính mới là `isolated_lab` ở trên. `ai/A2_fuzzer_benchmark/runner.py` chỉ giữ scaffold/template cũ để tương thích; script/kết quả tại `demo/ai_fuzzer` là thực nghiệm cũ. Công cụ cache mới từ chối thiếu dữ liệu, hash sai và ghi đè artifact.
+
+## Nội dung bàn giao lịch sử ngày 16–17/10
+
+Các bảng trạng thái cũ bên dưới được giữ làm lịch sử; dùng mục ngày 18/10 ở trên cho công việc hiện tại. Liên kết tới proposal/đề cương trong bản cũ chưa có file đích tại checkout này.
+
 **MSSV:** 23120289. **Nhánh:** `lan/ai-workspace`. Cập nhật: 16/10/2026.
 
 Phạm vi A1, A2, A3a, A3b, A4 theo [đề cương](../docs/de-cuong-seminar.md) và [proposal AI](../docs/ai_proposal.md). Không thay phần N1–N4 của Thạch Như, không tạo nhãn chuẩn N2/P2, không triển khai Fuzzer L2 hoặc bộ lọc H3.

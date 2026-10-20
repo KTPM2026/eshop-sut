@@ -1,5 +1,7 @@
 # Kế hoạch A1–A4 của Nguyễn Nhật Lân
 
+> Lịch sử ngày 16/10/2026. Trạng thái hiện tại ngày 18/10 ở [README](README.md) và [kế hoạch hoàn thiện](01_ke-hoach-hoan-thien-lan.md). H1/H3/L2 đã tích hợp; các dòng chờ chúng bên dưới chỉ mô tả thời điểm lập kế hoạch ban đầu.
+
 **MSSV:** 23120289. **Ngày:** 16/10/2026. **Nhánh:** `lan/ai-workspace`.
 
 Đối chiếu [bảng phân công](../docs/de-cuong-seminar.md) và [proposal](../docs/ai_proposal.md), đặc biệt mục 8–9. Thư mục này thực hiện yêu cầu dựng workspace trong `prompt.md`, không xác nhận thay nhóm các quyết định còn mở.
