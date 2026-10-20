@@ -1,0 +1,833 @@
+{
+  "schema_version": "nhu-live-assisted-comparison-v1",
+  "_meta": {
+    "created_at_utc": "2026-10-20T14:08:17.288411+00:00",
+    "evaluation_mode": "non_independent_assisted_reference",
+    "live_outputs_observed": true,
+    "is_synthetic": false,
+    "is_benchmark_result": false,
+    "is_ground_truth": false,
+    "independent_human_review": false,
+    "assisted_method_accepted_by_student": true,
+    "acceptance_source": "User confirmation in conversation on 2026-10-20",
+    "human_labels_verified": false,
+    "human_adjudication_confirmed": false,
+    "human_timing_measured": false,
+    "run_count": 3,
+    "notice": "Actual live artifacts compared with an AI-assisted reference, not adjudicated truth. Metrics are conditional agreement only, not independently validated vulnerability detection quality. No claim of time saving."
+  },
+  "dataset": {
+    "dataset_id": "lan-review-v1-api3000-live-comparison",
+    "data_origin": "real_zap",
+    "source_sha256": "275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea",
+    "raw_zap_sha256": "fee6ce5be6ab6dc619ec23efa1b1054468c13a29f4847f4c6b27f5d8cad438bf",
+    "origin": "http://localhost:3000",
+    "records": 11,
+    "source_byte_variants": {
+      "lf": "275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea",
+      "crlf": "ef539a916009c976a2dcffc8028be270e7f9c45646299847fdda89f0d059e2e7"
+    }
+  },
+  "reference": {
+    "source": "Nhu/N2_gan_nhan/assisted-review/nhu-review.json",
+    "source_content_sha256": "3eb4e300ae4dda9c6404fdf2e18c33680ff899a539a145dfe9171a20fd7d0e75",
+    "source_record_count": 29,
+    "projected_record_count": 11,
+    "labels": [
+      {
+        "alert_id": "zap-d2385c33b96b1383",
+        "phat_group": 3,
+        "risk": "High",
+        "is_real": true,
+        "priority": "P1",
+        "reason": "Đối chứng tên không tồn tại trả 0 sản phẩm; cùng prefix với OR 1=1 trả 5, OR 1=2 trả 0; dấu nháy gây 500. Có hiệu ứng boolean trên dữ liệu thật và source nối chuỗi SQL, không kết luận chỉ từ 500. Chưa dump users trong lượt Như.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/sql-control; evidence/main-13f4d88/verification.json#/requests/sql-true; evidence/main-13f4d88/verification.json#/requests/sql-false; evidence/main-13f4d88/verification.json#/requests/sql-quote",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-f173fdff11f41cfe",
+        "phat_group": 4,
+        "risk": "Medium",
+        "is_real": null,
+        "priority": null,
+        "reason": "Wildcard có thật nhưng các instance alert là API sản phẩm công khai. Browser đọc được sản phẩm khi omit credentials; include credentials bị chặn; /api/users/me không có token trả 401, không lộ profile. Chưa có policy origin hoặc bằng chứng đọc dữ liệu riêng qua CORS. Không suy wildcard thành lỗ hổng, cũng không kết luận toàn bộ CORS an toàn.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-private-guest; evidence/main-13f4d88/verification.json#/checkpoints/cors",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-8e21086f2ff27a84",
+        "phat_group": 4,
+        "risk": "Medium",
+        "is_real": null,
+        "priority": null,
+        "reason": "Wildcard có thật nhưng các instance alert là API sản phẩm công khai. Browser đọc được sản phẩm khi omit credentials; include credentials bị chặn; /api/users/me không có token trả 401, không lộ profile. Chưa có policy origin hoặc bằng chứng đọc dữ liệu riêng qua CORS. Không suy wildcard thành lỗ hổng, cũng không kết luận toàn bộ CORS an toàn.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-private-guest; evidence/main-13f4d88/verification.json#/checkpoints/cors",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-701994b405476380",
+        "phat_group": 4,
+        "risk": "Medium",
+        "is_real": null,
+        "priority": null,
+        "reason": "Wildcard có thật nhưng các instance alert là API sản phẩm công khai. Browser đọc được sản phẩm khi omit credentials; include credentials bị chặn; /api/users/me không có token trả 401, không lộ profile. Chưa có policy origin hoặc bằng chứng đọc dữ liệu riêng qua CORS. Không suy wildcard thành lỗ hổng, cũng không kết luận toàn bộ CORS an toàn.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-private-guest; evidence/main-13f4d88/verification.json#/checkpoints/cors",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-944ee923a3688327",
+        "phat_group": 5,
+        "risk": "Low",
+        "is_real": true,
+        "priority": "P4",
+        "reason": "Response sản phẩm/detail xác nhận X-Powered-By: Express. Ghi nhận lộ tech stack/hardening mức thấp; chưa chứng minh khai thác độc lập hoặc lộ dữ liệu riêng từ header.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-detail",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-a7915c01b0ed4fad",
+        "phat_group": 5,
+        "risk": "Low",
+        "is_real": true,
+        "priority": "P4",
+        "reason": "Response sản phẩm/detail xác nhận X-Powered-By: Express. Ghi nhận lộ tech stack/hardening mức thấp; chưa chứng minh khai thác độc lập hoặc lộ dữ liệu riêng từ header.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-detail",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-5551fe58281070be",
+        "phat_group": 5,
+        "risk": "Low",
+        "is_real": true,
+        "priority": "P4",
+        "reason": "Response sản phẩm/detail xác nhận X-Powered-By: Express. Ghi nhận lộ tech stack/hardening mức thấp; chưa chứng minh khai thác độc lập hoặc lộ dữ liệu riêng từ header.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-detail",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-d21aa8d9db78cb56",
+        "phat_group": 6,
+        "risk": "Low",
+        "is_real": true,
+        "priority": "P4",
+        "reason": "API sản phẩm/detail không có X-Content-Type-Options; MIME quan sát là JSON. Xác nhận điều kiện thiếu header theo rubric cấu hình/hardening, chưa chứng minh MIME-sniffing exploit. Nhóm cần đồng ý đưa hardening vào lớp dương khi chấm N3.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-detail",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-685ded1c24df762f",
+        "phat_group": 6,
+        "risk": "Low",
+        "is_real": true,
+        "priority": "P4",
+        "reason": "API sản phẩm/detail không có X-Content-Type-Options; MIME quan sát là JSON. Xác nhận điều kiện thiếu header theo rubric cấu hình/hardening, chưa chứng minh MIME-sniffing exploit. Nhóm cần đồng ý đưa hardening vào lớp dương khi chấm N3.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-detail",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-701ab0a1a67682ed",
+        "phat_group": 6,
+        "risk": "Low",
+        "is_real": true,
+        "priority": "P4",
+        "reason": "API sản phẩm/detail không có X-Content-Type-Options; MIME quan sát là JSON. Xác nhận điều kiện thiếu header theo rubric cấu hình/hardening, chưa chứng minh MIME-sniffing exploit. Nhóm cần đồng ý đưa hardening vào lớp dương khi chấm N3.",
+        "evidence_ref": "evidence/main-13f4d88/verification.json#/requests/api-products; evidence/main-13f4d88/verification.json#/requests/api-detail",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      },
+      {
+        "alert_id": "zap-9baea899de1db2e7",
+        "phat_group": 7,
+        "risk": "Informational",
+        "is_real": false,
+        "priority": "P4",
+        "reason": "Authentication Request Identified là nhận diện endpoint đăng nhập, không phải chứng cứ lỗi xác thực. Không suy ra mọi chức năng login an toàn; các lỗi login khác nằm ngoài kết luận của alert này.",
+        "evidence_ref": "alert/2026-10-14-ZAP-Report-.json (original source group 7)",
+        "review_method": "ai_assisted_after_peer_reference",
+        "independent_human_review": false,
+        "human_approved": false,
+        "human_elapsed_seconds": null
+      }
+    ],
+    "independent_human_review": false,
+    "is_ground_truth": false,
+    "counts": {
+      "true": 7,
+      "unknown": 3,
+      "false": 1
+    }
+  },
+  "config": {
+    "provider": "openai",
+    "model": "qwen/qwen3.8-27b",
+    "base_url": "https://api.groq.com/openai/v1",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "timeout_seconds": 30.0,
+    "group_approved": true
+  },
+  "baseline_risk_against_assisted_reference": {
+    "total_records": 11,
+    "scored_records": 8,
+    "excluded_unresolved_truth": 3,
+    "tp": 1,
+    "fp": 0,
+    "tn": 1,
+    "fn_explicit_false": 6,
+    "abstain_on_true": 0,
+    "abstain_on_false": 0,
+    "precision": 1.0,
+    "recall": 0.14285714285714285,
+    "f1": 0.25,
+    "accuracy": 0.25,
+    "classification_coverage": 1.0,
+    "priority_accuracy": 0.25,
+    "priority_matches": 2,
+    "true_labeled_false": 6,
+    "true_assigned_P4": 0,
+    "true_labeled_false_or_P4": 6,
+    "true_downgraded_from_P1_P2_to_P3_P4": 0,
+    "safety_alert_ids": {
+      "false": [
+        "zap-944ee923a3688327",
+        "zap-a7915c01b0ed4fad",
+        "zap-5551fe58281070be",
+        "zap-d21aa8d9db78cb56",
+        "zap-685ded1c24df762f",
+        "zap-701ab0a1a67682ed"
+      ],
+      "P4": [],
+      "downgraded_to_low": [],
+      "abstain": []
+    },
+    "notice": "Mẫu số 0 là null. Recall/F1 tính abstain trên lỗi thật là bỏ sót; Accuracy tính mọi abstain là chưa đúng, không loại khỏi mẫu số."
+  },
+  "runs": [
+    {
+      "run_id": "8e89ad87-c11c-417d-a613-6b1a66d80c3d",
+      "result_content_sha256": "ee4ceebcf789064cf3fa698ea3174a8aa16b0b6ee6ba496ae239249e25d1a890",
+      "source_sha256_reported_by_run": "ef539a916009c976a2dcffc8028be270e7f9c45646299847fdda89f0d059e2e7",
+      "created_at_utc": "2026-10-20T12:06:18.869281+00:00",
+      "updated_at_utc": "2026-10-20T12:21:36.512435+00:00",
+      "conditional_metrics_against_assisted_reference": {
+        "total_records": 11,
+        "scored_records": 8,
+        "excluded_unresolved_truth": 3,
+        "tp": 6,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_false": 0,
+        "abstain_on_true": 1,
+        "abstain_on_false": 1,
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1": 0.9230769230769231,
+        "accuracy": 0.75,
+        "classification_coverage": 0.75,
+        "priority_accuracy": 0.125,
+        "priority_matches": 1,
+        "true_labeled_false": 0,
+        "true_assigned_P4": 0,
+        "true_labeled_false_or_P4": 0,
+        "true_downgraded_from_P1_P2_to_P3_P4": 0,
+        "safety_alert_ids": {
+          "false": [],
+          "P4": [],
+          "downgraded_to_low": [],
+          "abstain": [
+            "zap-d2385c33b96b1383"
+          ]
+        },
+        "notice": "Mẫu số 0 là null. Recall/F1 tính abstain trên lỗi thật là bỏ sót; Accuracy tính mọi abstain là chưa đúng, không loại khỏi mẫu số."
+      },
+      "comparisons": [
+        {
+          "alert_id": "zap-d2385c33b96b1383",
+          "reference_is_real": true,
+          "reference_priority": "P1",
+          "ai_is_real": null,
+          "ai_priority": "P2",
+          "classification_agrees": false,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-f173fdff11f41cfe",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-8e21086f2ff27a84",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-701994b405476380",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-944ee923a3688327",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-a7915c01b0ed4fad",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-5551fe58281070be",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-d21aa8d9db78cb56",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-685ded1c24df762f",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-701ab0a1a67682ed",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-9baea899de1db2e7",
+          "reference_is_real": false,
+          "reference_priority": "P4",
+          "ai_is_real": null,
+          "ai_priority": "P4",
+          "classification_agrees": false,
+          "priority_agrees": true
+        }
+      ],
+      "api_calls": 14,
+      "successful_calls": 11,
+      "failed_calls": 3,
+      "response_ids": [
+        "chatcmpl-c7a811b4-7577-4337-b002-ee05d7ef42ae",
+        "chatcmpl-747ec809-ab4b-4a74-aee3-f65f346ed6b7",
+        "chatcmpl-cf353ec5-3bab-4600-bf85-18bf581b0281",
+        "chatcmpl-831a30cc-cca9-45e2-afe3-a5c7dc383803",
+        "chatcmpl-98df75dc-39f1-4a4e-bc42-e635339ef6b0",
+        "chatcmpl-7246d2dd-a721-452a-bf67-3b533e16a148",
+        "chatcmpl-114aa029-f006-4ee3-bbb6-bc7bdfa77712",
+        "chatcmpl-ace7ce73-4027-4cc0-8c89-8825bae75be1",
+        "chatcmpl-b7a821e4-f5f1-48fb-80c1-3fb825e4fac4",
+        "chatcmpl-335f2698-7b6f-4979-a5d8-8a3a9c14da40",
+        "chatcmpl-78536ed1-d070-4ca6-807b-95227b7c3c3d"
+      ],
+      "reported_tokens": 4600,
+      "calls_without_usage": 3,
+      "prediction_counts": {
+        "unknown": 5,
+        "true": 6
+      },
+      "priority_counts": {
+        "P2": 1,
+        "P3": 9,
+        "P4": 1
+      },
+      "timing": {
+        "api_latency_seconds": 14.418717,
+        "first_to_last_checkpoint_seconds": 917.643154,
+        "pipeline_seconds": null,
+        "human_review_seconds": null,
+        "manual_total_seconds": null,
+        "time_saved_fraction": null,
+        "notice": "API latency excludes throttling/I-O; checkpoint span can include resume pauses. Neither is human timing or a measured complete pipeline."
+      }
+    },
+    {
+      "run_id": "a9403d07-c7dd-4b48-8dad-de47eed35537",
+      "result_content_sha256": "64f84e0229bc9835715ec3438b49de3b16bd974b58c69175a160fe93bdb55c53",
+      "source_sha256_reported_by_run": "ef539a916009c976a2dcffc8028be270e7f9c45646299847fdda89f0d059e2e7",
+      "created_at_utc": "2026-10-20T12:25:13.102370+00:00",
+      "updated_at_utc": "2026-10-20T12:27:43.773884+00:00",
+      "conditional_metrics_against_assisted_reference": {
+        "total_records": 11,
+        "scored_records": 8,
+        "excluded_unresolved_truth": 3,
+        "tp": 6,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_false": 0,
+        "abstain_on_true": 1,
+        "abstain_on_false": 1,
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1": 0.9230769230769231,
+        "accuracy": 0.75,
+        "classification_coverage": 0.75,
+        "priority_accuracy": 0.125,
+        "priority_matches": 1,
+        "true_labeled_false": 0,
+        "true_assigned_P4": 0,
+        "true_labeled_false_or_P4": 0,
+        "true_downgraded_from_P1_P2_to_P3_P4": 0,
+        "safety_alert_ids": {
+          "false": [],
+          "P4": [],
+          "downgraded_to_low": [],
+          "abstain": [
+            "zap-d2385c33b96b1383"
+          ]
+        },
+        "notice": "Mẫu số 0 là null. Recall/F1 tính abstain trên lỗi thật là bỏ sót; Accuracy tính mọi abstain là chưa đúng, không loại khỏi mẫu số."
+      },
+      "comparisons": [
+        {
+          "alert_id": "zap-d2385c33b96b1383",
+          "reference_is_real": true,
+          "reference_priority": "P1",
+          "ai_is_real": null,
+          "ai_priority": "P2",
+          "classification_agrees": false,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-f173fdff11f41cfe",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-8e21086f2ff27a84",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-701994b405476380",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-944ee923a3688327",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-a7915c01b0ed4fad",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-5551fe58281070be",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-d21aa8d9db78cb56",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-685ded1c24df762f",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-701ab0a1a67682ed",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-9baea899de1db2e7",
+          "reference_is_real": false,
+          "reference_priority": "P4",
+          "ai_is_real": null,
+          "ai_priority": "P4",
+          "classification_agrees": false,
+          "priority_agrees": true
+        }
+      ],
+      "api_calls": 11,
+      "successful_calls": 11,
+      "failed_calls": 0,
+      "response_ids": [
+        "chatcmpl-54d527fe-4bb8-4f20-984a-d9ed5a6dd2b9",
+        "chatcmpl-05aa7b3b-9124-4e93-8875-1c3a37215e9e",
+        "chatcmpl-6616aa74-613d-484e-a903-1929b1f11e8f",
+        "chatcmpl-a4567c3c-af3a-47de-a1c3-fec2a5fa0e21",
+        "chatcmpl-a414f112-dafa-45fa-91a7-b71c710878ce",
+        "chatcmpl-f0a58d10-132c-4bb0-975b-3dfcea60734e",
+        "chatcmpl-d43bf835-6208-44e9-b2a5-83d80f399a86",
+        "chatcmpl-531a4e4a-b06b-4b3d-a8fd-4e0f8f526ecf",
+        "chatcmpl-0011ce20-549e-4f2d-ac6b-60a17f8ed007",
+        "chatcmpl-3b94e32c-b1c7-468f-8357-869088ae6917",
+        "chatcmpl-bd8f8133-408b-4770-9c4c-2eb2ffeceb83"
+      ],
+      "reported_tokens": 4600,
+      "calls_without_usage": 0,
+      "prediction_counts": {
+        "unknown": 5,
+        "true": 6
+      },
+      "priority_counts": {
+        "P2": 1,
+        "P3": 9,
+        "P4": 1
+      },
+      "timing": {
+        "api_latency_seconds": 8.891284,
+        "first_to_last_checkpoint_seconds": 150.671514,
+        "pipeline_seconds": null,
+        "human_review_seconds": null,
+        "manual_total_seconds": null,
+        "time_saved_fraction": null,
+        "notice": "API latency excludes throttling/I-O; checkpoint span can include resume pauses. Neither is human timing or a measured complete pipeline."
+      }
+    },
+    {
+      "run_id": "5356fd11-f686-4513-aba6-84d2840a66f1",
+      "result_content_sha256": "13be7523341782fa442e06d8b9c9cdaa2985beb27ea136d3bb2bb999d44403f7",
+      "source_sha256_reported_by_run": "ef539a916009c976a2dcffc8028be270e7f9c45646299847fdda89f0d059e2e7",
+      "created_at_utc": "2026-10-20T12:28:23.190782+00:00",
+      "updated_at_utc": "2026-10-20T12:30:53.860443+00:00",
+      "conditional_metrics_against_assisted_reference": {
+        "total_records": 11,
+        "scored_records": 8,
+        "excluded_unresolved_truth": 3,
+        "tp": 6,
+        "fp": 0,
+        "tn": 0,
+        "fn_explicit_false": 0,
+        "abstain_on_true": 1,
+        "abstain_on_false": 1,
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1": 0.9230769230769231,
+        "accuracy": 0.75,
+        "classification_coverage": 0.75,
+        "priority_accuracy": 0.125,
+        "priority_matches": 1,
+        "true_labeled_false": 0,
+        "true_assigned_P4": 0,
+        "true_labeled_false_or_P4": 0,
+        "true_downgraded_from_P1_P2_to_P3_P4": 0,
+        "safety_alert_ids": {
+          "false": [],
+          "P4": [],
+          "downgraded_to_low": [],
+          "abstain": [
+            "zap-d2385c33b96b1383"
+          ]
+        },
+        "notice": "Mẫu số 0 là null. Recall/F1 tính abstain trên lỗi thật là bỏ sót; Accuracy tính mọi abstain là chưa đúng, không loại khỏi mẫu số."
+      },
+      "comparisons": [
+        {
+          "alert_id": "zap-d2385c33b96b1383",
+          "reference_is_real": true,
+          "reference_priority": "P1",
+          "ai_is_real": null,
+          "ai_priority": "P2",
+          "classification_agrees": false,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-f173fdff11f41cfe",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-8e21086f2ff27a84",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-701994b405476380",
+          "reference_is_real": null,
+          "reference_priority": null,
+          "ai_is_real": null,
+          "ai_priority": "P3",
+          "classification_agrees": null,
+          "priority_agrees": null
+        },
+        {
+          "alert_id": "zap-944ee923a3688327",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-a7915c01b0ed4fad",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-5551fe58281070be",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-d21aa8d9db78cb56",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-685ded1c24df762f",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-701ab0a1a67682ed",
+          "reference_is_real": true,
+          "reference_priority": "P4",
+          "ai_is_real": true,
+          "ai_priority": "P3",
+          "classification_agrees": true,
+          "priority_agrees": false
+        },
+        {
+          "alert_id": "zap-9baea899de1db2e7",
+          "reference_is_real": false,
+          "reference_priority": "P4",
+          "ai_is_real": null,
+          "ai_priority": "P4",
+          "classification_agrees": false,
+          "priority_agrees": true
+        }
+      ],
+      "api_calls": 11,
+      "successful_calls": 11,
+      "failed_calls": 0,
+      "response_ids": [
+        "chatcmpl-0e11acac-9205-4720-80cb-5472bb8c59a8",
+        "chatcmpl-cbcfd6e8-5a3d-45d7-9925-bfed6a5a5533",
+        "chatcmpl-ac37d335-eec8-4ddd-a62b-089c77139aa3",
+        "chatcmpl-5a615ebe-c2e2-4246-aaba-b5a9d64fa47e",
+        "chatcmpl-82f8f206-072d-4363-aaf8-93b67a5e844c",
+        "chatcmpl-b3e0bdef-8d42-414c-89be-f582820bcfc2",
+        "chatcmpl-273dfefa-ddc0-4ef9-833d-ed2aaf6dabec",
+        "chatcmpl-d1f219cc-6e8c-4e13-a2f0-9135f90411fc",
+        "chatcmpl-b9784a16-fe0f-46d0-8528-66457a43074d",
+        "chatcmpl-15c129d3-3e52-46cc-a4aa-d1dc3ab16c56",
+        "chatcmpl-cc3dc1c9-7956-44aa-b99f-eb1badcf6cb8"
+      ],
+      "reported_tokens": 4600,
+      "calls_without_usage": 0,
+      "prediction_counts": {
+        "unknown": 5,
+        "true": 6
+      },
+      "priority_counts": {
+        "P2": 1,
+        "P3": 9,
+        "P4": 1
+      },
+      "timing": {
+        "api_latency_seconds": 9.463972,
+        "first_to_last_checkpoint_seconds": 150.669661,
+        "pipeline_seconds": null,
+        "human_review_seconds": null,
+        "manual_total_seconds": null,
+        "time_saved_fraction": null,
+        "notice": "API latency excludes throttling/I-O; checkpoint span can include resume pauses. Neither is human timing or a measured complete pipeline."
+      }
+    }
+  ],
+  "summary": {
+    "precision": {
+      "defined_runs": 3,
+      "undefined_runs": 0,
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "recall": {
+      "defined_runs": 3,
+      "undefined_runs": 0,
+      "mean": 0.8571428571428571,
+      "min": 0.8571428571428571,
+      "max": 0.8571428571428571
+    },
+    "f1": {
+      "defined_runs": 3,
+      "undefined_runs": 0,
+      "mean": 0.9230769230769231,
+      "min": 0.9230769230769231,
+      "max": 0.9230769230769231
+    },
+    "accuracy": {
+      "defined_runs": 3,
+      "undefined_runs": 0,
+      "mean": 0.75,
+      "min": 0.75,
+      "max": 0.75
+    },
+    "classification_coverage": {
+      "defined_runs": 3,
+      "undefined_runs": 0,
+      "mean": 0.75,
+      "min": 0.75,
+      "max": 0.75
+    },
+    "priority_accuracy": {
+      "defined_runs": 3,
+      "undefined_runs": 0,
+      "mean": 0.125,
+      "min": 0.125,
+      "max": 0.125
+    }
+  },
+  "provenance": {
+    "source_commit": "9fd85126f44a0b323c3b6b475a248bd409272c18",
+    "source_repository": "https://github.com/KTPM2026/eshop-sut",
+    "source_pull_request": 5,
+    "inference_reissued_by_this_tool": false,
+    "archive_files": [
+      {
+        "file": "input.json",
+        "upstream_path": "ai/A1_ai_triage/review_bundle_v1/alerts.json",
+        "sha256": "275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea"
+      },
+      {
+        "file": "run-1.json",
+        "upstream_path": "ai/A1_ai_triage/results/live_2026-10-20_run1.json",
+        "sha256": "54488977aa6b34cfb98ec5bb110f8c614954da586c3e3ea0dadb9efae7d8c48b"
+      },
+      {
+        "file": "run-2.json",
+        "upstream_path": "ai/A1_ai_triage/results/live_2026-10-20_run2.json",
+        "sha256": "f3f3b94ce228e542126ad7739c8dcc862622a5014ebb4667bcb0ae2b8f2ee4af"
+      },
+      {
+        "file": "run-3.json",
+        "upstream_path": "ai/A1_ai_triage/results/live_2026-10-20_run3.json",
+        "sha256": "e968d663b05629609323bace4e0e3105c89ffc2019e80bcd96e51049da007ebe"
+      }
+    ]
+  }
+}

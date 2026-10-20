@@ -145,7 +145,7 @@ def validate_result(document, dataset, *, synthetic):
     if not synthetic:
         require(meta.get("execution_mode") == "live" and
                 meta.get("model_inference_performed") is True and
-                meta.get("data_origin") in ("real_zap", "unverified_external") and
+                meta.get("data_origin") in ("real_zap", "real_zap_redacted", "unverified_external") and
                 config.get("group_approved") is True,
                 "Chỉ nhận run AI thật được duyệt; mock/sample không phải benchmark.")
     rows = indexed_rows(document.get("results"))

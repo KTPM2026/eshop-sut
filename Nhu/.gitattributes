@@ -7,3 +7,4 @@ N2_gan_nhan/data/** -text
 N2_gan_nhan/evidence/** -text
 N2_gan_nhan/assisted-review/** -text
 N2_gan_nhan/verify_local.cjs -text
+N3_benchmark_triage/evidence/** -text

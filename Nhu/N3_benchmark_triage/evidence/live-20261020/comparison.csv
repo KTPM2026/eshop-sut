@@ -1,0 +1,4 @@
+run_id,evaluation_mode,is_benchmark_result,precision,recall,f1,accuracy,classification_coverage,priority_accuracy,true_labeled_false,true_assigned_P4,true_labeled_false_or_P4,excluded_unresolved_truth,api_latency_seconds,human_review_seconds,time_saved_fraction
+8e89ad87-c11c-417d-a613-6b1a66d80c3d,non_independent_assisted_reference,False,1.0,0.8571428571428571,0.9230769230769231,0.75,0.75,0.125,0,0,0,3,14.418717,,
+a9403d07-c7dd-4b48-8dad-de47eed35537,non_independent_assisted_reference,False,1.0,0.8571428571428571,0.9230769230769231,0.75,0.75,0.125,0,0,0,3,8.891284,,
+5356fd11-f686-4513-aba6-84d2840a66f1,non_independent_assisted_reference,False,1.0,0.8571428571428571,0.9230769230769231,0.75,0.75,0.125,0,0,0,3,9.463972,,

@@ -1,6 +1,8 @@
 # N3: Bộ chấm benchmark AI Triage
 
-**Đã lập trình bộ chấm offline, chưa có benchmark thật.** Không gọi API, không phân loại/prompt lại alert và không sửa A1. Tương thích hợp đồng `lan-ai-v1-proposed` của [A1 hiện có trong main](../../ai/A1_ai_triage/README.md).
+**Cập nhật 20/10:** đã đối chiếu **ba output A1 live thật** của Lân với 11 nhãn tham chiếu AI-assisted được lấy từ bản Như đã có. Xem [JSON/CSV, output gốc và kết quả](evidence/live-20261020/README.md), [báo cáo N4](../N4_slide_baocao/bao-cao-thuc-nghiem.md). Như xác nhận chấp nhận phương pháp không độc lập; không gọi bản tham chiếu là ground truth. Chưa có human timing, chốt nhãn Phát hoặc benchmark độc lập hoàn chỉnh.
+
+Hai luồng tách biệt: `live_review.py` xuất so sánh tham chiếu assisted với `is_benchmark_result=false`; `run.py` bên dưới vẫn yêu cầu nhãn chuẩn và timing đã xác nhận cho benchmark độc lập. Không nới guard hoặc đổi tên assisted thành ground truth. Cả hai đều không gọi API, không viết lại logic/prompt A1.
 
 ## 1. Đầu vào chờ bàn giao
 
@@ -16,11 +18,17 @@ Dataset thật đã chuẩn bị tại [N2/data/h1-20261014](../N2_gan_nhan/data
 
 Sau pull main `d66c263`, đã kiểm thử A1 namespace `ai/` giữ đủ 29 ID khi cho phép cả API 3000 và frontend 5173. Chỉ bật origin API sẽ còn 11 ID, không được ghép output đó với dataset/ground truth 29 ID. Đây là kiểm thử mock, không phải inference.
 
-Nhánh mới của Lân `feat(ai)/benchmark_offline` tại `f56c79f` chưa merge vào main nhưng đã có bundle khóa 11 ID API và hai phiếu trống. [Adapter N2](../N2_gan_nhan/README.md#phương-án-11-id-theo-bundle-mới-của-lân) đã chuẩn bị candidate tương thích: nếu nhóm chọn bộ này, tất cả N2/P2/A1/N3 phải dùng **candidate dataset/input 11 ID** cùng hash `275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea`. Không dùng nhãn/run/hash của bộ 29 hoặc hash raw ZAP thay thế. Chưa tự đổi scope hay tạo manifest benchmark thật.
+Bundle khóa 11 ID API của Lân đã vào `main` tại merge `c1ed1de` (PR #3). Ba output live nằm ở PR #5, commit `9fd8512`; bản nguyên bytes được lưu trong archive N3, không tự merge phần code PR #5. Input Git LF có hash `275f6d14f2f066fe4b1cda3d5ce18f70881e883c469e90ae1d16e6303eb917ea`; run ghi biến thể CRLF `ef539a916009c976a2dcffc8028be270e7f9c45646299847fdda89f0d059e2e7`. Công cụ tính lại cả hai biến thể và kiểm tra ID, không sửa hash run để khớp giả. Review gốc 29 ID không bị ghi đè hoặc trộn với 11 ID.
 
 Benchmark/cache offline mới của Lân thuộc Fuzzer A2, không phải ba output phân loại A1 Triage; không chuyển số liệu đó thành Precision/Recall/F1/Accuracy N3.
 
-N3 không tự tạo ground truth hoặc đo lại inference từ file cache. Adapter N2 chỉ lọc scope và gọi parser H1/A1 sẵn có, không viết lại logic Triage. Các field metadata là khai báo của người cung cấp, không thay bằng chứng thực nghiệm. Chỉ chạy AI sau khi Như/Phát đã khóa nhãn và nhóm duyệt protocol/model.
+N3 không tự tạo ground truth hoặc đo lại inference từ cache. Adapter N2 dùng parser A1 sẵn có; metadata là khai báo của người cung cấp, không phải chứng nhận độc lập. Phương pháp assisted được ghi rõ là phân tích sau khi có output; không trình bày như protocol độc lập đã khóa nhãn trước AI.
+
+Tái lập phần assisted (không gọi model), dùng thư mục output mới:
+
+```powershell
+python -X utf8 -m Nhu.N3_benchmark_triage.live_review --ref 9fd85126f44a0b323c3b6b475a248bd409272c18 --accept-assisted-reference --output-dir Nhu/outputs/live-recheck-new
+```
 
 ## 2. Tệp nhãn chuẩn
 

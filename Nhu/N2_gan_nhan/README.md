@@ -1,4 +1,6 @@
-# N2: Như gán nhãn độc lập lần 1
+# N2: Review alert của Như
+
+**Cập nhật phương pháp 20/10/2026:** Như xác nhận chấp nhận bản **AI-assisted, không độc lập** và ghi rõ giới hạn. Không nhận là đã hoàn tất protocol hai reviewer blind ban đầu, không xác nhận thay Phát và không hồi dựng human timing. Bản 29 ID giữ nguyên quyết định/nguồn; [đối chiếu A1 live](../N3_benchmark_triage/evidence/live-20261020/README.md) chỉ lấy đúng 11 ID API, có 7 true/1 false/3 unknown. Các nhãn này là tham chiếu, không phải ground truth. Các hướng dẫn khóa độc lập bên dưới chỉ áp dụng nếu nhóm thực hiện lại protocol độc lập, không dùng cho bản assisted này.
 
 **Đã có bản review Như được AI hỗ trợ theo yêu cầu mới, sau khi đọc bài Phát trong main `13f4d88`.** Xem ngay [bảng Như và đối chiếu Phát](assisted-review/doi-chieu-phat.md), [JSON](assisted-review/nhu-review.json), [CSV 29 ID](assisted-review/nhu-review.csv). Đây không phải nhãn người độc lập hay Ground Truth đã chốt. Không tạo phiếu/khóa thay Phát.
 
