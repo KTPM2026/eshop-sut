@@ -2,6 +2,7 @@
 
 import json
 import os
+import time
 from typing import Literal
 
 import httpx
@@ -40,13 +41,17 @@ reason bằng tiếng Việt. Trả đúng JSON schema được yêu cầu.
 class AIClient:
     def __init__(self, config: AIConfig | None = None, *,
                  mode: Literal["mock", "live"] = "mock",
-                 transport: httpx.BaseTransport | None = None):
+                 transport: httpx.BaseTransport | None = None,
+                 min_interval_seconds: float = 0):
         """Mock không dùng mạng. Live cần nhóm duyệt cấu hình và key từ môi trường."""
         if mode not in {"mock", "live"}:
             raise ValueError("mode phải là mock hoặc live.")
         self.config = config or AIConfig.from_env()
         self.mode = mode
         self._client = None
+        self.calls = []
+        self.min_interval_seconds = min_interval_seconds
+        self._last_started = 0
         if mode == "live":
             if not self.config.group_approved:
                 raise ValueError("Cần nhóm chốt cấu hình rồi đặt AI_GROUP_APPROVED=1.")
@@ -70,6 +75,13 @@ class AIClient:
             self._client.close()
 
     def _request(self, system: str, data: dict, contract):
+        delay = self.min_interval_seconds - (time.monotonic() - self._last_started)
+        if delay > 0:
+            time.sleep(delay)
+        self._last_started = time.monotonic()
+        started = time.perf_counter()
+        call = {"status": "error", "usage": None}
+        self.calls.append(call)
         try:
             response = self._client.chat.completions.parse(
                 model=self.config.model,
@@ -80,16 +92,26 @@ class AIClient:
                 max_completion_tokens=self.config.max_completion_tokens,
                 store=False,
             )
+            call.update(response_id=response.id, model=response.model,
+                        usage=response.usage.model_dump() if response.usage else None)
             if not response.choices or response.choices[0].message.refusal:
                 raise AIResponseError("AI từ chối hoặc không trả kết quả; cần người rà soát.")
             parsed = response.choices[0].message.parsed
             if parsed is None:
                 raise AIResponseError("AI không trả JSON hợp lệ; không tự chuyển sang mock.")
-            return contract.model_validate(redact(parsed.model_dump()))
+            result = contract.model_validate(redact(parsed.model_dump()))
+            call["status"] = "success"
+            return result
         except (OpenAIError, ValidationError, ValueError) as error:
+            call["error_type"] = type(error).__name__
+            call["http_status"] = getattr(error, "status_code", None)
+            if getattr(error, "response", None) is not None:
+                call["retry_after"] = error.response.headers.get("retry-after")
             raise AIResponseError(
                 f"Gọi/kiểm tra AI thất bại ({type(error).__name__}); không dùng kết quả mô phỏng thay thế."
             ) from None
+        finally:
+            call["latency_ms"] = round((time.perf_counter() - started) * 1000, 3)
 
     def classify_alert(self, alert: dict) -> dict:
         """Nhận Alert JSON; trả sáu trường TriageSuggestion, luôn cần người review.

@@ -1,0 +1,400 @@
+{
+  "schema_version": "lan-ai-v1-proposed",
+  "_meta": {
+    "source_sha256": "ef539a916009c976a2dcffc8028be270e7f9c45646299847fdda89f0d059e2e7",
+    "config": {
+      "provider": "openai",
+      "model": "qwen/qwen3.8-27b",
+      "base_url": "https://api.groq.com/openai/v1",
+      "temperature": 0.0,
+      "max_completion_tokens": 1200,
+      "timeout_seconds": 30.0,
+      "group_approved": true
+    },
+    "prompt_sha256": "69c9a07c97ae3d7670c9c0138a650f87f95271d6a7930ca7341e6ad6d8dacccd",
+    "schema_sha256": "67c7fba89d619bccfdde03486df02e1d099662e00d6109a7cc240085bfde1c01",
+    "alert_ids": [
+      "zap-d2385c33b96b1383",
+      "zap-f173fdff11f41cfe",
+      "zap-8e21086f2ff27a84",
+      "zap-701994b405476380",
+      "zap-944ee923a3688327",
+      "zap-a7915c01b0ed4fad",
+      "zap-5551fe58281070be",
+      "zap-d21aa8d9db78cb56",
+      "zap-685ded1c24df762f",
+      "zap-701ab0a1a67682ed",
+      "zap-9baea899de1db2e7"
+    ],
+    "run_id": "a9403d07-c7dd-4b48-8dad-de47eed35537",
+    "created_at_utc": "2026-10-20T12:25:13.102370+00:00",
+    "execution_mode": "live",
+    "data_origin": "real_zap_redacted",
+    "endpoint": "https://api.groq.com/openai/v1",
+    "model_inference_performed": true,
+    "is_replay": false,
+    "review_required": true,
+    "final_decision": "pending_human_review",
+    "is_benchmark_result": false,
+    "record_count": 11,
+    "status": "completed",
+    "notice": "Inference suggestions only; not human ground truth or N3 evaluation.",
+    "updated_at_utc": "2026-10-20T12:27:43.773884+00:00"
+  },
+  "results": [
+    {
+      "alert_id": "zap-d2385c33b96b1383",
+      "is_real": null,
+      "priority": "P2",
+      "reason": "Bằng chứng chỉ là mã lỗi HTTP 500 khi tham số search chứa dấu nháy đơn. Lỗi 500 có thể do nhiều nguyên nhân (lỗi xử lý, lỗi cơ sở dữ liệu, lỗi ứng dụng) và không đủ để kết luận chắc chắn là SQL Injection. Cần thêm bằng chứng như thông báo lỗi SQL cụ thể, sự khác biệt trong thời gian phản hồi, hoặc dữ liệu bị rò rỉ để xác nhận.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-f173fdff11f41cfe",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "Header Access-Control-Allow-Origin: * được phát hiện trên endpoint /api/products. Đây là cấu hình CORS phổ biến cho các API công khai chỉ đọc (public read-only). Việc sử dụng wildcard (*) không tự động cấu thành lỗ hổng bảo mật nếu endpoint không yêu cầu xác thực (authentication) hoặc không xử lý dữ liệu nhạy cảm. Do thiếu thông tin về việc endpoint có yêu cầu cookie/token hay không, không thể xác nhận đây là cấu hình sai (misconfiguration) dẫn đến rủi ro thực tế. Cần kiểm tra thêm xem API /",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-8e21086f2ff27a84",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "Bằng chứng chỉ là header Access-Control-Allow-Origin: * trên endpoint công khai /api/products/1. Đây là cấu hình CORS phổ biến cho dữ liệu công khai, không có bằng chứng về dữ liệu nhạy cảm, cookie hoặc lỗi xác thực. Không đủ căn cứ để xác nhận lỗ hổng thực tế.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-701994b405476380",
+      "is_real": null,
+      "priority": "P3",
+      "reason": "Header Access-Control-Allow-Origin: * được phát hiện trên endpoint /api/forgot-password. Tuy nhiên, theo RFC 6454, wildcard (*) không được phép kết hợp với Access-Control-Allow-Credentials: true. Nếu endpoint này không trả về cookie hoặc thông tin xác thực nhạy cảm, cấu hình này thường là an toàn và phổ biến cho các API công khai. Cần kiểm tra thêm xem endpoint có yêu cầu xác thực hay không và có header Access-Control-Allow-Credentials hay không để xác định rủi ro thực tế. Hiện tại chưa đủ证据",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-944ee923a3688327",
+      "is_real": true,
+      "priority": "P3",
+      "reason": "Bằng chứng hiển thị rõ ràng header 'X-Powered-By: Express' trong phản hồi HTTP, xác nhận máy chủ đang tiết lộ công nghệ nền tảng. Đây là lỗi thông tin (Information Disclosure) thực tế, không phải giả âm. Mức độ rủi ro thấp vì chỉ tiết lộ tên framework, không trực tiếp dẫn đến khai thác lỗ hổng bảo mật nghiêm trọng, nhưng vẫn nên khắc phục để giảm bề mặt tấn công.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-a7915c01b0ed4fad",
+      "is_real": true,
+      "priority": "P3",
+      "reason": "Bằng chứng hiển thị rõ ràng header 'X-Powered-By: Express' trong phản hồi HTTP. Đây là hành vi xác thực được của máy chủ tiết lộ công nghệ nền tảng, khớp với mô tả cảnh báo và CWE-497. Mức rủi ro thấp vì chỉ là thông tin phụ trợ, không trực tiếp gây lỗ hổng khai thác.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-5551fe58281070be",
+      "is_real": true,
+      "priority": "P3",
+      "reason": "Bằng chứng hiển thị rõ ràng header 'X-Powered-By: Express' trong phản hồi HTTP. Đây là hành vi xác thực được của máy chủ tiết lộ công nghệ nền tảng, khớp với mô tả cảnh báo và CWE-497. Mức rủi ro thấp vì chỉ là thông tin phụ trợ, không trực tiếp gây ra lỗ hổng khai thác được.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-d21aa8d9db78cb56",
+      "is_real": true,
+      "priority": "P3",
+      "reason": "Thiếu header X-Content-Type-Options: nosniff là một lỗ hổng cấu hình bảo mật hợp lệ (CWE-693). Mặc dù rủi ro thấp và thường không dẫn đến khai thác trực tiếp nếu ứng dụng không có các lỗ hổng khác (như XSS), nhưng việc thiếu header này cho phép trình duyệt thực hiện MIME sniffing, có thể làm tăng nguy cơ bị khai thác trong các kịch bản tấn công phức tạp. Đây là một khuyến nghị bảo mật chuẩn mực và nên được khắc phục.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-685ded1c24df762f",
+      "is_real": true,
+      "priority": "P3",
+      "reason": "Thiếu header X-Content-Type-Options: nosniff. Đây là lỗ hổng cấu hình bảo mật phổ biến, cho phép trình duyệt tự suy luận kiểu nội dung (MIME sniffing), có thể dẫn đến rủi ro XSS nếu nội dung không được định nghĩa rõ. Mức độ rủi ro thấp nhưng nên khắc phục bằng cách thêm header này vào phản hồi HTTP.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-701ab0a1a67682ed",
+      "is_real": true,
+      "priority": "P3",
+      "reason": "Thiếu header X-Content-Type-Options: nosniff. Đây là lỗ hổng cấu hình bảo mật (CWE-693) cho phép trình duyệt tự suy luận kiểu nội dung (MIME sniffing), có thể dẫn đến rủi ro XSS nếu nội dung không được định nghĩa rõ. Mức độ rủi ro thấp (Low) vì cần kết hợp với các yếu tố khác để khai thác thành công. Khuyến nghị thêm header này vào phản hồi HTTP.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    },
+    {
+      "alert_id": "zap-9baea899de1db2e7",
+      "is_real": null,
+      "priority": "P4",
+      "reason": "Cảnh báo mang tính thông tin (Informational) xác nhận việc phát hiện tham số 'email' và 'password' trong yêu cầu đăng nhập. Đây là hành vi chuẩn của hệ thống xác thực, không phải lỗ hổng bảo mật. Không có bằng chứng về khai thác hoặc cấu hình sai. Cần kiểm tra thêm các cảnh báo liên quan khác (như brute force, credential stuffing) để đánh giá rủi ro thực tế.",
+      "confidence": 1.0,
+      "trang_thai_bang_chung": "can_xac_minh"
+    }
+  ],
+  "attempts": [
+    {
+      "alert_id": "zap-d2385c33b96b1383",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:25:14.837539+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 157,
+            "prompt_tokens": 270,
+            "total_tokens": 427,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.058092832,
+            "prompt_time": 0.018929126,
+            "completion_time": 0.319286992,
+            "total_time": 0.338216118
+          },
+          "response_id": "chatcmpl-54d527fe-4bb8-4f20-984a-d9ed5a6dd2b9",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 1733.597
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-f173fdff11f41cfe",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:25:28.836487+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 173,
+            "prompt_tokens": 260,
+            "total_tokens": 433,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.05110265,
+            "prompt_time": 0.018432189,
+            "completion_time": 0.355501433,
+            "total_time": 0.373933622
+          },
+          "response_id": "chatcmpl-05aa7b3b-9124-4e93-8875-1c3a37215e9e",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 732.181
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-8e21086f2ff27a84",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:25:43.824767+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 128,
+            "prompt_tokens": 263,
+            "total_tokens": 391,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.122574871,
+            "prompt_time": 0.018759488,
+            "completion_time": 0.256616056,
+            "total_time": 0.275375544
+          },
+          "response_id": "chatcmpl-6616aa74-613d-484e-a903-1929b1f11e8f",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 720.053
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-701994b405476380",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:25:58.858186+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 178,
+            "prompt_tokens": 264,
+            "total_tokens": 442,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.054527796,
+            "prompt_time": 0.018554532,
+            "completion_time": 0.366386499,
+            "total_time": 0.384941031
+          },
+          "response_id": "chatcmpl-a4567c3c-af3a-47de-a1c3-fec2a5fa0e21",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 753.109
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-944ee923a3688327",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:26:13.845321+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 154,
+            "prompt_tokens": 276,
+            "total_tokens": 430,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.059399513,
+            "prompt_time": 0.028416515,
+            "completion_time": 0.323161829,
+            "total_time": 0.351578344
+          },
+          "response_id": "chatcmpl-a414f112-dafa-45fa-91a7-b71c710878ce",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 739.679
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-a7915c01b0ed4fad",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:26:28.828286+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 135,
+            "prompt_tokens": 273,
+            "total_tokens": 408,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.073164305,
+            "prompt_time": 0.030412823,
+            "completion_time": 0.283964225,
+            "total_time": 0.314377048
+          },
+          "response_id": "chatcmpl-f0a58d10-132c-4bb0-975b-3dfcea60734e",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 722.027
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-5551fe58281070be",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:26:43.765560+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 139,
+            "prompt_tokens": 275,
+            "total_tokens": 414,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.058665649,
+            "prompt_time": 0.02188444,
+            "completion_time": 0.28915798,
+            "total_time": 0.31104242
+          },
+          "response_id": "chatcmpl-d43bf835-6208-44e9-b2a5-83d80f399a86",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 659.203
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-d21aa8d9db78cb56",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:26:58.850746+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 169,
+            "prompt_tokens": 261,
+            "total_tokens": 430,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.05990768,
+            "prompt_time": 0.018884098,
+            "completion_time": 0.340285348,
+            "total_time": 0.359169446
+          },
+          "response_id": "chatcmpl-531a4e4a-b06b-4b3d-a8fd-4e0f8f526ecf",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 743.517
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-685ded1c24df762f",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:27:13.792174+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 140,
+            "prompt_tokens": 262,
+            "total_tokens": 402,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.06130766,
+            "prompt_time": 0.017823369,
+            "completion_time": 0.2832534,
+            "total_time": 0.301076769
+          },
+          "response_id": "chatcmpl-0011ce20-549e-4f2d-ac6b-60a17f8ed007",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 684.264
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-701ab0a1a67682ed",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:27:28.847299+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 160,
+            "prompt_tokens": 263,
+            "total_tokens": 423,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.0532195,
+            "prompt_time": 0.017817889,
+            "completion_time": 0.331332085,
+            "total_time": 0.349149974
+          },
+          "response_id": "chatcmpl-3b94e32c-b1c7-468f-8357-869088ae6917",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 738.671
+        }
+      ]
+    },
+    {
+      "alert_id": "zap-9baea899de1db2e7",
+      "status": "success",
+      "created_at_utc": "2026-10-20T12:27:43.773870+00:00",
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 149,
+            "prompt_tokens": 251,
+            "total_tokens": 400,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.053666118,
+            "prompt_time": 0.017591161,
+            "completion_time": 0.299442765,
+            "total_time": 0.317033926
+          },
+          "response_id": "chatcmpl-bd8f8133-408b-4770-9c4c-2eb2ffeceb83",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 664.983
+        }
+      ]
+    }
+  ]
+}

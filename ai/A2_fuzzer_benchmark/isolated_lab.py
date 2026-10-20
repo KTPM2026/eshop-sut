@@ -20,6 +20,7 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--budget", type=int, default=50)
+    parser.add_argument("--mode", choices=["offline", "live"], default="offline")
     args = parser.parse_args()
     if args.output.exists() or args.runs <= 0 or args.budget <= 0:
         parser.error("output must be new and runs/budget must be positive")
@@ -51,7 +52,7 @@ def main():
                 else:
                     raise RuntimeError("Isolated lab did not become ready")
                 return subprocess.run([sys.executable, "-X", "utf8", "-m",
-                    "ai.A2_fuzzer_benchmark.offline", "--base-url", base,
+                    "ai.A2_fuzzer_benchmark." + args.mode, "--base-url", base,
                     "--runs", str(args.runs), "--budget", str(args.budget),
                     "--output", str(args.output.resolve())], cwd=ROOT, env=environment).returncode
             finally:

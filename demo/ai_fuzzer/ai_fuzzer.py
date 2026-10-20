@@ -226,33 +226,7 @@ def run_playback():
     
     if not CACHE_FILE.exists():
         print(f"[!] Không tìm thấy file cache: {CACHE_FILE}")
-        print("[*] Đang khởi tạo dữ liệu cache chuẩn hóa mặc định...")
-        default_cache = {
-            "is_replay": True,
-            "target": DEFAULT_TARGET,
-            "success": True,
-            "total_attempts": 2,
-            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "logs": [
-                {
-                    "attempt": 1,
-                    "payload": "' OR '1'='1",
-                    "status": 403,
-                    "blocked": True,
-                    "reason": "Keyword or space detected",
-                    "latency_ms": 12.5
-                },
-                {
-                    "attempt": 2,
-                    "payload": "1'/**/OR/**/'1'='1",
-                    "status": 200,
-                    "blocked": False,
-                    "reason": None,
-                    "latency_ms": 8.4
-                }
-            ]
-        }
-        CACHE_FILE.write_text(json.dumps(default_cache, indent=2, ensure_ascii=False), encoding="utf-8")
+        return
 
     data = json.loads(CACHE_FILE.read_text(encoding="utf-8"))
     print(f"[+] Nguồn phát lại: {CACHE_FILE.name} (Ghi nhận lúc: {data.get('timestamp')})")
@@ -266,15 +240,12 @@ def run_playback():
         
         if item["blocked"]:
             print(f"[!] WAF kích hoạt chặn (HTTP {item['status']})! Lý do: {item['reason']}")
-            print("[🤖 AI Reasoning Feedback Loop] Nhận diện WAF lọc khoảng trắng và từ khóa OR.")
-            print("[🤖 AI Suggested] Sinh payload thích ứng: Sử dụng inline comment /**/ thay thế khoảng trắng.\n")
             time.sleep(0.8)
         else:
-            print(f"[✔] THÀNH CÔNG! Checkpoint đạt: Server phản hồi HTTP {item['status']} OK.")
-            print(f"[✔] Vượt qua bộ lọc WAF Lab sau đúng {item['attempt']} requests! (Tiết kiệm 85.7% requests)\n")
+            print(f"[*] HTTP {item['status']}; cache cũ thiếu checkpoint từng attempt để xác nhận SQLi.")
 
     print(f"{'='*65}")
-    print(" [HOÀN TẤT PLAYBACK] Quá trình thích ứng tự động tái hiện 100% khớp thực tế.")
+    print(" [HOÀN TẤT PLAYBACK] Chỉ hiển thị log đã lưu; không gọi mạng hoặc xác minh lại.")
     print(f"{'='*65}\n")
 
 def main():

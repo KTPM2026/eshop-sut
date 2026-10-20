@@ -1,5 +1,7 @@
 # Kế hoạch A1–A4 của Nguyễn Nhật Lân
 
+> Cập nhật 20/10/2026: đã chạy A3a/A1 live bằng `ai/.env`, benchmark LLM 9 lượt trên lab tách biệt, tạo cache thật và báo cáo. Xem [báo cáo live](A4_slide_baocao/bao-cao-live-2026-10-20.md). Các block thiếu key/inference bên dưới là lịch sử; nhãn độc lập/N3 và clip vẫn cần người phụ trách cung cấp.
+
 > Lịch sử ngày 16/10/2026. Trạng thái hiện tại ngày 18/10 ở [README](README.md) và [kế hoạch hoàn thiện](01_ke-hoach-hoan-thien-lan.md). H1/H3/L2 đã tích hợp; các dòng chờ chúng bên dưới chỉ mô tả thời điểm lập kế hoạch ban đầu.
 
 **MSSV:** 23120289. **Ngày:** 16/10/2026. **Nhánh:** `lan/ai-workspace`.

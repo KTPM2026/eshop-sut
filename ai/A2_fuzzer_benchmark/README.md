@@ -1,5 +1,7 @@
 # A2: Khung benchmark Fuzzer
 
+> 20/10/2026: đã có nhánh live: `python -X utf8 -m ai.A2_fuzzer_benchmark.isolated_lab --mode live --output ai/outputs/new-live-benchmark.json`. Launcher dùng lab/database tạm; 3 lượt/nhánh, budget 50, tối đa 10 feedback API call/lượt. AI tĩnh sinh đúng 7 ứng viên bằng một call, dùng chung ba lượt, có provenance. Kết quả thật: wordlist 3/3, AI tĩnh 0/3 (hết nguồn), feedback 0/3 (model dừng); không fallback heuristic. [Log](results/live_2026-10-20_v1.json), [báo cáo](../A4_slide_baocao/bao-cao-live-2026-10-20.md). Đường offline vẫn dùng lệnh cũ; scaffold `runner.py` không phải runner thực nghiệm.
+
 > Cập nhật 18/10: entrypoint chính là `python -X utf8 -m ai.A2_fuzzer_benchmark.isolated_lab --output ai/outputs/offline-new-run.json`. Xem [README hiện tại](../README.md) và [kết quả offline v1](results/offline_v1.json). Có budget chung, checkpoint SQLite từng attempt và ba nhánh ghi đúng nguồn offline. `runner.py` dưới đây chỉ giữ scaffold/template cũ để tương thích. Script/kết quả demo được giữ làm lịch sử.
 
 Runner trong thư mục này vẫn là giao diện an toàn và bị block nếu thiếu phụ

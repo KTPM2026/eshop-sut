@@ -1,5 +1,7 @@
 # A3a: Cấu hình và giao diện AI chung
 
+> 20/10/2026: cấu hình thật dùng Groq qua OpenAI-compatible SDK, model `qwen/qwen3.8-27b`. Các CLI live mới đọc `ai/.env` bằng dotenv (không thực thi shell), ghi usage/model trả về/latency/lỗi từng API call. Khi tích hợp bằng Python, gọi `load_environment(Path("ai/.env"))` từ `environment.py` trước khi tạo `AIClient(mode="live")`. `AI_PROVIDER=openai` là adapter; xem `base_url` để xác định dịch vụ. Không tự fallback hoặc retry. Không ghi key vào log. [Báo cáo](../A4_slide_baocao/bao-cao-live-2026-10-20.md).
+
 **Đã triển khai adapter, chưa chạy API thật.** Dùng cho A1 và để Long tích hợp L2; không chứa vòng lặp Fuzzer hay logic chấm benchmark.
 
 ## Cấu hình đề xuất

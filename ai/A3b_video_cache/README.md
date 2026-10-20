@@ -1,5 +1,7 @@
 # A3b: Cache và video AI
 
+> 20/10/2026: đã có [cache triage live](cache/triage_live_2026-10-20_run1.json) và [cache benchmark live](cache/fuzzer_live_2026-10-20_v1.json), giữ nguyên mode/usage/checkpoint và hash. Replay dùng `artifacts --source <cache> --replay`, không gọi mạng. Playback L2 cũ đã bỏ cache thành công tự sinh, lời thoại AI tự chèn và tỷ lệ cố định. Chưa có clip L3/video ghép; trạng thái cache rỗng bên dưới là lịch sử. [Báo cáo hiện tại](../A4_slide_baocao/bao-cao-live-2026-10-20.md).
+
 > Cập nhật 18/10: [cache offline mới](cache/offline_v1.json) có hash nguồn/payload và kết quả 9 lượt. Replay: `python -X utf8 -m ai.A3b_video_cache.artifacts --source ai/A3b_video_cache/cache/offline_v1.json --replay`. Công cụ kiểm tra hash, không gọi mạng, không tạo kết quả khi thiếu cache. Có thể lưu cache A1 ngay khi có inference, đánh giá chất lượng vẫn chờ nhãn/N3. Cache cũ giữ nguyên để truy vết; log 403 → 200 cũ không chứa đủ checkpoint độc lập. Công cụ mới không dùng playback L2 còn có kịch bản mặc định/tỷ lệ cố định.
 
 **BLOCK một phần:** Triage vẫn chờ inference/ground truth N3; Fuzzer đã có

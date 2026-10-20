@@ -1,5 +1,9 @@
 # Báo cáo tiến độ công việc của Nguyễn Nhật Lân
 
+## Cập nhật 20/10/2026
+
+Đã chạy triage live đủ 11 alert, bổ sung checkpoint/resume và provenance/usage; benchmark 9 lượt với model Groq thật trên lab/database tạm; tạo cache triage/fuzzer có hash. Wordlist thành công 3/3, AI tĩnh và AI feedback 0/3. Đã sửa playback cũ để không tự tạo cache thành công/tỷ lệ tiết kiệm cố định. Các lần lỗi được giữ trong log, không fallback mock. Xem [báo cáo live và phần còn phụ thuộc](A4_slide_baocao/bao-cao-live-2026-10-20.md). Nhãn/N3, thời gian thủ công và clip vẫn chưa có; các trạng thái cũ bên dưới là lịch sử.
+
 ## Cập nhật 18/10/2026
 
 - Đã khóa input 11 alert thật, manifest SHA-256 và hai bản review trống riêng tại [review_bundle_v1](A1_ai_triage/review_bundle_v1/README.md). Chưa có nhãn reviewer hoặc inference cloud.

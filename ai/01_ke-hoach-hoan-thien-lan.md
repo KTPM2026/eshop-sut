@@ -1,5 +1,17 @@
 # Kiểm tra hiện trạng và kế hoạch hoàn thiện phần Lân
 
+## Cập nhật thực hiện — 20/10/2026
+
+Theo yêu cầu tiếp tục với cấu hình `ai/.env`, đã triển khai CLI live có dotenv/checkpoint/resume; smoke test và hoàn tất dataset 11 alert; benchmark cloud 3 lượt/nhánh trên lab tách biệt; cache thật có hash; sửa playback cũ để không tự tạo thành công/tỷ lệ cố định. Xem [báo cáo live](A4_slide_baocao/bao-cao-live-2026-10-20.md) và [README](README.md).
+
+- M0: giữ artifact offline/mock và input review đã khóa; kết quả live dùng tên mới.
+- M1 phần phần mềm/A3a: cấu hình thực tế hoạt động với Groq, checkpoint từng alert; lỗi không fallback; lưu usage và hash. Hai bản review vẫn trống.
+- M2: thực nghiệm LLM đã chạy 9 lượt; wordlist thành công 3/3, AI tĩnh 0/3, feedback 0/3 (model dừng). Oracle SQLi vẫn cần người phụ trách rà soát; chưa đánh giá XSS.
+- M3 phần inference: có output thật và chạy các lượt độc lập; N3/Precision/Recall, chốt nhãn và đo thời gian thủ công vẫn cần Như/Phát.
+- M4: cache live và báo cáo kỹ thuật có nguồn; replay không gửi mạng. Clip L3/video ghép và mẫu slide chung chưa được cung cấp.
+
+Các mô tả thiếu key/chưa gọi cloud dưới đây là lịch sử. Không dùng đầu ra model làm nhãn chuẩn.
+
 ## Kết quả thực hiện phần không bị block — 18/10/2026
 
 - M0: đã thêm trạng thái hiện tại ở README/báo cáo, đánh dấu kế hoạch và scaffold cũ là lịch sử, giữ artifact cũ nguyên vẹn. Điểm còn mở về tài liệu gốc/provider/oracle vẫn chưa tự xác nhận thay nhóm.

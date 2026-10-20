@@ -1,5 +1,7 @@
 # A4: Khung slide của Lân
 
+> Cập nhật 20/10/2026: dùng [nội dung 7 slide từ kết quả live](slide-live-2026-10-20.md) để ghép bài chung. Outline bên dưới được giữ làm lịch sử, các dòng chờ inference đã có dữ liệu; nhãn/N3 và clip vẫn chưa có.
+
 **Nguyễn Nhật Lân – 23120289.** TỰ ĐỀ XUẤT - CẦN NHÓM CHỐT: bố cục dưới đây để ghép bài chung, không phải slide kết quả đã hoàn thành. Không làm lại phần lý thuyết của các thành viên.
 
 ## Slide 1: Phạm vi và kiến trúc thực hiện
