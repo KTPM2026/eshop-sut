@@ -144,12 +144,15 @@ Toàn bộ kết quả thực nghiệm thực tế được lưu trữ tại th�
   +-----------------+-----------------+
   | email           | password        |
   +-----------------+-----------------+
-  | admin@eshop.com | Admin123!       |
+  | admin@eshop.com | PwnedAdmin2026! |
   | test@eshop.com  | Test1234!       |
   +-----------------+-----------------+
   ```
+> [!NOTE]
+> **Ghi chú đối soát thực nghiệm:** Trong tệp log thực tế [`demo/sqlmap/sqlmap-logs/sqlmap_dump_passwords.log`](file:///Users/macbookpro/Documents/Nam_4/2_HK1/1_KiemThu/DoAn/eshop-sut/demo/sqlmap/sqlmap-logs/sqlmap_dump_passwords.log), mật khẩu của `admin@eshop.com` hiển thị là `PwnedAdmin2026!` vì kịch bản dump này được thực hiện sau chuỗi kiểm thử tấn công vét cạn OTP thành công ở Mục 3 (đổi mật khẩu sang `PwnedAdmin2026!`). Mật khẩu gốc mặc định của tài khoản quản trị trước khi tấn công là `Admin123!`. Cả hai trạng thái đều chứng minh rõ ràng việc máy chủ lưu trữ mật khẩu ở dạng văn bản thô.
+
 * **Đánh giá lỗ hổng A02 (Cryptographic Failures):**
-  - Mật khẩu của cả tài khoản quản trị (`Admin123!`) lẫn người dùng thông thường (`Test1234!`) đều hiển thị ở dạng **văn bản thô (Plaintext)**.
+  - Mật khẩu của cả tài khoản quản trị (`Admin123!` / `PwnedAdmin2026!`) lẫn người dùng thông thường (`Test1234!`) đều hiển thị ở dạng **văn bản thô (Plaintext)**.
   - Hoàn toàn không có bất kỳ thuật toán băm bảo mật (như bcrypt, Argon2id, PBKDF2) hay muối (Salt) nào được sử dụng.
   - Phân loại điểm yếu: **CWE-312 (Cleartext Storage of Sensitive Information)** và **CWE-256 (Unprotected Storage of Credentials)**.
 
