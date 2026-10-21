@@ -34,8 +34,9 @@ def get_groq_api_key():
     if not key:
         env_paths = [
             Path(__file__).parent / ".env",
+            Path(__file__).resolve().parents[2] / "Lan" / ".env",
+            Path(__file__).resolve().parents[2] / "ai" / ".env",
             Path(__file__).parent.parent.parent / "ai" / ".env",
-            Path("/Users/macbookpro/Documents/Nam_4/2_HK1/1_KiemThu/DoAn/eshop-sut/ai/.env"),
         ]
         for p in env_paths:
             if p.exists():

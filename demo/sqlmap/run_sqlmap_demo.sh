@@ -23,6 +23,8 @@ echo "======================================================================"
 SQLMAP_CMD=""
 if command -v sqlmap &> /dev/null; then
     SQLMAP_CMD="sqlmap"
+elif [ -f "$DIR/../../../seminar/tools/sqlmap/sqlmap.py" ]; then
+    SQLMAP_CMD="python3 $DIR/../../../seminar/tools/sqlmap/sqlmap.py"
 elif [ -f "$DIR/../../tools/sqlmap/sqlmap.py" ]; then
     SQLMAP_CMD="python3 $DIR/../../tools/sqlmap/sqlmap.py"
 elif [ -f "/Users/macbookpro/Documents/Nam_4/2_HK1/1_KiemThu/DoAn/seminar/tools/sqlmap/sqlmap.py" ]; then
