@@ -435,33 +435,43 @@ Nhằm phục vụ bài thí nghiệm có đối chứng, hệ thống thiết l
 
 ### 4.4. Đo lường và đánh giá đối chứng Benchmark 3 nhánh
 
-Thực nghiệm đo lường được tiến hành theo phương pháp kiểm soát biến số qua tập lệnh `benchmark_fuzzer.py` trên cùng một máy chủ mục tiêu (cổng 3001) trong ngân sách giới hạn $N \le 50$ requests.
+Thực nghiệm đo lường được tiến hành theo phương pháp kiểm soát biến số qua tập lệnh `benchmark_fuzzer.py` trên cùng một máy chủ mục tiêu (cổng 3001) trong ngân sách giới hạn $N \le 50$ requests, lặp lại 3 lượt độc lập để đảm bảo tính ổn định thống kê.
 
 #### Bảng số liệu kết quả thực nghiệm đối chứng:
 
-| Nhánh kiểm thử | Phương pháp sinh payload | Số requests cần gửi | Thời gian hoàn tất (s) | Tỷ lệ giảm request so với Baseline |
+| Nhánh kiểm thử | Phương pháp sinh payload | Số requests đến lần đầu thành công | Thời gian thực thi trung bình (s) | Tỷ lệ giảm request so với Baseline |
 |---|---|:---:|:---:|:---:|
-| **Nhánh 1** | Mảng từ điển mẫu tĩnh cổ điển (Synthetic Wordlist) | **14** | 0.027s | Baseline (0%) |
-| **Nhánh 2** | Payload AI sinh sẵn không có feedback (Mức 1) | **6** | 0.002s | Giảm **57.1%** |
-| **Nhánh 3** | **AI Fuzzer Feedback Loop thích ứng (Mức 2)** | **2** | 0.450s | **Giảm 85.7%** |
+| **Nhánh 1** | Mảng từ điển mẫu tĩnh cổ điển (`wordlist_static`) | **5** | ~0.060s | Baseline (0%) |
+| **Nhánh 2** | Payload AI sinh sẵn không có feedback (`ai_static`) | **6** | ~0.056s | Tăng 20% (thử hết 6 ứng viên) |
+| **Nhánh 3** | **AI Fuzzer Feedback Loop thích ứng (`ai_feedback`)** | **2** | ~0.038s (lab) / ~0.450s (live LLM) | **Giảm 60.0%** (so với Nhánh 1)<br>**Giảm 66.7%** (so với Nhánh 2) |
 
-*(Số liệu được kết xuất chuẩn hóa từ tệp `demo/ai_fuzzer/benchmark_results.json`).*
+*(Toàn bộ số liệu được kết xuất chuẩn hóa 100% từ tệp JSON thực nghiệm [`demo/ai_fuzzer/benchmark_results.json`](file:///Users/macbookpro/Documents/Nam_4/2_HK1/1_KiemThu/DoAn/eshop-sut/demo/ai_fuzzer/benchmark_results.json) qua 3 lượt chạy lặp).*
 
-#### Phân tích biểu đồ hiệu năng:
-* **Nhánh 1:** Do nạp danh sách tĩnh, fuzzer phải thử lần lượt từng phần tử; các chuỗi có khoảng trắng đều bị WAF từ chối cho đến khi tình cờ duyệt đến chuỗi thứ 14 có định dạng `/**/`.
-* **Nhánh 3:** Nhờ có vòng lặp phản hồi, fuzzer chỉ mất **đúng 1 request mồi để nhận diện bộ lọc** và **1 request tiếp theo để khai thác thành công**, tiết kiệm tới **85.7% lưu lượng mạng**.
+#### Phân tích chi tiết cơ chế từng nhánh:
+* **Nhánh 1 (`wordlist_static`):** Fuzzer nạp danh sách từ điển mẫu gồm 7 payload chuẩn. Các payload 1 (`' OR 1=1 --`), 2 (`' OR '1'='1`), 4 (`' or 'a'='a`) đều vi phạm regex lọc khoảng trắng quanh từ khóa SQL của WAF Level 1 (`/(^|\s+)(OR|AND...)(\s+|$)/i`) nên bị chặn (HTTP 403). Payload 3 (`admin' --`) tuy qua bộ lọc nhưng CSDL trả về mảng rỗng `[]` (không tìm thấy sản phẩm có tên `admin`), do đó không đạt checkpoint khai thác SQLi. Phải đến payload thứ 5 (`1' ORDER BY 1--+`), do mệnh đề `ORDER BY` không bị vướng regex từ khóa đơn lẻ và câu truy vấn backend trả về danh sách sản phẩm chứa ký tự `'1'`, checkpoint SQLi mới được thỏa mãn. Tổng số request cần gửi là **5**.
+* **Nhánh 2 (`ai_static`):** Gồm 6 payload AI sinh sẵn cố định. Các payload 1, 2, 4, 5 đều bị WAF Level 1 chặn lại; payload 3 không trúng checkpoint; fuzzer phải thử lần lượt cho đến payload cuối cùng thứ 6 (`1'/**/OR/**/'1'='1'`) mới vượt qua bộ lọc thành công. Tổng số request cần gửi là **6**.
+* **Nhánh 3 (`ai_feedback`):** Khởi đầu bằng đúng 1 request mồi (`' OR '1'='1'`). Khi WAF trả về mã HTTP 403 kèm chuỗi thông báo lỗi, vòng lặp phản hồi (Feedback Loop) lập tức phân tích và suy luận kỹ thuật thay thế khoảng trắng bằng inline comment `/**/`. Fuzzer sinh ra payload thích ứng `'/**/OR/**/'1'='1'` và gửi lại ở request thứ 2, đạt ngay checkpoint thành công. Nhờ đó, fuzzer tiết kiệm tới **60.0% số request** so với từ điển tĩnh và **66.7%** so với danh sách sinh sẵn.
+
 
 ---
 
 ### 4.5. Đánh giá học thuật: Trade-off và Tính tái lập (Reproducibility)
 
 #### Phân tích sự đánh đổi (Trade-off):
-* **Lợi thế:** Giảm thiểu đột biến số lượng request, giảm thiểu nguy cơ làm quá tải dịch vụ (Denial of Service) và hạn chế kích hoạt các cơ chế Rate-limiting của hạ tầng mạng.
-* **Chi phí đánh đổi:** Thời gian phản hồi của Nhánh 3 cao hơn (~0.45s so với 0.027s) do phát sinh độ trễ mạng (Network Latency) và thời gian suy luận (Inference Time) khi gọi API LLM.
+* **Lợi thế:** Giảm thiểu đột biến số lượng request mạng (giảm 60% – 66.7%), giảm nguy cơ gây quá tải dịch vụ (Denial of Service) và hạn chế kích hoạt các cơ chế Rate-limiting của hạ tầng mạng.
+* **Chi phí đánh đổi:** 
+  * Trong môi trường Lab nội bộ (chế độ Heuristic Offline): Thời gian phản hồi cực nhanh (~0.038s).
+  * Trong môi trường Live Cloud LLM: Phát sinh độ trễ mạng (Network Latency) và thời gian suy luận (Inference Time) khi gọi API bên ngoài (~0.45s – 1.5s mỗi lượt gọi).
+
+#### Đối chiếu với thực nghiệm Live Cloud LLM ngày 20/10/2026:
+Khi đưa mô hình vào chạy đối chứng trực tiếp với Cloud LLM thật (`qwen/qwen3.8-27b` qua Groq API, theo ghi nhận tại [`ai/A4_slide_baocao/bao-cao-live-2026-10-20.md`](file:///Users/macbookpro/Documents/Nam_4/2_HK1/1_KiemThu/DoAn/eshop-sut/ai/A4_slide_baocao/bao-cao-live-2026-10-20.md)):
+- Mô hình Cloud LLM được áp dụng hệ thống prompt phòng vệ an toàn (Safety Guardrails) nghiêm ngặt để tránh việc tự động leo thang tấn công nguy hiểm.
+- Do đó, khi gặp phản hồi 403, model đã kích hoạt điều kiện an toàn (`should_stop=true`) và chủ động dừng lại thay vì tiếp tục cố tình sinh payload vượt lọc. 
+- Phát hiện này đem lại giá trị học thuật quan trọng: **Hiệu quả của AI Fuzzer phụ thuộc mật thiết vào ranh giới an toàn (Safety Alignment) của từng mô hình LLM và cấu trúc prompt**. Trong môi trường kiểm thử hộp trắng nội bộ, cần có prompt template được cấp quyền (Group Approved) phù hợp để AI phát huy tối đa khả năng thích ứng.
 
 #### Đảm bảo Tính tái lập (Reproducibility) trong kiểm thử phần mềm:
 * Mô hình AI mang tính chất ngẫu nhiên thống kê (Stochastic/Non-deterministic), có thể sinh ra các biến thể khác nhau giữa các lần chạy hoặc gặp sự cố gián đoạn đường truyền mạng khi báo cáo.
-* **Giải pháp chuẩn hóa:** Module tích hợp cờ `--playback` đọc dữ liệu từ tệp `fuzzer_cache.json`. Chế độ này "đóng băng" kết quả thực nghiệm thực tế, cho phép tái hiện quy trình thích ứng một cách nhất quán 100% mà không phụ thuộc vào kết nối Internet, đáp ứng chặt chẽ tiêu chuẩn kiểm chứng khoa học.
+* **Giải pháp chuẩn hóa:** Module tích hợp cờ `--playback` đọc dữ liệu từ tệp `fuzzer_cache.json`. Chế độ này phát lại kết quả thực nghiệm thực tế mà không gọi mạng, giúp demo ổn định trong các điều kiện hội trường mất mạng.
 * **Cơ chế dự phòng:** Hàm `heuristic_adaptation` đóng vai trò lưới an toàn (fallback) bằng mã nguồn Python tĩnh, đảm bảo công cụ không bị dừng đột ngột trong trường hợp mất kết nối API.
 
 ---
@@ -485,7 +495,7 @@ Bảng đối chiếu toàn bộ các sản phẩm bàn giao kỹ thuật của 
 | **L1** | **A03** (Injection) | Tự động hóa sqlmap 3 kịch bản: Proxy check, Param scan, Raw request | `demo/sqlmap/run_sqlmap_demo.sh`<br>`demo/sqlmap/sqlmap-logs/scenario_{1,2,3}*.log` | **Hoàn tất 100%** |
 | **L2** | **A03** (Injection) | Lập trình module AI Fuzzer thích ứng Mức 2 (Feedback loop) | `demo/ai_fuzzer/ai_fuzzer.py`<br>`demo/ai_fuzzer/benchmark_fuzzer.py` | **Hoàn tất 100%** |
 | **L3** | **A03** (Injection) | Cơ chế Offline Playback & Cache kết quả thực nghiệm đối chứng | `demo/ai_fuzzer/fuzzer_cache.json`<br>`demo/ai_fuzzer/benchmark_results.json` | **Hoàn tất 100%** |
-| **L4** | Tổng hợp | Báo cáo chuyên đề thực nghiệm kỹ thuật | `docs/bao-cao-thuc-nghiem-sqlmap-ai-fuzzer.md` | **Hoàn tất 100%** |
+| **L4** | Tổng hợp | Báo cáo chuyên đề thực nghiệm kỹ thuật & Nhật ký tiến độ cá nhân | `docs/bao-cao-thuc-nghiem-sqlmap-ai-fuzzer.md`<br>`docs/progress-log-long.md` | **Hoàn tất 100%** |
 | **Bổ sung 1** | **A07** (Auth Failures) | Viết script Python tự động hóa vét cạn OTP 4 số vào `/api/reset-password` | `demo/brute_force_otp/brute_force_otp.py`<br>`demo/brute_force_otp/brute_force_otp.log` | **Hoàn tất 100%** |
 | **Bổ sung 2** | **A02** (Crypto Failures) | Dùng sqlmap dump bảng `users` (`-C email,password`) chứng minh Plaintext | `demo/sqlmap/sqlmap-logs/sqlmap_dump_passwords.log` | **Hoàn tất 100%** |
 
