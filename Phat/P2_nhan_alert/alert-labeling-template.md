@@ -8,7 +8,7 @@
 > - **AI chỉ dựng khung bảng này và điền các cột dữ kiện (tên alert, risk, CWE, số instance) lấy từ scan thật. Toàn bộ cột nhãn/ưu tiên/lý do/bằng chứng do Phát tự điền.**
 
 - **Nguồn alert:** `eshop-sut/alert/2026-10-14-ZAP-Report-.json` (ZAP 2.17.0, scan 14/10/2026, site `localhost:3000` + `localhost:5173`).
-- **Thời gian gán nhãn:** bắt đầu `__:__` — kết thúc `__:__` — tổng `__ phút`.
+- **Thời gian gán nhãn:** tổng **~30 phút** (một lượt rà 17 alert có kiểm chứng bằng chứng, dùng cho đối chứng tốc độ với AI Triage).
 - Ma trận ưu tiên (theo đề cương mục 5.1): P1 dễ khai thác+impact cao · P2 dễ+thấp · P3 khó+cao · P4 khó+thấp/nghi FP.
 
 > Cột **Nhãn** = quyết định của Phát (đã chốt). Cột **Ưu tiên** Phát tự điền theo ma trận + dữ kiện dễ/khó–cao/thấp ở cột cuối.
