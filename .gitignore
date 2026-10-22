@@ -14,3 +14,5 @@ ENV/
 
 # Temporary / testing logs
 *.log
+
+.agents/*
