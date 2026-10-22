@@ -31,7 +31,16 @@
 | 14 | Suspicious Comments | Info (Medium) | 615 | 6 | Không phải lỗ hổng (Informational) | — | Comment `// TODO…` nằm trong thư viện React Refresh, không lộ bí mật EShop | Informational → không xếp |
 | 15 | Modern Web Application | Info (Medium) | — | 2 | Không phải lỗ hổng (Informational) | — | ZAP chỉ ghi nhận EShop là SPA | Informational → không xếp |
 
-**Tổng:** 15 loại alert / 31 instance. · **Phát chốt:** Thật = #3,4,5,6,9,10,12,13 · Giả/FP = #1,2,8,11 · Informational = #7,14,15.
+**→ 2 alert MỞ RỘNG (mục 1.4 đề cương — xác định thủ công từ code/kiểm thử, không nằm trong file ZAP gốc):**
+
+| # | Lỗ hổng (OWASP) | Nguồn | CWE | Nhãn (xác nhận) | Ưu tiên | Lý do | Dữ kiện xếp ưu tiên |
+|---|---|---|---|---|:---:|---|---|
+| 16 | **A07 — Brute-force OTP đặt lại mật khẩu** | Code review + Lab 3 | 307 / 640 | **Thật** *(đề xuất)* | **P1** *(đề xuất)* | OTP 4 số (`Math.floor(1000+Math.random()*9000)`) + `/api/reset-password` **không rate-limit** (`server.js:68-98`) → vét cạn 9000 tổ hợp | Khai thác **dễ** (9000 request, không chặn) / impact **cao** (chiếm tài khoản) → P1 |
+| 17 | **A02 — Mật khẩu lưu plaintext** | sqlmap dump (Lab 2) | 312 / 256 | **Thật** *(đã chứng minh)* | **P1** *(đề xuất)* | Dump `users` ra `Admin123!`, `Test1234!` — không băm (`evidence/sqlmap_users_dump.csv`) | Đã lộ qua SQLi / impact **cao** (toàn bộ credential) → P1 |
+
+> ⚠️ **Nhãn 2 dòng trên là ĐỀ XUẤT có cơ sở** (A02 đã chứng minh bằng dump thật; A07 xác nhận từ code). Vẫn cần Phát rà lại và chốt như các alert khác — đây là ground truth của bạn.
+
+**Tổng:** 15 alert ZAP + 2 alert mở rộng (A02/A07) = **17**. · **Thật:** #3,4,5,6,9,10,12,13,16,17 · **Giả/FP:** #1,2,8,11 · **Informational:** #7,14,15.
 
 > **Ưu tiên đã điền** (Phát rà lại & chỉnh nếu muốn): P1=#3 · P3=#4,#9 · P4=#5,#6,#10,#12,#13. Ba cái **#4, #10, #13** là vùng ranh giới có thể dịch 1 bậc (P2↔P3 hoặc P3↔P4) tùy bạn lập luận — cần chuẩn bị giải thích khi bảo vệ.
 
