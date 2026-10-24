@@ -74,6 +74,10 @@ def benchmark(output, base, runs=3, budget=50, max_ai_calls=10, client=None):
                     "remaining_requests": remaining}, PayloadSuggestion).model_dump()
                 if not answer["should_stop"] and not answer["payload"].strip():
                     raise ValueError("Empty payload")
+                raw_payload = answer["payload"].strip().strip('"`')
+                if raw_payload.lower().startswith("search="):
+                    raw_payload = raw_payload[7:].strip()
+                answer["payload"] = raw_payload
                 suggestions.append(answer)
                 return answer
 
