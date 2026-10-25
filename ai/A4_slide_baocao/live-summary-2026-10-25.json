@@ -1,0 +1,150 @@
+{
+  "triage_runs": [
+    {
+      "source": "ai/A1_ai_triage/results/live_2026-10-20_run1.json",
+      "status": "completed",
+      "run_id": "8e89ad87-c11c-417d-a613-6b1a66d80c3d",
+      "records": 11,
+      "priority_counts": {
+        "P2": 1,
+        "P3": 9,
+        "P4": 1
+      },
+      "is_real_counts": {
+        "None": 5,
+        "True": 6
+      },
+      "api_calls": 14,
+      "successful_calls": 11,
+      "failed_calls": 3,
+      "reported_tokens": {
+        "prompt_tokens": 2918,
+        "completion_tokens": 1682,
+        "total_tokens": 4600
+      },
+      "usage_missing_calls": 3,
+      "cost": null
+    },
+    {
+      "source": "ai/A1_ai_triage/results/live_2026-10-20_run2.json",
+      "status": "completed",
+      "run_id": "a9403d07-c7dd-4b48-8dad-de47eed35537",
+      "records": 11,
+      "priority_counts": {
+        "P2": 1,
+        "P3": 9,
+        "P4": 1
+      },
+      "is_real_counts": {
+        "None": 5,
+        "True": 6
+      },
+      "api_calls": 11,
+      "successful_calls": 11,
+      "failed_calls": 0,
+      "reported_tokens": {
+        "prompt_tokens": 2918,
+        "completion_tokens": 1682,
+        "total_tokens": 4600
+      },
+      "usage_missing_calls": 0,
+      "cost": null
+    },
+    {
+      "source": "ai/A1_ai_triage/results/live_2026-10-20_run3.json",
+      "status": "completed",
+      "run_id": "5356fd11-f686-4513-aba6-84d2840a66f1",
+      "records": 11,
+      "priority_counts": {
+        "P2": 1,
+        "P3": 9,
+        "P4": 1
+      },
+      "is_real_counts": {
+        "None": 5,
+        "True": 6
+      },
+      "api_calls": 11,
+      "successful_calls": 11,
+      "failed_calls": 0,
+      "reported_tokens": {
+        "prompt_tokens": 2918,
+        "completion_tokens": 1682,
+        "total_tokens": 4600
+      },
+      "usage_missing_calls": 0,
+      "cost": null
+    }
+  ],
+  "triage_quality_metrics": null,
+  "human_review_status": "pending_independent_labels_and_N3",
+  "manual_time_savings": null,
+  "benchmark": {
+    "source": "ai/A2_fuzzer_benchmark/results/live_verify_2026-10-25_rerun.json",
+    "status": "completed",
+    "branches": {
+      "wordlist_static": {
+        "runs": 3,
+        "successful_runs": 3,
+        "success_rate_per_run": 1.0,
+        "attack_requests": 15,
+        "auxiliary_requests": 12,
+        "request_to_first_success": [
+          5,
+          5,
+          5
+        ],
+        "stop_reasons": [
+          "success",
+          "success",
+          "success"
+        ]
+      },
+      "llm_static": {
+        "runs": 3,
+        "successful_runs": 0,
+        "success_rate_per_run": 0.0,
+        "attack_requests": 21,
+        "auxiliary_requests": 12,
+        "request_to_first_success": [
+          null,
+          null,
+          null
+        ],
+        "stop_reasons": [
+          "source_exhausted",
+          "source_exhausted",
+          "source_exhausted"
+        ]
+      },
+      "llm_feedback": {
+        "runs": 3,
+        "successful_runs": 3,
+        "success_rate_per_run": 1.0,
+        "attack_requests": 3,
+        "auxiliary_requests": 12,
+        "request_to_first_success": [
+          1,
+          1,
+          1
+        ],
+        "stop_reasons": [
+          "success",
+          "success",
+          "success"
+        ]
+      }
+    },
+    "api_calls": 4,
+    "successful_calls": 4,
+    "failed_calls": 0,
+    "reported_tokens": {
+      "prompt_tokens": 1291,
+      "completion_tokens": 238,
+      "total_tokens": 1529
+    },
+    "usage_missing_calls": 0,
+    "cost": null
+  },
+  "notice": "Descriptive lab measurements only; API latency is not manual time saved. Missing usage/cost remains unknown."
+}

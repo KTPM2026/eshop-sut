@@ -1,5 +1,7 @@
 # Báo cáo thực nghiệm LLM — Nguyễn Nhật Lân, 20/10/2026
 
+> Cập nhật 25/10/2026: [bản bàn giao theo log người dùng tự chạy](ban-giao-benchmark-2026-10-25.md) xác nhận feedback 3/3, 4 request/lượt. [Lần xác minh trước](bao-cao-live-2026-10-25.md) có kết quả 1 request/lượt và được giữ riêng. Báo cáo này giữ nguyên số liệu lịch sử ngày 20/10.
+
 Đã chạy inference trên 11 instance ZAP đã làm sạch và benchmark SQLi 3 lượt/nhánh với model thật. Benchmark hiện tại cho kết quả wordlist thành công 3/3 lượt, AI tĩnh 0/3, AI feedback 0/3. Chưa có nhãn người review để kết luận Precision/Recall hoặc mức tiết kiệm thời gian.
 
 ## 1. Cấu hình và phạm vi

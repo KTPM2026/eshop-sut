@@ -1,5 +1,9 @@
 # Không gian làm việc của Nguyễn Nhật Lân
 
+## Bàn giao benchmark — 25/10/2026
+
+Log người dùng tự chạy đủ 9 lượt xác nhận Wordlist **3/3**, LLM static **0/3**, LLM feedback **3/3**; request tấn công/lượt **5/7/4** (static chưa thành công). Tổng **48 tấn công + 36 phụ = 84 request SUT**, cộng riêng 13 API call. Feedback dùng ít request hơn Wordlist trong lần này; chưa kết luận nhanh hơn về thời gian. [Bản bàn giao, biểu đồ và các giới hạn](A4_slide_baocao/ban-giao-benchmark-2026-10-25.md). Lần xác minh trước ra 1 request feedback/lượt được giữ riêng; các số liệu bên dưới là lịch sử.
+
 ## Cập nhật live — 20/10/2026
 
 A3a/A1 đã gọi thật model `qwen/qwen3.8-27b` tại Groq qua OpenAI-compatible API trong `ai/.env`: hoàn tất 3 lượt, mỗi lượt đủ 11/11 ID. CLI mới đọc dotenv tường minh, lưu checkpoint mỗi alert, resume bỏ qua ID đã thành công, giữ lỗi/usage/latency và hash input/prompt/schema. Không ghi key vào artifact.

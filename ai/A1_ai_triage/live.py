@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,7 +24,16 @@ def save(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(redact(data), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    temporary.replace(path)
+    # Windows readers (editors, indexers, antivirus) may briefly deny replacement.
+    # Keep the previous checkpoint and the new .tmp intact if retries fail.
+    for attempt in range(6):
+        try:
+            temporary.replace(path)
+            break
+        except PermissionError as error:
+            if getattr(error, "winerror", None) not in {5, 32, 33} or attempt == 5:
+                raise
+            time.sleep(0.1 * (attempt + 1))
 
 
 def execute(source, output, client, *, resume=False, max_calls=11):

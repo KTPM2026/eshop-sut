@@ -1,6 +1,6 @@
-# Nội dung slide bàn giao — Lân, 20/10/2026
+# Nội dung slide bàn giao — Lân; benchmark cập nhật 25/10/2026
 
-Nội dung Markdown để Phát ghép vào mẫu chung. Nguồn: [báo cáo live](bao-cao-live-2026-10-20.md).
+Nội dung Markdown để Phát ghép vào mẫu chung. Nguồn: [triage lịch sử 20/10](bao-cao-live-2026-10-20.md) và [benchmark người dùng tự chạy 25/10](ban-giao-benchmark-2026-10-25.md).
 
 ## Slide 1 — Phần triển khai
 
@@ -39,17 +39,24 @@ Lời trình bày: “Đây là phân bố dự đoán. Chưa thể nói có sá
 
 Lời trình bày: “HTTP 200 chưa chứng minh SQLi. Kết quả phải khớp truy vấn dễ lỗi và khác truy vấn an toàn trên cùng snapshot.”
 
-## Slide 5 — Kết quả benchmark live
+## Slide 5 — A2 live: feedback đạt 3/3, 4 request/lượt
 
 | Nhánh | Đạt oracle | Request đến thành công | Tổng request tấn công |
 |---|---:|---|---:|
 | Wordlist | 3/3 | 5, 5, 5 | 15 |
-| AI tĩnh | 0/3 | Chưa đạt | 21 |
-| AI feedback | 0/3 | Chưa đạt, model dừng | 3 |
+| LLM static | 0/3 | Chưa đạt; gửi 7 ứng viên/lượt | 21 |
+| LLM feedback | 3/3 | 4, 4, 4 | 12 |
 
-Tổng 75 request benchmark tới SUT: 39 tấn công + 36 phụ. API AI: 7 call, 2.775 token được báo. Request chờ server sẵn sàng của launcher nằm ngoài tổng benchmark.
+![Biểu đồ ba chiến lược từ log tự chạy](benchmark-manual-2026-10-25.png)
 
-Lời trình bày: “Trong phép thử này LLM chưa tốt hơn wordlist. AI tĩnh hết ứng viên; AI feedback dừng sau khi WAF chặn. Em giữ cả kết quả không thành công.”
+- Nguồn: `live_manual_check_02.json`, đủ 9 lượt, không replay.
+- Tổng **84 request SUT = 48 tấn công + 36 phụ**; không gồm request launcher chờ sẵn sàng.
+- AI: **13 call thành công**, 7.906 token được báo; chưa kết luận chi phí tiền.
+- Feedback: 200 → 403 → 200 → 200; chỉ request thứ tư đạt oracle ở cả ba lượt.
+- Dùng 4 so với 5 request tấn công/lượt của Wordlist; chưa kết luận nhanh hơn về thời gian.
+- Kết quả thay đổi giữa các lần chạy: lần xác minh trước là 1 request/lượt, giữ log riêng. Chưa tách đóng góp riêng của prompt, chuẩn hóa và feedback.
+
+Lời trình bày: “Lần em tự chạy lại xác nhận feedback đạt oracle ở cả ba lượt, mỗi lượt bốn request tấn công, so với năm request của Wordlist. Model tiếp tục sau khi bị WAF chặn; HTTP 200 đơn thuần vẫn không được tính thành công. Kết quả cho thấy ít request hơn trong cấu hình lab này, chưa chứng minh nhanh hơn về thời gian hay tốt hơn trên mọi WAF.”
 
 ## Slide 6 — Demo có thể tái lập
 
@@ -58,6 +65,7 @@ python -X utf8 -m ai.A3b_video_cache.artifacts --source ai/A3b_video_cache/cache
 python -X utf8 -m ai.A3b_video_cache.artifacts --source ai/A3b_video_cache/cache/fuzzer_live_2026-10-20_v1.json --replay
 ```
 
+- Hai lệnh trên phát lại cache ngày 20/10, gồm kết quả feedback 0/3 lịch sử; không dùng chúng để minh họa số liệu Slide 5 ngày 25/10. Log bàn giao: `ai/A2_fuzzer_benchmark/results/live_manual_check_02.json`.
 - Gắn nhãn **PHÁT LẠI KẾT QUẢ ĐÃ LƯU** khi trình chiếu.
 - Kiểm tra hash; thiếu cache không tạo phiên thành công.
 - Quay input, lệnh chạy, output ID và checkpoint; không quay `.env`.

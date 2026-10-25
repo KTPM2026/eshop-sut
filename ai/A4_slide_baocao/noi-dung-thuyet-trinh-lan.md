@@ -1,5 +1,7 @@
 ﻿# Nội dung thuyết trình phần Nguyễn Nhật Lân
 
+> Cập nhật 25/10/2026: tài liệu này giữ phần trình bày benchmark offline (5/6/2). Khi trình bày kết quả LLM live mới, dùng [Slide 5 đã cập nhật](slide-live-2026-10-20.md): Wordlist 3/3, static 0/3, feedback 3/3; request tấn công/lượt 5/7/4. Không dùng các nhận định chưa gọi model dưới đây để mô tả lần live mới.
+
 **Chủ đề nhóm:** Security Testing in Website — môn Testing.  
 **Thời lượng:** 3–4 phút, **3 slide trong tổng 10 slide của nhóm**.  
 **Căn cứ:** tài liệu và kết quả cập nhật ngày 18/10/2026.

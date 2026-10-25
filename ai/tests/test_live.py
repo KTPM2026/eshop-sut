@@ -8,7 +8,7 @@ import contextlib
 import io
 from unittest.mock import patch
 
-from ai.A1_ai_triage.live import execute
+from ai.A1_ai_triage.live import execute, save
 from ai.A2_fuzzer_benchmark.live import benchmark
 from ai.A2_fuzzer_benchmark.offline import run_branch
 from ai.A3a_ai_config import AIConfig, AIResponseError
@@ -32,6 +32,49 @@ class FakeClient:
 
 
 class LiveTests(unittest.TestCase):
+    def test_checkpoint_retries_transient_windows_lock(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "run.json"
+            output.write_text('{"previous": true}', encoding="utf-8")
+            original_replace = Path.replace
+            calls = []
+
+            def replace(source, target):
+                calls.append(source)
+                if len(calls) < 3:
+                    error = PermissionError("fixture lock")
+                    error.winerror = 5
+                    raise error
+                return original_replace(source, target)
+
+            with patch.object(Path, "replace", replace), patch("ai.A1_ai_triage.live.time.sleep") as sleep:
+                save(output, {"new": True})
+            self.assertEqual(len(calls), 3)
+            self.assertEqual(sleep.call_count, 2)
+            self.assertEqual(json.loads(output.read_text()), {"new": True})
+            self.assertFalse(output.with_suffix(".json.tmp").exists())
+
+    def test_checkpoint_persistent_lock_preserves_both_versions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "run.json"
+            output.write_text('{"previous": true}', encoding="utf-8")
+            error = PermissionError("fixture lock")
+            error.winerror = 32
+            with patch.object(Path, "replace", side_effect=error) as replace, patch("ai.A1_ai_triage.live.time.sleep"):
+                with self.assertRaises(PermissionError):
+                    save(output, {"new": True})
+            self.assertEqual(replace.call_count, 6)
+            self.assertEqual(json.loads(output.read_text()), {"previous": True})
+            self.assertEqual(json.loads(output.with_suffix(".json.tmp").read_text()), {"new": True})
+
+    def test_checkpoint_does_not_retry_unrelated_permission_error(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.object(Path, "replace", side_effect=PermissionError("fixture permission")) as replace, patch("ai.A1_ai_triage.live.time.sleep") as sleep:
+                with self.assertRaises(PermissionError):
+                    save(Path(directory) / "run.json", {})
+            self.assertEqual(replace.call_count, 1)
+            sleep.assert_not_called()
+
     def test_legacy_playback_does_not_invent_missing_cache_or_success(self):
         from demo.ai_fuzzer import ai_fuzzer
         with tempfile.TemporaryDirectory() as directory:
