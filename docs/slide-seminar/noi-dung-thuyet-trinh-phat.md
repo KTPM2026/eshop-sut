@@ -1,7 +1,7 @@
 # Nội dung thuyết trình phần Nguyễn Đức Phát
 
 **Chủ đề nhóm:** Security Testing in Website — môn Testing.  
-**Thời lượng:** 3–4 phút, **3 slide trong tổng ~10 slide của nhóm**.  
+**Thời lượng:** 3–4 phút, **4 slide trong tổng ~10 slide của nhóm** (nếu cần gọn, có thể gộp Slide 4 vào phần AI của Lân).  
 **Phạm vi phân công:** P1 (thiết kế & hoàn thiện bộ **bài tập thực hành Lab cho lớp**), P2 (gán nhãn Ground Truth), P3a (pilot), P4 (slide/báo cáo **thao tác Lab**). Trọng tâm slide là **bài tập Lab**.  
 **Căn cứ:** đề cương mục 6, tài liệu Lab và kết quả chạy thật ngày 17/10/2026 (bổ sung A02/A07 ngày 22/10/2026).
 
@@ -19,59 +19,85 @@ Chỉ đưa phần "Nội dung trên slide" vào PowerPoint. Lời thuyết trì
 | **Lab 2** | SQL Injection (A03) | 🟡 Nâng cao | CLI — sqlmap | ~15–20 phút |
 | **Lab 3** | Brute-force OTP (A07) | 🟡 Nâng cao | ZAP Fuzzer / Burp Intruder | ~15 phút |
 
-- Mỗi Lab có **hướng dẫn từng bước + Hints tăng dần + Đáp án + tiêu chí Pass/Fail** → lớp tự làm theo.
+- Mỗi Lab có **hướng dẫn từng bước + Hints tăng dần + Đáp án + Pass/Fail** → lớp tự làm theo.
 - **Bàn giao cho lớp:** wordlist payload XSS (`xss-payloads.txt`), script reset DB (`database.sqlite.bak`).
-- Đi từ trực quan (GUI) đến can thiệp sâu (CLI/DB), bám chuẩn OWASP Top 10.
 
-### Lời thuyết trình — khoảng 1 phút
+### Lời thuyết trình — khoảng 45 giây
 
-"Phần em phụ trách là bộ bài tập thực hành để chính các bạn trong lớp làm trực tiếp trong buổi seminar.
+"Phần em phụ trách là bộ bài tập để chính các bạn trong lớp làm trực tiếp. Nhóm thiết kế ba bài độ khó tăng dần trên EShop localhost: Lab 1 Reflected XSS mức cơ bản thao tác trên giao diện ZAP khoảng 10 phút; Lab 2 SQL Injection bằng sqlmap khoảng 15–20 phút; Lab 3 vét cạn OTP khoảng 15 phút. Mỗi bài có hướng dẫn từng bước, gợi ý, đáp án và tiêu chí Pass/Fail, kèm wordlist và script reset để lớp làm lại được."
 
-Nhóm thiết kế ba bài Lab độ khó tăng dần trên ứng dụng EShop chạy localhost, với lỗ hổng cố ý cài để học. Bài 1 là Reflected XSS, mức cơ bản, thao tác hoàn toàn trên giao diện ZAP, khoảng 10 phút. Bài 2 là SQL Injection bằng dòng lệnh sqlmap, nâng cao hơn, khoảng 15 đến 20 phút. Bài 3 là vét cạn OTP, cũng mức nâng cao, khoảng 15 phút.
-
-Mỗi bài đều có hướng dẫn từng bước, gợi ý tăng dần, đáp án và tiêu chí Pass/Fail rõ ràng để các bạn tự kiểm tra. Nhóm bàn giao kèm file wordlist payload và script reset cơ sở dữ liệu để lớp làm lại được. Thời lượng ba bài em thấy vừa với một buổi; đây cũng là điểm nhóm muốn xin ý kiến Thầy/Cô."
-
-## Slide 2 — Kết quả chạy thử (kiểm chứng 3 Lab đều chạy được)
+## Slide 2 — Hướng dẫn thao tác: ZAP Fuzzer (Lab 1 XSS) & Fuzzer số (Lab 3 OTP)
 
 ### Nội dung trên slide
 
-- **Lab 1 — XSS:** payload `<img src=x onerror=...>` phản xạ qua `dangerouslySetInnerHTML` → **alert thực thi trên trình duyệt** (checkpoint = browser execution, không chỉ status 200).
-- **Lab 2 — SQLi:** sqlmap xác nhận **UNION, 6 cột, SQLite**; dump `users` ra mật khẩu **plaintext** (`Admin123!`, `Test1234!`) → đồng thời minh chứng **A02**.
-- **Lab 3 — OTP:** OTP 4 số (`Math.random`) + `/api/reset-password` **không rate-limit** → vét cạn 9000 tổ hợp → chiếm tài khoản.
-- **Khắc phục:** Output Encoding/CSP (XSS); Parameterized Query + hash mật khẩu (SQLi/A02); rate-limit + OTP mạnh CSPRNG + TTL (OTP).
-- *Ảnh gợi ý:* `evidence/lab1-xss-alert.jpg`, `evidence/sqlmap_users_dump.csv`, `evidence/lab1-zap-fuzzer.jpg`.
+**Lab 1 — ZAP Fuzzer (XSS):**
+1. **Manual Explore → Launch Browser**, vào EShop (5173), tìm kiếm 1 từ khóa.
+2. Tab **History** → tìm request `GET /api/products?search=...` → chuột phải → **Attack → Fuzz**.
+3. Bôi đen **giá trị tham số `search`** → **Add** (điểm chèn).
+4. **Payloads → Add → Type: File** → chọn `xss-payloads.txt` → **Start Fuzzer**.
+5. Lọc theo **Size Resp. Body / Code** để tìm phản hồi bất thường → tab **Response** kiểm payload chưa escape.
+6. **Xác thực:** gõ `<img src=x onerror=alert(...)>` vào ô tìm kiếm → **alert bung** (browser execution).
+
+**Lab 3 — ZAP Fuzzer / Burp Intruder (vét cạn OTP):**
+1. Gọi `POST /api/forgot-password` (body `{"email":"test@eshop.com"}`) để tạo `reset_token`.
+2. Bắt request `POST /api/reset-password` → **Attack → Fuzz**, đánh dấu giá trị `resetToken`.
+3. **Payloads → Type: Numberzz**, From `1000` To `9999` Step `1` → **Start** *(Burp: Intruder → Sniper → Payload Numbers 1000–9999)*.
+4. Lọc dòng **HTTP 200 "Password reset successfully"** = OTP đúng → chiếm tài khoản.
 
 ### Lời thuyết trình — khoảng 1 phút
 
-"Để chứng minh ba Lab chạy được thật, em đã tự chạy toàn bộ trên EShop.
+"Đây là phần cốt lõi lớp thao tác — dùng ZAP Fuzzer.
 
-Bài 1, em cho bung được hộp alert trên trình duyệt — tức payload thực thi thật, chứ không chỉ nhìn mã 200. Bài 2, sqlmap xác nhận lỗi SQL Injection kiểu UNION trên SQLite và dump được bảng users; mật khẩu lưu dạng thô như Admin123!, nên đây vừa là SQL Injection vừa là lỗi lưu mật khẩu không băm, nhóm A02. Bài 3, vì OTP chỉ bốn chữ số và endpoint reset không giới hạn số lần thử, nên dò hết chín nghìn tổ hợp là đổi được mật khẩu nạn nhân.
+Với Lab 1, các bạn mở trình duyệt qua ZAP, tìm kiếm để ZAP bắt được request, rồi chuột phải chọn Attack → Fuzz. Bôi đen giá trị tham số search làm điểm chèn, nạp file payload XSS rồi Start Fuzzer. Sau đó lọc theo kích thước phản hồi để tìm payload đáng ngờ, và xác thực bằng cách gõ payload onerror vào ô tìm kiếm cho bung alert.
 
-Về khắc phục: mã hóa đầu ra và CSP cho XSS; truy vấn tham số hóa và băm mật khẩu cho SQL Injection và A02; giới hạn số lần thử, OTP đủ mạnh và có thời hạn cho A07."
+Lab 3 dùng đúng kỹ thuật Fuzzer nhưng nạp dải số: trước hết gọi forgot-password để sinh mã, rồi fuzz tham số resetToken với payload số từ 1000 đến 9999. Vì không có giới hạn số lần thử, chỉ cần tìm dòng trả về 200 là ra mã đúng."
 
-## Slide 3 — Gán nhãn Ground Truth cho đối chứng AI Triage (P2)
+## Slide 3 — Hướng dẫn sqlmap (Lab 2) & Kết quả kiểm chứng 3 Lab
 
 ### Nội dung trên slide
 
-- Gán nhãn **độc lập 17 cảnh báo** (15 từ ZAP + 2 mở rộng A02/A07) làm **đáp án chuẩn** để chấm AI Triage.
+**Lab 2 — sqlmap (SQL Injection):**
+```bash
+sqlmap -r search.req --batch                                  # xác nhận injectable
+sqlmap -r search.req --batch --tables                         # liệt kê bảng
+sqlmap -r search.req --batch -T users -C "name,email,password,role" --dump
+```
+> SQLite: dùng `--tables` trực tiếp; `--dump` cần chỉ cột `-C`.
+
+**Kết quả chạy thử (bằng chứng 3 Lab chạy được):**
+- **Lab 1:** alert thực thi trên trình duyệt (`evidence/lab1-xss-alert.jpg`).
+- **Lab 2:** dump `users` → mật khẩu **plaintext** `Admin123!`, `Test1234!` → cũng là **A02** (`evidence/sqlmap_users_dump.csv`).
+- **Lab 3:** vét cạn 9000 OTP, không rate-limit → đổi được mật khẩu (**A07**).
+- **Khắc phục:** Output Encoding/CSP; Parameterized Query + hash mật khẩu; rate-limit + OTP mạnh (CSPRNG) + TTL.
+
+### Lời thuyết trình — khoảng 1 phút
+
+"Lab 2 chuyển sang dòng lệnh. Các bạn lưu request tìm kiếm thành file rồi nạp vào sqlmap với cờ `-r` và `--batch`; sqlmap tự xác nhận lỗi, liệt kê bảng bằng `--tables` rồi dump bảng users — vì là SQLite nên cần chỉ rõ cột khi dump.
+
+Để chứng minh ba Lab chạy thật, em đã tự chạy: Lab 1 bung được alert; Lab 2 dump ra mật khẩu dạng thô như Admin123!, nên vừa là SQL Injection vừa là lỗi A02 lưu mật khẩu không băm; Lab 3 đổi được mật khẩu nạn nhân qua vét cạn OTP, đại diện A07. Cách khắc phục tương ứng là mã hóa đầu ra, truy vấn tham số hóa kèm băm mật khẩu, và giới hạn số lần thử kèm OTP mạnh có thời hạn."
+
+## Slide 4 — Gán nhãn Ground Truth cho đối chứng AI Triage (P2)
+
+### Nội dung trên slide
+
+- Gán nhãn **độc lập 17 cảnh báo** (15 từ ZAP + 2 mở rộng A02/A07) làm **đáp án chuẩn** chấm AI Triage.
 - Phân loại: **10 Thật / 4 Giả–False Positive / 3 Informational**; ưu tiên P1–P4.
-- Gán nhãn thủ công **~30 phút** → mốc đối chứng tốc độ với AI. Gán **độc lập, chưa xem kết quả AI**.
+- Gán tay **~30 phút** → mốc đối chứng tốc độ với AI. Gán **độc lập, chưa xem kết quả AI**.
 - **Đang chờ:** đối chiếu bất đồng với người gán nhãn thứ 2 (Như) để chốt Ground Truth cuối.
 
-### Lời thuyết trình — khoảng 1 phút
+### Lời thuyết trình — khoảng 45 giây
 
-"Ngoài bộ Lab, em còn đóng góp phần gán nhãn làm đáp án chuẩn cho module AI Triage.
-
-Em xem xét độc lập 17 cảnh báo — 15 từ lần quét ZAP và 2 cái mở rộng là mật khẩu plaintext và vét cạn OTP — rồi tự phán xử là lỗ hổng thật, báo động giả hay chỉ là thông tin, kèm mức ưu tiên. Kết quả 10 thật, 4 giả, 3 thông tin. Việc này mất khoảng 30 phút làm tay, dùng để đối chứng tốc độ với AI. Em gán độc lập, chưa xem kết quả AI, để đáp án khách quan. Bước còn lại là ngồi với bạn Như chốt các điểm bất đồng."
+"Ngoài bộ Lab, em gán nhãn làm đáp án chuẩn cho module AI Triage của bạn Lân. Em xem độc lập 17 cảnh báo, phán xử thật / giả / thông tin kèm ưu tiên — kết quả 10 thật, 4 giả, 3 thông tin — mất khoảng 30 phút làm tay để đối chứng tốc độ với AI. Em gán độc lập, chưa xem kết quả AI; bước còn lại là chốt bất đồng với bạn Như."
 
 ## Ghi chú khi được hỏi — không đưa lên slide
 
-- **Thời lượng Lab có vừa buổi không? (GVTH #4):** ~10 / 15–20 / 15 phút là hợp lý khi môi trường đã dựng sẵn; lần đầu cài môi trường (ZAP/sqlmap/npm) nên chuẩn bị trước buổi, không tính vào giờ Lab.
+- **Thời lượng Lab có vừa buổi không? (GVTH #4):** ~10 / 15–20 / 15 phút hợp lý khi môi trường đã dựng sẵn; lần đầu cài ZAP/sqlmap/npm nên chuẩn bị trước buổi, không tính vào giờ Lab.
 - **Vì sao vào URL `?search=<payload>` không bung alert?** App không đọc tham số từ URL (phải gõ vào ô tìm kiếm); cửa sổ trình duyệt do ZAP điều khiển nuốt hộp `alert` → xác thực bằng Chrome thường.
-- **sqlmap báo DB tên gì?** `SQLite_masterdb` (tên placeholder của sqlmap, không phải `main`); `--dump` trên SQLite cần chỉ cột `-C`.
-- **Mật khẩu dump có phải dữ liệu thật?** Không — dữ liệu seed thử nghiệm của lab, không phải người dùng thật.
-- **Lab OTP có "ăn gian"?** API hiện còn trả `resetToken` trong response (một lỗi lộ thông tin), nhưng lab giả định kẻ tấn công không thấy mã và chỉ brute-force.
-- **Nhãn Ground Truth đã chốt chưa?** Chưa — mới có nhãn độc lập; còn chờ đối chiếu với Như. Người viết module AI (Lân) không gán nhãn chuẩn.
+- **`<script>` có chạy không?** Không — `<script>` chèn qua `dangerouslySetInnerHTML`/innerHTML không tự thực thi; phải dùng event handler (`onerror`/`onload`). Payload có `'` lại vỡ SQL → 500.
+- **sqlmap báo DB tên gì?** `SQLite_masterdb` (placeholder của sqlmap, không phải `main`); `--dump` trên SQLite cần `-C`.
+- **Mật khẩu dump có phải dữ liệu thật?** Không — dữ liệu seed thử nghiệm của lab.
+- **Lab OTP có "ăn gian"?** API còn trả `resetToken` trong response (lỗi lộ thông tin), nhưng lab giả định kẻ tấn công không thấy mã và chỉ brute-force.
+- **Nhãn Ground Truth đã chốt chưa?** Chưa — mới có nhãn độc lập; chờ đối chiếu với Như. Người viết module AI (Lân) không gán nhãn chuẩn.
 
 ## Nguồn đối chiếu — không tạo slide riêng
 
