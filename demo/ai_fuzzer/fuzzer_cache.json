@@ -3,7 +3,7 @@
   "target": "http://localhost:3001/api/products?search=",
   "success": true,
   "total_attempts": 2,
-  "timestamp": "2026-10-17T13:52:29Z",
+  "timestamp": "2026-10-27T03:44:54Z",
   "logs": [
     {
       "attempt": 1,
@@ -11,7 +11,7 @@
       "status": 403,
       "blocked": true,
       "reason": " OR ",
-      "latency_ms": 19.7
+      "latency_ms": 1.59
     },
     {
       "attempt": 2,
@@ -19,7 +19,7 @@
       "status": 200,
       "blocked": false,
       "reason": null,
-      "latency_ms": 20.3
+      "latency_ms": 2.05
     }
   ]
 }

@@ -10,7 +10,7 @@
       "run_no": 1,
       "request_count": 5,
       "bypass": true,
-      "elapsed_seconds": 0.0833,
+      "elapsed_seconds": 0.0308,
       "attempts": [
         {
           "attempt_no": 1,
@@ -56,7 +56,7 @@
       "run_no": 1,
       "request_count": 6,
       "bypass": true,
-      "elapsed_seconds": 0.1022,
+      "elapsed_seconds": 0.0097,
       "attempts": [
         {
           "attempt_no": 1,
@@ -109,7 +109,7 @@
       "run_no": 1,
       "request_count": 2,
       "bypass": true,
-      "elapsed_seconds": 0.0391,
+      "elapsed_seconds": 0.0044,
       "attempts": [
         {
           "attempt_no": 1,
@@ -134,7 +134,7 @@
       "run_no": 2,
       "request_count": 5,
       "bypass": true,
-      "elapsed_seconds": 0.0627,
+      "elapsed_seconds": 0.0081,
       "attempts": [
         {
           "attempt_no": 1,
@@ -180,7 +180,7 @@
       "run_no": 2,
       "request_count": 6,
       "bypass": true,
-      "elapsed_seconds": 0.0312,
+      "elapsed_seconds": 0.0087,
       "attempts": [
         {
           "attempt_no": 1,
@@ -233,7 +233,7 @@
       "run_no": 2,
       "request_count": 2,
       "bypass": true,
-      "elapsed_seconds": 0.0154,
+      "elapsed_seconds": 0.0048,
       "attempts": [
         {
           "attempt_no": 1,
@@ -258,7 +258,7 @@
       "run_no": 3,
       "request_count": 5,
       "bypass": true,
-      "elapsed_seconds": 0.0336,
+      "elapsed_seconds": 0.0079,
       "attempts": [
         {
           "attempt_no": 1,
@@ -304,7 +304,7 @@
       "run_no": 3,
       "request_count": 6,
       "bypass": true,
-      "elapsed_seconds": 0.0356,
+      "elapsed_seconds": 0.0126,
       "attempts": [
         {
           "attempt_no": 1,
@@ -357,7 +357,7 @@
       "run_no": 3,
       "request_count": 2,
       "bypass": true,
-      "elapsed_seconds": 0.0605,
+      "elapsed_seconds": 0.0059,
       "attempts": [
         {
           "attempt_no": 1,
@@ -378,5 +378,5 @@
       "baseline_empty": true
     }
   ],
-  "generated_at_utc": "2026-10-17T13:52:29Z"
+  "generated_at_utc": "2026-10-27T03:44:54Z"
 }
