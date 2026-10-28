@@ -22,7 +22,7 @@ Ba giá trị mà `lab-huong-dan.md` ghi là "sinh viên phải tự xác minh" 
 
 | Giá trị | Kết luận | Bằng chứng |
 |---|---|---|
-| Endpoint tìm kiếm | **`GET /api/products?search=`** | `backend/server.js:141-144`; `search.req` đã dùng đúng |
+| Endpoint tìm kiếm | **`GET /api/products?search=`** | `backend/server.js:141-144`; `search.raw` đã dùng đúng |
 | Câu truy vấn (gốc lỗi SQLi) | `SELECT * FROM products WHERE name LIKE '%${searchQuery}%'` — nối chuỗi | `backend/server.js:144` |
 | Tên DB SQLite | **`main`** | File sqlite đơn, mặc định `main`; `--tables` dùng trực tiếp không cần `-D` |
 | Bảng dữ liệu người dùng | **`users`** tồn tại (cột `id,name,email,password,role,...`), seed `admin@eshop.com` | `backend/database.js:50-64, 91-92` |
