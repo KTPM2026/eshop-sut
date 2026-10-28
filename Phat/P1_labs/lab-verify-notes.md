@@ -32,15 +32,15 @@ Nối chuỗi trực tiếp tham số người dùng vào SQL → SQL Injection 
 
 ## 3. Các chỗ đã vá trong `seminar/docs/lab-huong-dan.md`
 1. Endpoint tìm kiếm: sửa thành `GET /api/products?search=`.
-2. Bước lấy `search.req`: đã có sẵn file `eshop-sut/search.req` trỏ đúng endpoint (kèm Authorization Bearer token mẫu).
+2. Bước lấy `search.raw`: đã có sẵn file `eshop-sut/search.raw` trỏ đúng endpoint (kèm Authorization Bearer token mẫu).
 3. Lệnh sqlmap: SQLite là file đơn → dùng `--tables` trực tiếp, bỏ bước `--dbs`/`-D` của MySQL/Postgres; nếu cần chỉ DB thì là `main`.
 4. Hint 3 (Lab 2): bỏ tên sai `SQLite_masterdb`; tên đúng là `main`.
 5. Mục "Ghi chú rà soát": cập nhật trạng thái 3 giá trị đã xác minh (vẫn giữ yêu cầu Phát tự chạy để ký xác nhận).
 6. Thêm cảnh báo luồng XSS frontend/API ở Lab 1.
 
 ## 4. CÒN PHẢI TỰ CHẠY (AI không làm thay được)
-- [ ] Khởi động EShop (backend 3000 + frontend 5173), kiểm tra `search.req` còn chạy được (token còn hạn không).
+- [ ] Khởi động EShop (backend 3000 + frontend 5173), kiểm tra `search.raw` còn chạy được (token còn hạn không).
 - [ ] Chạy ZAP Fuzzer với `xss-payloads.txt`, chụp bảng kết quả + response có payload chưa escape; kiểm chứng thực thi trên frontend.
-- [ ] Chạy `sqlmap -r search.req --batch` → `--tables` → `-T users --dump`; lưu log + ảnh.
+- [ ] Chạy `sqlmap -r search.raw --batch` → `--tables` → `-T users --dump`; lưu log + ảnh.
 - [ ] Chạy `reset-db.ps1`/`.sh` sau khi dump, xác nhận DB về trạng thái sạch.
 - [ ] Ghi timing từng bước (phục vụ P3a) và quay clip.

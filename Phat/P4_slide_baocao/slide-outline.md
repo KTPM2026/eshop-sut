@@ -12,7 +12,7 @@ Phần của Phát dự kiến **6–8 slide** trong bài chung (nền trắng, 
 3. **Lab 1 — Phân biệt reflection API (JSON) vs thực thi trình duyệt** (điểm dễ nhầm).
 4. **Lab 2 — SQL Injection bằng sqlmap**
    - Root cause: nối chuỗi `LIKE '%${search}%'` (`server.js:144`).
-   - Lệnh: `-r search.req --batch` → `--tables` → `-T users --dump`. SQLite dùng `--tables` trực tiếp.
+   - Lệnh: `-r search.raw --batch` → `--tables` → `-T users --dump`. SQLite dùng `--tables` trực tiếp.
    - Ảnh: sqlmap báo injectable + dump bảng `users`. [CHỜ PILOT]
 5. **Khắc phục** — Output Encoding/CSP (XSS); Parameterized Query/ORM (SQLi).
 6. **Kết quả pilot & thời lượng** — timing thật so dự kiến (10' / 15–20'). [CHỜ PILOT]

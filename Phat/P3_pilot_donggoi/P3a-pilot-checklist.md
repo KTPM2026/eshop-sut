@@ -27,7 +27,7 @@
 ## Lab 2 — sqlmap / SQLi
 | Bước | Làm được? | Ghi chú |
 |---|:---:|---|
-| Chuẩn bị `search.req`/`.raw` | ✅ | Lưu từ ZAP (Save Raw → Request → Header) hoặc dùng file repo |
+| Chuẩn bị `search.raw` | ✅ | Lưu từ ZAP (Save Raw → Request → Header) hoặc dùng file repo |
 | `sqlmap ... --batch` → injectable | ✅ | UNION query, 6 cột, DBMS = SQLite (98 requests, ~1 phút) |
 | `--tables` | ✅ | 7 bảng; sqlmap gọi DB là `SQLite_masterdb` |
 | `-T users -C "..." --dump` | ✅ | Dump 2 user, password plaintext (`evidence/sqlmap_users_dump.csv`) |

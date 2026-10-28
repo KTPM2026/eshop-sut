@@ -15,8 +15,8 @@ Phần thực hành gồm **02 bài Lab có độ khó tăng dần**, minh họa
 
 | Lab | Lỗ hổng | OWASP | Công cụ | Tầng | Độ khó |
 |---|---|---|---|---|---|
-| Lab 1 | Reflected XSS | A03: Injection | OWASP ZAP | Client-side | 🟢 Cơ bản (GUI) |
-| Lab 2 | SQL Injection | A03: Injection | sqlmap | Server-side (API + DB) | 🟡 Nâng cao (CLI) |
+| Lab 1 | Reflected XSS | A03: Injection | OWASP ZAP | Client-side | Cơ bản (GUI) |
+| Lab 2 | SQL Injection | A03: Injection | sqlmap | Server-side (API + DB) | Nâng cao (CLI) |
 
 Mục tiêu: giúp người học trải nghiệm trọn vẹn quy trình DAST — *bắt gói tin → fuzzing/kiểm chứng → xác thực lỗ hổng → đánh giá tác động → đề xuất khắc phục*.
 
@@ -119,12 +119,12 @@ const query = `SELECT * FROM products WHERE name LIKE '%${searchQuery}%'`;
 ```
 
 ### 4.2. Quy trình thực hiện
-Lưu request thô của chức năng tìm kiếm (`search.req`) từ ZAP, rồi nạp vào sqlmap:
+Lưu request thô của chức năng tìm kiếm (`search.raw`) từ ZAP, rồi nạp vào sqlmap:
 
 ```bash
-sqlmap -r search.req --batch                                   # 1. xác nhận injectable
-sqlmap -r search.req --batch --tables                          # 2. liệt kê bảng
-sqlmap -r search.req --batch -T users -C "name,email,password,role" --dump   # 3. dump users
+sqlmap -r search.raw --batch                                   # 1. xác nhận injectable
+sqlmap -r search.raw --batch --tables                          # 2. liệt kê bảng
+sqlmap -r search.raw --batch -T users -C "name,email,password,role" --dump   # 3. dump users
 ```
 
 ### 4.3. Kết quả
@@ -170,7 +170,7 @@ Cả hai Lab chạy thành công, lỗ hổng xác nhận bằng bằng chứng 
 ## 6. Giới hạn và lưu ý đạo đức
 - Toàn bộ thử nghiệm chỉ trên EShop localhost của môn học; lỗ hổng cài sẵn để học tập.
 - Dữ liệu dump (`admin@eshop.com`...) là dữ liệu seed thử nghiệm, không phải dữ liệu thật.
-- `search.req` chứa token mẫu; endpoint không yêu cầu xác thực nên token hết hạn không ảnh hưởng kết quả.
+- `search.raw` chứa token mẫu; endpoint không yêu cầu xác thực nên token hết hạn không ảnh hưởng kết quả.
 
 ## 7. Tài liệu tham khảo
 - OWASP Top 10:2021 — A03 Injection; OWASP XSS & SQL Injection Prevention Cheat Sheets.

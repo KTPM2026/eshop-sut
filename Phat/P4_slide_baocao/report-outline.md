@@ -26,7 +26,7 @@ Phát phụ trách hoàn thiện/chạy thử 2 Lab và đóng gói (P1–P4). K
 
 ## 5. Kết quả pilot & giới hạn
 - Timing thật từng Lab vs dự kiến; lỗi hướng dẫn đã sửa. [CHỜ PILOT]
-- Giới hạn: môi trường localhost, lỗ hổng cài sẵn để học; token trong `search.req` có thể hết hạn cần cấp lại.
+- Giới hạn: môi trường localhost, lỗ hổng cài sẵn để học; token trong `search.raw` có thể hết hạn cần cấp lại.
 - Không khẳng định kết quả khi chưa chạy.
 
 ## 6. Liên kết minh chứng

