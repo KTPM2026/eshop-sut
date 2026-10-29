@@ -1,7 +1,7 @@
 # Nhật ký tiến độ — Nguyễn Đức Phát (23120317)
 
 Phạm vi: P1 (2 Lab), P2 (gán nhãn alert), P3 (pilot + đóng gói), P4 (báo cáo phần Lab).
-Nhánh: `phat/labs-workspace` (eshop-sut), `phat/lab-doc-fixes` (seminar).
+Nhánh: `phat/labs-workspace`, `phat/search-raw-lab3-cleanup` (eshop-sut), `phat/lab-doc-fixes` (seminar).
 
 ---
 
@@ -30,9 +30,28 @@ Nhánh: `phat/labs-workspace` (eshop-sut), `phat/lab-doc-fixes` (seminar).
 
 ---
 
+## 27–29/10/2026
+
+**P1/P4 — Khớp phạm vi 2 Lab & dọn tài liệu**
+- Đổi tên file request sqlmap `search.req` → `search.raw`; cập nhật mọi tham chiếu trong tài liệu Lab và nội dung slide.
+- Gỡ **Lab 3 (brute-force OTP)** khỏi tài liệu Lab + báo cáo — ngoài phạm vi (đề cương chỉ 2 Lab: XSS, SQLi). Về đúng 2 Lab.
+- Lược bớt emoji trong `seminar/docs/lab-huong-dan.md` và `P4_slide_baocao/bao-cao-lab.md` cho gọn.
+- P2: alert #16 (A07) đổi nguồn ghi "Code review + Lab 3" → "Code review"; nhãn/ưu tiên Ground Truth giữ nguyên.
+
+**P4 — Script thuyết trình (bản nháp local)**
+- Script nói phần Lab khớp deck thật (`Seminar_Security_Testing_EShop.pptx.pdf`): Lab 1 XSS = trang 42, Lab 2 SQLi = trang 43; dùng từ đơn giản, có đánh dấu số trang. → `Phat/P4_slide_baocao/script-thuyet-trinh-phat.md`.
+- Script slide ZAP "nguyên lý & chức năng" (trang 10). → `docs/slide-seminar/script-zap-trang10.md`.
+
+**Kiểm chứng lại:** chạy lại `sqlmap --tables` → xác nhận DBMS SQLite, 7 bảng (gồm `users`).
+
+**Commit/push:** eshop-sut `3941cd0` (nhánh `phat/search-raw-lab3-cleanup`); seminar `d6384b5` (nhánh `phat/lab-doc-fixes`). Chờ mở PR vào `main`.
+
+---
+
 ## Việc còn lại (cập nhật khi xong)
 - [ ] Quay 2 clip demo (Lab 1, Lab 2).
-- [ ] P2: điền timing + chốt nhãn chuẩn với Như.
-- [ ] Làm slide phần Lab.
+- [x] P2: điền timing (~30 phút). *Còn:* chốt nhãn chuẩn với Như.
+- [x] Nội dung + script thuyết trình phần Lab (slide đã dựng trong deck nhóm, trang 42–43).
+- [ ] Mở PR gộp nhánh dọn tài liệu (`phat/search-raw-lab3-cleanup`, `phat/lab-doc-fixes`) vào `main`.
 - [ ] P3b: đóng gói bản cuối (chờ video + benchmark N3/A2 của nhóm).
 - [ ] Gộp nhật ký này vào `progress-log.md` chung của nhóm (nếu nhóm dùng file chung).
