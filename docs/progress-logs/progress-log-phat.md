@@ -1,7 +1,7 @@
 # Nhật ký tiến độ — Nguyễn Đức Phát (23120317)
 
-Phạm vi: P1 (2 Lab), P2 (gán nhãn alert), P3 (pilot + đóng gói), P4 (báo cáo phần Lab).
-Nhánh: `phat/labs-workspace`, `phat/search-raw-lab3-cleanup` (eshop-sut), `phat/lab-doc-fixes` (seminar).
+Phạm vi: P1 (2 Lab), P2 (gán nhãn alert), P3 (pilot + đóng gói + video), P4 (báo cáo + script phần Lab).
+Nhánh: `phat/labs-workspace`, `phat/search-raw-lab3-cleanup` (eshop-sut, đã merge), `phat/lab-doc-fixes` (seminar, đã merge).
 
 ---
 
@@ -30,28 +30,48 @@ Nhánh: `phat/labs-workspace`, `phat/search-raw-lab3-cleanup` (eshop-sut), `phat
 
 ---
 
-## 27–29/10/2026
+## 27–29/10/2026 — Chốt phạm vi, dọn tài liệu, script & hoàn tất
 
-**P1/P4 — Khớp phạm vi 2 Lab & dọn tài liệu**
-- Đổi tên file request sqlmap `search.req` → `search.raw`; cập nhật mọi tham chiếu trong tài liệu Lab và nội dung slide.
-- Gỡ **Lab 3 (brute-force OTP)** khỏi tài liệu Lab + báo cáo — ngoài phạm vi (đề cương chỉ 2 Lab: XSS, SQLi). Về đúng 2 Lab.
-- Lược bớt emoji trong `seminar/docs/lab-huong-dan.md` và `P4_slide_baocao/bao-cao-lab.md` cho gọn.
-- P2: alert #16 (A07) đổi nguồn ghi "Code review + Lab 3" → "Code review"; nhãn/ưu tiên Ground Truth giữ nguyên.
+**P1 — Rà soát phạm vi & gỡ Lab 3 (ngoài phạm vi)**
+- Rà cả 3 bản đề cương: xác nhận mục 6 chỉ quy định **2 Lab bắt buộc** (Lab 1 XSS, Lab 2 SQLi); phân công ghi rõ "2 bài Lab".
+- Phát hiện Lab 3 (brute-force OTP, A07) được thêm trước đó **ngoài phạm vi** và viện dẫn "mục 1.4 đề cương" thực tế không tồn tại (mục 1.4 là "Thứ tự triển khai") → **quyết định gỡ Lab 3**.
+- Gỡ toàn bộ section Lab 3 trong `seminar/docs/lab-huong-dan.md`; bảng so sánh độ khó và phần "Bàn giao" trả về đúng 2 Lab.
 
-**P4 — Script thuyết trình (bản nháp local)**
-- Script nói phần Lab khớp deck thật (`Seminar_Security_Testing_EShop.pptx.pdf`): Lab 1 XSS = trang 42, Lab 2 SQLi = trang 43; dùng từ đơn giản, có đánh dấu số trang. → `Phat/P4_slide_baocao/script-thuyet-trinh-phat.md`.
-- Script slide ZAP "nguyên lý & chức năng" (trang 10). → `docs/slide-seminar/script-zap-trang10.md`.
+**P1/P4 — Đổi tên file request & dọn hình thức**
+- Đổi `search.req` → **`search.raw`** (rename file thật ở gốc + cập nhật tham chiếu ở 10 tài liệu: lab-huong-dan, bao-cao-lab, report-outline, slide-outline, README, noi-dung-thuyet-trinh-phat, P3a-pilot-checklist, alert-labeling-template, lab-verify-notes, và bản MSSV).
+- Lược bớt emoji trang trí trong `lab-huong-dan.md` và `bao-cao-lab.md` cho gọn, hợp tài liệu học thuật.
 
-**Kiểm chứng lại:** chạy lại `sqlmap --tables` → xác nhận DBMS SQLite, 7 bảng (gồm `users`).
+**P2 — Rà soát số liệu & chốt Ground Truth**
+- Kiểm chứng 3 bộ nhãn khớp file nguồn: Phát **17 mục (10 Thật / 4 Giả / 3 Informational)**; Như **29 instance (14 True / 10 False / 5 Unknown, AI-assisted)**; tập đối chiếu A1 **11 instance (7 True / 1 False / 3 Unknown)**. Ba bộ khác đơn vị đếm → chỉ so sau khi ánh xạ theo ID.
+- Hoàn tất timing gán nhãn tay **~30 phút**.
+- Alert #16 (A07): đổi nguồn ghi "Code review + Lab 3" → "Code review" (do gỡ Lab 3); **nhãn/ưu tiên giữ nguyên, không sửa Ground Truth**.
+- Đối chiếu & thống nhất nhãn với Thạch Như (N2) → **chốt Ground Truth**.
 
-**Commit/push:** eshop-sut `3941cd0` (nhánh `phat/search-raw-lab3-cleanup`); seminar `d6384b5` (nhánh `phat/lab-doc-fixes`). Chờ mở PR vào `main`.
+**P4 — Script thuyết trình (khớp deck thật)**
+- Đọc deck `Seminar_Security_Testing_EShop.pptx.pdf` (49 trang); xác định vị trí phần của mình: **Lab 1 XSS = trang 42**, **Lab 2 SQLi = trang 43**, **gán nhãn P2 = trang 33** (nằm trong khối AI Triage).
+- Viết script nói phần Lab (2 Lab, từ ngữ đơn giản, đánh dấu số trang, kèm phần trả lời câu hỏi) → `Phat/P4_slide_baocao/script-thuyet-trinh-phat.md`.
+- Viết script slide ZAP "nguyên lý & chức năng" (trang 10) → `docs/slide-seminar/script-zap-trang10.md`.
+
+**P3 — Video demo & đóng gói**
+- Hoàn thành **2 clip demo**: Lab 1 (XSS) và Lab 2 (SQLi).
+- P3b: đóng gói bản cuối phần Lab (hướng dẫn + payload + script reset + báo cáo + video).
+
+**Kiểm chứng lại**
+- Chạy lại `sqlmap -r search.raw --batch --tables` → xác nhận DBMS SQLite, **7 bảng** (gồm `users`). Lưu ý dùng `--flush-session` khi quay demo để kết quả "tươi", không lấy cache cũ.
+
+**Git**
+- Commit dọn tài liệu: eshop-sut `3941cd0` (nhánh `phat/search-raw-lab3-cleanup`), seminar `d6384b5` (nhánh `phat/lab-doc-fixes`). Xử lý lỗi fetch TLS (schannel) bằng fetch "blobless".
+- **PR đã gộp vào `main`** cả hai repo (xác nhận trên eshop-sut: `search.raw` ở gốc main, P2 #16 nguồn = "Code review").
+- Ghi nhật ký này lên `docs/progress-logs/progress-log-phat.md`.
 
 ---
 
-## Việc còn lại (cập nhật khi xong)
-- [ ] Quay 2 clip demo (Lab 1, Lab 2).
-- [x] P2: điền timing (~30 phút). *Còn:* chốt nhãn chuẩn với Như.
-- [x] Nội dung + script thuyết trình phần Lab (slide đã dựng trong deck nhóm, trang 42–43).
-- [ ] Mở PR gộp nhánh dọn tài liệu (`phat/search-raw-lab3-cleanup`, `phat/lab-doc-fixes`) vào `main`.
-- [ ] P3b: đóng gói bản cuối (chờ video + benchmark N3/A2 của nhóm).
-- [ ] Gộp nhật ký này vào `progress-log.md` chung của nhóm (nếu nhóm dùng file chung).
+## Việc còn lại — ĐÃ HOÀN TẤT (cập nhật 29/10/2026)
+- [x] Quay 2 clip demo (Lab 1, Lab 2).
+- [x] P2: điền timing (~30 phút) + đối chiếu & chốt nhãn chuẩn với Như.
+- [x] Nội dung + script thuyết trình phần Lab (deck nhóm trang 42–43; script đơn giản hóa).
+- [x] Mở & gộp PR dọn tài liệu (`phat/search-raw-lab3-cleanup`, `phat/lab-doc-fixes`) vào `main`.
+- [x] P3b: đóng gói bản cuối phần Lab.
+- [x] Nhật ký tiến độ đã nằm trong `docs/progress-logs/` của repo nhóm.
+
+> **Trạng thái:** các gói việc P1–P4 của Phát đã hoàn tất.
