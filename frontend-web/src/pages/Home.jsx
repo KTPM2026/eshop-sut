@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
+import { API_URL } from "../config";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ export default function Home() {
     try {
       setErrorHtml("");
       const res = await axios.get(
-        `http://localhost:3000/api/products?search=${query}`,
+        `${API_URL}/api/products?search=${query}`,
       );
       if (typeof res.data === "string" && res.data.includes("<h1>")) {
         setErrorHtml(res.data);

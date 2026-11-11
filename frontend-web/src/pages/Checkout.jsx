@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 export default function Checkout() {
   const { cart, cartTotal, clearCart } = useCart();
@@ -25,7 +26,7 @@ export default function Checkout() {
     setCouponResult(null);
     setApplyingCoupon(true);
     try {
-      const res = await axios.post('http://localhost:3000/api/apply-coupon', {
+      const res = await axios.post(`${API_URL}/api/apply-coupon`, {
         code: couponCode.trim().toUpperCase(),
         total_amount: editableTotal,
         user_id: user?.id || null
@@ -42,7 +43,7 @@ export default function Checkout() {
     try {
       const finalAmount = couponResult ? couponResult.final_amount : editableTotal;
 
-      await axios.post('http://localhost:3000/api/checkout', {
+      await axios.post(`${API_URL}/api/checkout`, {
         items: cart,
         total_amount: finalAmount,
         coupon_id: couponResult?.coupon_id || null
@@ -52,7 +53,7 @@ export default function Checkout() {
 
       // Record coupon usage if applied
       if (couponResult?.coupon_id && token) {
-        await axios.post('http://localhost:3000/api/coupon-usage',
+        await axios.post(`${API_URL}/api/coupon-usage`,
           { coupon_id: couponResult.coupon_id },
           { headers: { Authorization: `Bearer ${token}` } }
         );
